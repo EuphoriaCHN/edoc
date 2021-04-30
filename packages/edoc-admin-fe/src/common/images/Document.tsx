@@ -1,0 +1,7 @@
+import * as React from 'react';
+
+function DocumentImage () {
+  return <img style={{ userSelect: 'none' }} src={'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAMAAADypuvZAAAARVBMVEUAAAAAAAAAAAAAAAAAAADb29vBwcEAAADb29va2trKysr6+vr5+fn////c3Nzx8fH39/fz8/P19fXu7u7MzMzb29vQ0NA1fD0SAAAAC3RSTlMABAwZCesyE+zsMBmPxxwAAAE2SURBVEjH7dUNa8IwEIBh02Vz212aXjL9/z9199HUMZILCGMgvq1FwYeLbcDTIxdGuWbt9v4ZHBTX1Ate34KL0Nrs1EpCR4VlTYCNHTAnVQ5CVtCchoxUeQgYQVsibCjIVHCWZ8aYLc9ThoCJMhUMKTU1RCDMlMWTHNUQkFRIiU2y4COE4aTCMdrAGF2/tGu9xCECvdk/nhcRZQkuy3hS5ore+UPqU06riyofWQzYLL266NYxa46wbPvByYaVZJw7KZMeFuVS+ROvcPabiphaiV/7Dyw8yUfyXa3ubwk5H+nayFBrm6EsquRCdJwZJgj2bcQXBnYlnKF9E8AtlHN2IzLpjjhSM0HwO/MO6ucvb9hdCOGeSU/0RH+KvPoorpNiDy3nF6fz0kMhxsUpxtD7/5x2+oe+AaeOQrbsiD7xAAAAAElFTkSuQmCC'} />
+}
+
+export default DocumentImage;

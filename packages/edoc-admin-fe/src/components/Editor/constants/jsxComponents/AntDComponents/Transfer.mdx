@@ -1,0 +1,5 @@
+<Transfer
+  dataSource={Array(12).fill(0).map((id, index) => ({ key: index, title: `穿梭框数据 - ${index}`, description: `描述 - ${index}` }))}
+  titles={['Source', 'Target']}
+  render={item => item.title}
+/>

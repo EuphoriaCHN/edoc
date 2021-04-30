@@ -1,0 +1,37 @@
+<ChartsSunburst {...({
+    data: {
+      "label": "root",
+      "children": [{
+        "label": "类别 2",
+        "children": [{
+          "label": "类别 2.1",
+          "children": [{
+            "label": "类别 2.1.1",
+            "children": "null",
+            "uv": 0,
+            "sum": 5,
+            "count": 0
+          }, {
+            "label": "类别 2.1.2",
+            "children": null,
+            "uv": 0,
+            "sum": 2,
+            "count": 0
+          }, {
+            "label": "类别 2.1.5",
+            "children": null,
+            "uv": 1,
+            "sum": 1,
+            "count": 0
+          }],
+          "uv": 1,
+          "sum": 12,
+          "count": 0
+        }],
+      }]
+    },
+    seriesField: 'sum',
+    colorField: 'label',
+    innerRadius: 0.3,
+    interactions: [{ type: 'element-active' }],
+})} />

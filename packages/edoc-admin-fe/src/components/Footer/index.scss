@@ -1,0 +1,21 @@
+$footerHeight: 60px;
+
+.site-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  height: $footerHeight;
+
+  background-color: rgba(46, 50, 56, .05);
+  font-size: 12px;
+
+  > * {
+    display: inline-block;
+    margin-right: 8px;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}

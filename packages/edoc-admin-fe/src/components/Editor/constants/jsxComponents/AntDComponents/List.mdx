@@ -1,0 +1,11 @@
+<List
+  header={<div>Header</div>}
+  footer={<div>Footer</div>}
+  bordered
+  dataSource={Array(10).fill(0).map((_, id) => id)}
+  renderItem={item => (
+    <ListItem>
+      <Text mark>[ITEM]</Text> {item}
+    </ListItem>
+  )}
+/>

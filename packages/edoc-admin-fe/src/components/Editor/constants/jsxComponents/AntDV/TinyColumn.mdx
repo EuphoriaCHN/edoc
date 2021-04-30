@@ -1,0 +1,20 @@
+<ChartsTinyColumn {...({
+    height: 64,
+    width: 240,
+    autoFit: false,
+    data: [274, 337, 81, 497, 666, 219, 269],
+    tooltip: {
+      customContent: function customContent(x, data) {
+        var _data$, _data$$data;
+        return 'NO.'
+          .concat(x, ': ')
+          .concat(
+            (_data$ = data[0]) === null || _data$ === void 0
+              ? void 0
+              : (_data$$data = _data$.data) === null || _data$$data === void 0
+              ? void 0
+              : _data$$data.y.toFixed(2),
+          );
+      },
+    },
+})} />

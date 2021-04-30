@@ -1,0 +1,29 @@
+$headerHeight: 60px;
+
+.site-header {
+  height: $headerHeight !important;
+  box-sizing: border-box;
+  
+  background-color: #fff !important;
+  padding: 12px 50px !important;
+  border-bottom: 1px solid var(--color-border);
+
+  &-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    &-logo {
+      height: 32px;
+      width: 32px;
+    }
+  
+    > h4 {
+      margin: 0 !important;
+      margin-left: 16px !important;
+      line-height: $headerHeight;
+      color: var(--color-text-0) !important;
+    }
+  }
+}

@@ -1,0 +1,93 @@
+<ChartsMultiView {...({
+    appendPadding: 8,
+    syncViewPadding: true,
+    tooltip: { shared: true, showMarkers: false, showCrosshairs: true, offsetY: -50 },
+    views: [
+      {
+        data: [
+          { "time": 1246406400000, "temperature": [14.3, 27.7] },
+          { "time": 1246492800000, "temperature": [14.5, 27.8] },
+          { "time": 1246579200000, "temperature": [15.5, 29.6] },
+          { "time": 1246665600000, "temperature": [16.7, 30.7] },
+          { "time": 1246752000000, "temperature": [16.5, 25.0] },
+          { "time": 1246838400000, "temperature": [17.8, 25.7] },
+          { "time": 1246924800000, "temperature": [13.5, 24.8] },
+          { "time": 1247011200000, "temperature": [10.5, 21.4] },
+          { "time": 1247097600000, "temperature": [9.2, 23.8] },
+          { "time": 1247184000000, "temperature": [11.6, 21.8] },
+        ],
+        axes: {},
+        meta: {
+          time: {
+            type: 'time',
+            mask: 'MM-DD',
+            nice: true,
+            tickInterval: 24 * 3600 * 1000 * 2,
+            range: [0, 1],
+          },
+          temperature: {
+            nice: true,
+            sync: true,
+            alias: '温度范围',
+          },
+        },
+        // view1: prepare a area plot, mapping position to `time*temperature`
+        geometries: [
+          {
+            type: 'area',
+            xField: 'time',
+            yField: 'temperature',
+            mapping: {},
+          },
+        ],
+      },
+      {
+        data: [
+          { "time": 1246406400000, "temperature": 21.5 },
+          { "time": 1246492800000, "temperature": 22.1 },
+          { "time": 1246579200000, "temperature": 23 },
+          { "time": 1246665600000, "temperature": 23.8 },
+          { "time": 1246752000000, "temperature": 21.4 },
+          { "time": 1246838400000, "temperature": 21.3 },
+          { "time": 1246924800000, "temperature": 18.3 },
+          { "time": 1247011200000, "temperature": 15.4 },
+          { "time": 1247097600000, "temperature": 16.4 },
+          { "time": 1247184000000, "temperature": 17.7 },
+        ],
+        axes: false,
+        meta: {
+          time: {
+            type: 'time',
+            mask: 'MM-DD',
+            nice: true,
+            tickInterval: 24 * 3600 * 1000 * 2,
+            range: [0, 1],
+          },
+          temperature: {
+            sync: 'temperature',
+            alias: '温度',
+          },
+        },
+        // view2: prepare a line plot and point plot, mapping position to `time*temperature` (share data)
+        geometries: [
+          {
+            type: 'line',
+            xField: 'time',
+            yField: 'temperature',
+            mapping: {},
+          },
+          {
+            type: 'point',
+            xField: 'time',
+            yField: 'temperature',
+            mapping: {
+              shape: 'circle',
+              style: {
+                fillOpacity: 1,
+              },
+            },
+          },
+        ],
+      },
+    ],
+})} />

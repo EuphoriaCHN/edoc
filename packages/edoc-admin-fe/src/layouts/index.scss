@@ -1,0 +1,27 @@
+.site-content {
+  min-height: calc(100vh - 120px) !important;
+  background-color: #fff;
+  box-sizing: border-box !important;
+}
+
+.content-container {
+  padding: 20px 144px;
+
+  .ant-page-header {
+    padding: 12px 0 16px;
+  }
+}
+
+body {
+  min-width: 1100px;
+}
+
+.left-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .ant-pagination-total-text {
+    margin-right: 16px;
+  }
+}

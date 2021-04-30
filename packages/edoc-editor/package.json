@@ -1,0 +1,21 @@
+{
+  "name": "edoc-editor",
+  "version": "0.0.3",
+  "description": "",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "typings": "src/index.ts",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "edoc-mdx-renderer": "^0.0.6"
+  },
+  "dependencies": {
+    "prettier": "^2.2.1",
+    "tui-editor": "^1.4.10"
+  }
+}

@@ -1,0 +1,11 @@
+.mdx-renderer {
+  &-video {
+    > video {
+      background-color: #000;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

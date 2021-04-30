@@ -1,0 +1,159 @@
+.business-documents {
+  &-header {
+    margin-bottom: 20px;
+  }
+
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(100vh - 210px);
+    border: 1px solid var(--color-border);
+    box-sizing: border-box;
+  }
+
+  // 右侧 Document 列表 & header
+  &-list {
+    flex: 1;
+    height: 100%;
+    box-sizing: border-box;
+
+    > header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 24px 32px;
+      border-bottom: 1px solid #f0f0f0;
+
+      > h5 {
+        line-height: 32px;
+        margin: 0;
+      }
+    }
+
+    &-breadcrumb {
+      > span {
+        color: var(--color-text-1) !important;
+
+        &:hover {
+          cursor: pointer;
+          color:rgba(0, 126, 246, .8) !important;
+        }
+
+        &:last-child {
+          font-weight: 600;
+
+          &:hover {
+            cursor: default;
+            color: var(--color-text-1) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 树结构
+.business-libraries {
+  height: 100%;
+  width: 225px;
+  box-sizing: border-box;
+  padding-top: 24px;
+  border-right: 1px solid var(--color-border);
+
+  > h5 {
+    box-sizing: border-box;
+    width: 100%;
+    display: inline-block;
+    padding: 0 24px 8px;
+    background-color: #fff;
+  }
+
+  &-tree {
+    height: calc(100% - 64px);
+    overflow-y: auto;
+
+    &-node {
+      box-sizing: border-box;
+      padding: 0 24px;
+      height: 32px;
+      line-height: 32px;
+      font-size: 14px;
+
+      &-title {
+        color: var(--color-text-1);
+      }
+    }
+
+    .ant-tree-switcher {
+      display: none;
+    }
+  }
+
+  .business-libraries-tree-node-title {
+    transition: all .3s;
+  }
+
+  .ant-tree-node-content-wrapper {
+    &:hover {
+      background-color: unset;
+
+      .business-libraries-tree-node-title {
+        color: rgba(0, 126, 246, .8);
+      }
+    }
+  }
+
+  .ant-tree-node-selected {
+    background-color: unset !important;
+  }
+
+  .ant-tree-treenode-selected {
+    position: relative;
+    background-color: rgba(0, 126, 246, 0.12) !important;
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      top: 0;
+      right: 0;
+      width: 3px;
+      background-color: rgba(0, 126, 246, .8);
+    }
+
+    .business-libraries-tree-node-title {
+      color: rgba(0, 126, 246, .8);
+    }
+  }
+}
+
+// 文档 Table 结构
+.document-table {
+  height: calc(100% - 82px);
+  overflow-y: auto;
+
+  &-row {
+    &:nth-child(2n + 1) {
+      background-color: rgba(0, 23, 121, 0.03);
+    }
+
+    > td {
+      height: 84px;
+    }
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #6acaf9;
+
+    > svg {
+      height: 45px;
+      width: 45px;  
+    }
+  }
+}

@@ -1,0 +1,15 @@
+a {
+    color: var(--color-link);
+    text-decoration: none;
+
+    a:hover {
+        color: var(--color-link-hover);
+    }
+}
+
+::selection {
+    color: #fff;
+    background: #1890ff;
+    // background-color: rgba(0, 0, 0, 0.2);
+    // background-color: var(--color-fill-0);
+}

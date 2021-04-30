@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "ESNext",
+    "outDir": "dist",
+    "jsx": "react",
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@base/*": [
+        "base/*"
+      ]
+    },
+    // You have to define these again in jest.config.js
+    // open jest.config.js for more information
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      },
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}

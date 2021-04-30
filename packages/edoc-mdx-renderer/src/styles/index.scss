@@ -1,0 +1,215 @@
+@import "~antd/dist/antd.css";
+
+$bf: 16px;
+$h1: $bf * 2.25;
+$h2: $bf * 1.728;
+$h3: $bf * 1.44;
+$h4: $bf * 1.2;
+$h5: $bf * 1;
+$h6: $bf * 1;
+
+$nav-width: 260px;
+$bp-mobile: 820px;
+$breakpoint: 1024px;
+
+$max-paragraph-width: 800px;
+
+.article-wrapper {
+  flex-grow: 1;
+  flex-basis: 100%;
+  padding-top: 24px;
+  padding-bottom: 100px;
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1160px;
+
+  .main-article {
+    padding-top: 2 * $bf;
+
+    @media screen and (max-width: $breakpoint) {
+      grid-column-start: content-start;
+      grid-column-end: toc-end;
+    }
+
+    @media screen and (max-width: $bp-mobile) {
+      grid-column: full;
+      grid-template-columns: [large-start] 24px [main-start] minmax(0, $max-paragraph-width) [main-end] 24px [large-end];
+    }
+
+    section.md {
+      display: grid;
+      grid-column: large;
+      grid-template-columns: [main-start large-start] minmax(0, $max-paragraph-width) [main-end] 1fr [large-end];
+
+      & > * {
+        grid-column: large;
+      }
+
+      .full-palette,
+      .image-large,
+      .icons-list {
+        grid-column: large;
+      }
+
+      @media screen and (max-width: $bp-mobile) {
+        grid-template-columns: [large-start] 24px [main-start] minmax(0, $max-paragraph-width) [main-end] 24px [large-end];
+      }
+    }
+
+    h2.md:first-child,
+    section.md:first-child h2.md {
+      margin-top: $bf;
+    }
+
+    p.md {
+      font-size: $bf;
+      line-height: 1.75;
+      color: var(--color-text-0);
+      margin-top: 0;
+
+      code {
+        color: var(--color-text-2);
+      }
+    }
+
+    h2.md {
+      color: var(--color-text-0);
+      font-size: $h2;
+      margin-top: 4 * $bf;
+      margin-bottom: 1.5 * $bf;
+    }
+
+    h3.md {
+      color: var(--color-text-0);
+      font-size: $h3;
+      margin-top: 2 * $bf;
+      margin-bottom: 1.5 * $bf;
+    }
+
+    h2.md + h3.md {
+      margin-top: $bf;
+    }
+
+    h4.md {
+      color: var(--color-text-0);
+      font-size: $h4;
+      margin-top: $bf;
+      margin-bottom: $bf;
+    }
+
+    h5.md {
+      color: var(--color-text-0);
+      font-size: $h5;
+      margin-top: $bf;
+      margin-bottom: $bf;
+    }
+
+    a.anchor {
+      display: block;
+      position: relative;
+      top: -120px;
+      height: 0;
+      user-select: none;
+      visibility: hidden;
+    }
+
+    [class^="image-"] {
+      margin-bottom: 1.5 * $bf;
+      box-shadow: 0 0 0 1px var(--color-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .image-large {
+      grid-column: large;
+    }
+
+    .image-no-border {
+      box-shadow: none;
+    }
+
+    div.image-no-border-large {
+      box-shadow: none;
+      grid-column: large;
+    }
+
+    .table-container {
+      display: block;
+      overflow-x: auto;
+      width: 100%;
+      @media screen and (max-width: $bp-mobile) {
+        grid-column: large;
+        border-width: 0.5px;
+        // padding-left: 24px;
+        padding-right: 16px;
+        box-sizing: border-box;
+        -webkit-mask: linear-gradient(270deg, rgba(0, 0, 0, 0) 0, #000 36px);
+        mask: linear-gradient(270deg, rgba(0, 0, 0, 0) 0, #000 36px);
+        -webkit-mask-position: right;
+
+        table.md {
+          margin-right: 24px;
+        }
+      }
+    }
+
+    & > * {
+      grid-column: main;
+    }
+
+    .text {
+      vertical-align: middle;
+    }
+    .example-container {
+      grid-column: large;
+    }
+  }
+
+  .title-area {
+    grid-row: title;
+    grid-column-start: content-start;
+    // grid-column-end: toc-end;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .article-title {
+    color: var(--color-text-0);
+    font-size: $h1;
+    margin-bottom: $bf;
+    margin-top: 1.5 * $bf;
+  }
+
+  .article-actions {
+    @media screen and (max-width: $breakpoint) {
+      display: none;
+    }
+    margin-top: 1.5 * $bf;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .article-brief {
+    color: var(--color-text-2);
+    font-size: $bf;
+    line-height: 1.75;
+    margin-bottom: 2 * $bf;
+    max-width: $max-paragraph-width;
+  }
+
+  .article-tag {
+    margin-top: $bf;
+    margin-bottom: 0;
+  }
+  .article-tag + .article-title {
+    margin-top: $bf;
+  }
+  .article-footer {
+    margin-top: 8 * $bf;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-radius: 6px;
+    background-color: var(--color-fill-0);
+  }
+}

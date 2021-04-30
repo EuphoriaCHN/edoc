@@ -1,0 +1,79 @@
+.tui-editor .te-preview-style-vertical .te-preview {
+    width: calc(50vw - 1px);
+    padding: 0;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+
+    .edoc-mdx-error-view {
+        position: static;
+        width: 100%;
+    }
+}
+
+.CodeMirror-vscrollbar {
+    width: 13px;
+    opacity: 0.95;
+
+    & > div {
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+    }
+}
+
+.edoc-toolbar-button {
+    &.tui-toolbar-icons {
+        background-image: none !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+            color: #000;
+        }
+    }
+
+    &.button {
+        &-jsx-component::before {
+            content: "\269B";
+            transform: scale(1.8);
+        }
+
+        &-theme::before {
+            content: "\2606";
+        }
+
+        &-prettier::before {
+            content: "\2714";
+        }
+
+        &-video::before {
+            content: "\1F4F9";
+            transform: translateY(-4px);
+        }
+    }
+}
+
+.add-jsx-component-modal {
+    &-renderer {
+        margin-top: 12px;
+        border: 1px solid var(--color-border);
+        height: 480px;
+        overflow-y: auto;
+    }
+}
+
+#edoc-portal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+
+    > * {
+        position: absolute;
+    }
+}

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "removeComments": true,
+    "paths": {
+      "@lib/*": [
+        "lib/*"
+      ]
+    },
+    // You have to define these again in jest.config.js
+    // open jest.config.js for more information
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      },
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}
