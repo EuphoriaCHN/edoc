@@ -1,0 +1,10 @@
+.side-nav {
+    height: calc(100vh - 65px) !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    .ant-menu-sub.ant-menu-inline {
+        background-color: #fff;
+    }
+}

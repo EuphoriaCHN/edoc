@@ -1,0 +1,7 @@
+.markdown > pre {
+    padding: 0 !important;
+
+    & > pre {
+        margin: 0 !important;
+    }
+}
