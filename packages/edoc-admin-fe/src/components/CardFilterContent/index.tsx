@@ -23,6 +23,7 @@ interface IProps<T extends object = any> {
   loading: boolean;
   loadData: <T extends { offset: number; limit: number } = any>(query: T) => any;
   onCardClick: (record: T) => any;
+  onCardDelete: (record: T) => any;
 }
 
 const DEFAULT_PAGINATION_DATA: PaginationProps = {
@@ -85,7 +86,13 @@ function CardFilterContent (props: IProps) {
 
   const renderContent = React.useMemo(() =>
     <React.Fragment>
-      <CardContent onClick={props.onCardClick} dataSource={props.dataSource} colKey={'ID'} loading={props.loading} />
+      <CardContent 
+        onClick={props.onCardClick} 
+        onDelete={props.onCardDelete}
+        dataSource={props.dataSource} 
+        colKey={'ID'} 
+        loading={props.loading}
+      />
       <Pagination
         {...paginationData}
         showTotal={(total, range) => t('第 {{start}}~{{end}} 项，共 {{total}} 项', {

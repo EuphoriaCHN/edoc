@@ -50,6 +50,13 @@ function Platform(props: IProps) {
     _history.push(`/siteDetail/${project.ID}`);
   }, []);
 
+  /**
+   * 删除项目
+   */
+  const handleDeleteProject = React.useCallback(async (project: any) => {
+    console.log(project);
+  }, []);
+
   return (
     <React.Fragment>
       <div className={'platform content-container'}>
@@ -85,6 +92,7 @@ function Platform(props: IProps) {
           total={projectListData?.total || 0}
           loadData={loadProjectList}
           onCardClick={handleCardClick}
+          onCardDelete={handleDeleteProject}
         />
       </div>
       <CreateProjectModal
