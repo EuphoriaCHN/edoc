@@ -13,6 +13,7 @@ import { ProjectAPI, PageLibraryAPI, DocumentAPI } from '@/api';
 import { Spin, message, Tree, Typography, Breadcrumb, Button, Table, Dropdown, Menu, Modal } from 'antd';
 import { PlusOutlined, DownOutlined, DeleteOutlined } from '@ant-design/icons';
 
+import CreateDocumentModal from '@/components/CreateDocumentModal';
 import DocumentImage from '@/common/images/Document';
 import FolderImage from '@/common/images/Folder';
 
@@ -33,6 +34,8 @@ function BusinessDocuments(props: IProps) {
   const [selectedTreeNode, setSelectedTreeNode] = React.useState<any>({});
   const [pathStack, setPathStack] = React.useState<any[]>([]);
   const [tableData, setTableData] = React.useState<any[]>([]);
+
+  const [createDocumentModalVisible, setCreateDocumentModalVisible] = React.useState<boolean>(false);
 
   const { t } = useTranslation();
   const projectState = useSelector<Store, Store['project']>(state => state.project);
@@ -279,7 +282,13 @@ function BusinessDocuments(props: IProps) {
           )}
         </Breadcrumb>
         <div>
-          <Button type={'primary'} icon={<PlusOutlined />}>{t('新建页面')}</Button>
+          <Button
+            type={'primary'}
+            icon={<PlusOutlined />}
+            onClick={setCreateDocumentModalVisible.bind(this, true)}
+          >
+            {t('新建页面')}
+          </Button>
         </div>
       </header>
       <Table
@@ -331,12 +340,18 @@ function BusinessDocuments(props: IProps) {
   }, [isError, renderPageLibrary, renderDocumentsContent]);
 
   return (
-    <div className={'content-container business-documents'}>
-      <Spin spinning={loading || pageLibraryLoading}>
-        {renderHeader}
-        {renderContent}
-      </Spin>
-    </div>
+    <React.Fragment>
+      <div className={'content-container business-documents'}>
+        <Spin spinning={loading || pageLibraryLoading}>
+          {renderHeader}
+          {renderContent}
+        </Spin>
+      </div>
+      <CreateDocumentModal 
+        visible={createDocumentModalVisible} 
+        onCancel={setCreateDocumentModalVisible.bind(this, false)}
+      />
+    </React.Fragment>
   );
 }
 
