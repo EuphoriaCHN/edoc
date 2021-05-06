@@ -46,6 +46,13 @@ function PageLibrary(props: IProps) {
     loadPageLibrary(Object.assign({ siteID }, queryData));
   }, [siteID]);
 
+  /**
+   * 删除页面库
+   */
+  const handleDeleteBusiness = React.useCallback(async (business: any) => {
+    // todo:: 删除页面库
+  }, []);
+
   React.useEffect(() => {
     if (!siteID) {
       message.error(t('错误的站点 ID'));
@@ -77,6 +84,7 @@ function PageLibrary(props: IProps) {
         total={pageLibrary?.total || 0}
         loadData={loadData}
         onCardClick={onCardClick}
+        onCardDelete={handleDeleteBusiness}
       />
       <CreatePageLibraryModal
         visible={createPageLibraryModalVisible}

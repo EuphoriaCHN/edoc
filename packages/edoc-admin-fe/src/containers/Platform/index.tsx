@@ -54,6 +54,7 @@ function Platform(props: IProps) {
    * 删除项目
    */
   const handleDeleteProject = React.useCallback(async (project: any) => {
+    // todo:: 删除项目
     console.log(project);
   }, []);
 

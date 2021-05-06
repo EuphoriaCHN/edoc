@@ -10,12 +10,13 @@ import { nanoid } from '@reduxjs/toolkit';
 
 import { ProjectAPI, PageLibraryAPI, DocumentAPI } from '@/api';
 
-import { Spin, message, Tree, Typography, Breadcrumb, Button, Table } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Spin, message, Tree, Typography, Breadcrumb, Button, Table, Dropdown, Menu, Modal } from 'antd';
+import { PlusOutlined, DownOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import DocumentImage from '@/common/images/Document';
 import FolderImage from '@/common/images/Folder';
 
+import { MenuInfo } from 'rc-menu/lib/interface';
 import { DataNode } from 'rc-tree/lib/interface';
 import { GetComponentProps } from 'rc-table/lib/interface';
 import { ColumnType } from 'antd/lib/table/interface';
@@ -69,6 +70,29 @@ function BusinessDocuments(props: IProps) {
   }, [sitePageLibraries]);
 
   /**
+   * 删除一个 Document
+   */
+  const handleDeleteDocument = React.useCallback(async (record: any) => {
+    // todo:: 删除 Document
+  }, []);
+
+  const handleOnClickDeleteDocument = React.useCallback((menuInfo: MenuInfo, record: any) => {
+    const { domEvent } = menuInfo;
+
+    domEvent.stopPropagation();
+    domEvent.preventDefault();
+
+    Modal.confirm({
+      title: t('确认删除？'),
+      content: t('删除数据无法恢复'),
+      okText: t('删除'),
+      cancelText: t('取消'),
+      okButtonProps: { danger: true },
+      onOk: () => handleDeleteDocument(record)
+    });
+  }, []);
+
+  /**
    * 文档表格 Columns 定义
    */
   const tableColumns = React.useMemo<Array<ColumnType<any>>>(() => [{
@@ -82,6 +106,27 @@ function BusinessDocuments(props: IProps) {
       <React.Fragment>
         <Typography.Title level={5}>{title}</Typography.Title>
       </React.Fragment>
+  }, {
+    render: (_, record) => (
+      <Dropdown
+        overlay={(
+          <Menu>
+            <Menu.Item 
+              onClick={info => handleOnClickDeleteDocument(info, record)} 
+              icon={<DeleteOutlined />} 
+              danger
+            >
+              {t('删除')}
+            </Menu.Item>
+          </Menu>
+        )}
+      >
+        <a className={'ant-dropdown-link'} onClick={e => e.stopPropagation()}>
+          {t('更多')} <DownOutlined />
+        </a>
+      </Dropdown>
+    ),
+    width: 100
   }], []);
 
   /**
