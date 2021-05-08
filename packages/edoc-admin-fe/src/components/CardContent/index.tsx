@@ -67,7 +67,7 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
       onClick={() => onClick(item)} 
       className={'card-content-card'}
       extra={renderCardExtra}
-      title={item.name}
+      title={item.projectName}
       hoverable
     >
       <Skeleton loading={props.loading} active>
@@ -77,11 +77,11 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
             <Typography.Paragraph
               ellipsis={{
                 rows: 1,
-                tooltip: <Tooltip title={item.name}>{item.name}</Tooltip>
+                tooltip: <Tooltip title={item.projectName}>{item.projectName}</Tooltip>
               }}
               className={'card-content-cols-title'}
             >
-              {item.name}
+              {item.projectName}
             </Typography.Paragraph>
           )}
           description={(
@@ -89,13 +89,13 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
               className={'card-content-cols-description'}
               ellipsis={{
                 rows: 2,
-                tooltip: <Tooltip title={item.description}>{item.description}</Tooltip>
+                tooltip: <Tooltip title={item.projectDesc}>{item.projectDesc}</Tooltip>
               }}
             >
-              {item.description || '-'}
+              {item.projectDesc || '-'}
             </Typography.Paragraph>
           )}
-          key={item.ID}
+          key={item.id}
         />
       </Skeleton>
     </Card>

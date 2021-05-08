@@ -21,7 +21,7 @@ interface IProps<T extends object = any> {
   }
   total: number;
   loading: boolean;
-  loadData: <T extends { offset: number; limit: number } = any>(query: T) => any;
+  loadData: <T extends { offset: number; limit: number; } & { [name: string]: string } = any>(query: T) => any;
   onCardClick: (record: T) => any;
   onCardDelete: (record: T) => any;
 }
@@ -53,7 +53,10 @@ function CardFilterContent (props: IProps) {
 
     const { offset, limit } = calculatePagination(current, pageSize);
 
-    const queryData = Object.assign({ offset, limit }, filtersData);
+    const queryData: any = Object.assign({ 
+      page: Math.floor(offset / limit) + 1, 
+      size: limit 
+    }, filtersData);
 
     props.loadData(queryData);
   }, [paginationData, props.loadData]);

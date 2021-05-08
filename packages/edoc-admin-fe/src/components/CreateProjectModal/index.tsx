@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, message } from 'antd';
 
 interface IProps {
   visible: boolean;
   onCancel: () => void;
+  onOk: (param: { projectName: string; projectDesc: string }) => Promise<void>;
 }
 
 function CreateProjectModal (props: IProps) {
@@ -59,12 +60,20 @@ function CreateProjectModal (props: IProps) {
       { name: 'description', errors: [] }
     ]);
 
-    // todo:: 发起请求
-    await new Promise<void>(resolve => {
-      setTimeout(() => resolve(), 1500);
-    });
-    setLoading(false);
-    props.onCancel();
+    const requestData = {
+      projectName: name,
+      projectDesc: description
+    };
+
+    try {
+      await props.onOk(requestData);
+      props.onCancel();
+    } catch(err) {
+      message.error(t('创建站点失败'));
+      message.error(err.message || JSON.stringify(err));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

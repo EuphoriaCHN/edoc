@@ -51,6 +51,16 @@ function Platform(props: IProps) {
   }, []);
 
   /**
+   * 新建项目
+   */
+  const handleCreateProject = React.useCallback(async (data: any) => {
+    await ProjectAPI.createProject(data);
+
+    message.success(t('站点已创建'));
+    loadProjectList({ page: 1, size: 8 });
+  }, []); 
+
+  /**
    * 删除项目
    */
   const handleDeleteProject = React.useCallback(async (project: any) => {
@@ -72,7 +82,7 @@ function Platform(props: IProps) {
           className={'platform-header'}
         />
         <CardFilterContent
-          dataSource={projectListData?.list || []}
+          dataSource={projectListData?.data || []}
           headerOptions={{
             inputs: [{
               placeHolder: t('搜索站点'),
@@ -99,6 +109,7 @@ function Platform(props: IProps) {
       <CreateProjectModal
         visible={createProjectModalVisible}
         onCancel={() => setCreateProjectModalVisible(false)}
+        onOk={handleCreateProject}
       />
     </React.Fragment>
   );

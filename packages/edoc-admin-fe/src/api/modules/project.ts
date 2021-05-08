@@ -1,16 +1,21 @@
 import { API } from '../config';
 
 class Project extends API {
-  static PREFIX = '/project';
-  static MOCK_ALL = true;
+  static PREFIX = '/abs/project';
 
   useProjectList = Project.sign({
-    url: '/getProjectList',
+    url: '/limitGet',
     useHooks: true,
+    method: 'post'
   });
 
   getProjectByID = Project.sign({
     url: '/getProjectByID',
+  });
+
+  createProject = Project.sign({
+    url: '/add',
+    method: 'post'
   });
 }
 

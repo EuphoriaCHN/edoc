@@ -6,9 +6,11 @@ import { isArray, each } from 'lodash-es';
 
 // 响应结构
 export type ResponseData<T = any> = {
-  status_code: number;
+  success: boolean;
   data?: T;
-  message?: string;
+  errorMsg?: string;
+  errorCode?: number;
+  total?: number;
 };
 
 // 错误响应结构
@@ -59,6 +61,17 @@ const instance = axios.create(config);
 
 // Axios 请求捕获，针对 get 请求需要序列化 Array 类型的参数
 instance.interceptors.request.use(value => {
+  if (!!value.params) {
+    value.params = {
+      data: value.params
+    }
+  }
+  if (!!value.data) {
+    value.data = {
+      data: value.data
+    }
+  }
+
   if (value.method.toLowerCase() === 'get') {
     const newParams = {};
 
@@ -67,8 +80,6 @@ instance.interceptors.request.use(value => {
     each(old, (val, key) => {
       newParams[key] = isArray(val) ? JSON.stringify(val) : val;
     });
-
-    value.params = newParams;
   }
 
   return value;
@@ -82,22 +93,13 @@ const onAxiosInstanceFulfilled = async (value: AxiosResponse<ResponseData>) => {
     // 不是 200
     return Promise.reject(value);
   }
-  const { data, status_code, message } = value.data;
+  const { data, success, errorMsg, errorCode, total } = value.data;
 
-  switch (status_code) {
-    case STATUS_CODE.SUCCESS:
-      return Promise.resolve(data);
-    case STATUS_CODE.NOT_LOGIN:
-      if (location.pathname !== '/login') {
-        window.location.href = `/login?redirect=${encodeURIComponent(location.href)}`;
-      }
-      return Promise.reject(data);
-    case STATUS_CODE.COMMON_ERROR:
-    default:
-      const mes: string = typeof message === 'string' ? message : JSON.stringify(message);
-      console.error(mes);
-      return Promise.reject({ message: mes, data: value.data });
+  if (!!success) {
+    return Promise.resolve({ data, total });
   }
+
+  return Promise.reject({ message: errorMsg, errorCode });
 };
 
 const onAxiosInstanceRejected = async (error: ResponseError) => {

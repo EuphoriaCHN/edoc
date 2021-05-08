@@ -11,9 +11,9 @@ export interface SignOptionDefault extends AxiosRequestConfig {
 }
 
 const config: SignOptionDefault = {
-  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4004/v2',
+  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://192.168.28.24:21002',
   timeout: 30 * 1000,
-  withCredentials: true,
+  withCredentials: false,
   retry: 1, // 重试 3 次
   retryDelay: 2000, // 重请求延迟
 
