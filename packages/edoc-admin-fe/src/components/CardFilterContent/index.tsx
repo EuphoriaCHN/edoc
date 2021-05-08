@@ -78,6 +78,16 @@ function CardFilterContent (props: IProps) {
     loadData({ current: page });
   }, [loadData]);
 
+  /**
+   * 当删除一个 Card
+   */
+  const handleOnCardDelete = React.useCallback(async (record: any) => {
+    await props.onCardDelete(record);
+
+    setPaginationData({ type: 'current', data: DEFAULT_PAGINATION_DATA.current || 0 });
+    loadData({ current: DEFAULT_PAGINATION_DATA.current });
+  }, [props.onCardDelete]);
+
   const renderEmpty = React.useMemo(() =>
     <Empty
       dataSets={{
@@ -91,7 +101,7 @@ function CardFilterContent (props: IProps) {
     <React.Fragment>
       <CardContent 
         onClick={props.onCardClick} 
-        onDelete={props.onCardDelete}
+        onDelete={handleOnCardDelete}
         dataSource={props.dataSource} 
         colKey={'ID'} 
         loading={props.loading}

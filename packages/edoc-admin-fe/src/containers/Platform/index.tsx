@@ -20,6 +20,7 @@ interface IProps {
 
 function Platform(props: IProps) {
   const [createProjectModalVisible, setCreateProjectModalVisible] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const { t } = useTranslation();
   const _history = useHistory();
@@ -47,7 +48,7 @@ function Platform(props: IProps) {
       project
     }));
 
-    _history.push(`/siteDetail/${project.ID}`);
+    _history.push(`/siteDetail/${project.id}`);
   }, []);
 
   /**
@@ -64,8 +65,19 @@ function Platform(props: IProps) {
    * 删除项目
    */
   const handleDeleteProject = React.useCallback(async (project: any) => {
-    // todo:: 删除项目
-    console.log(project);
+    try {
+      setLoading(true);
+
+      await ProjectAPI.deleteProject({ id: project.id });
+
+      message.success(t('项目已删除'));
+      loadProjectList({ page: 1, size: 8 });
+    } catch (err) {
+      message.error(t('删除项目失败'));
+      message.error(err.message || JSON.stringify(err));
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   return (
@@ -99,7 +111,7 @@ function Platform(props: IProps) {
           empty={{
             description: t('暂无数据')
           }}
-          loading={projectListLoading}
+          loading={projectListLoading || loading}
           total={projectListData?.total || 0}
           loadData={loadProjectList}
           onCardClick={handleCardClick}

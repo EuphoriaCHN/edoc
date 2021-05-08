@@ -17,6 +17,11 @@ class Project extends API {
     url: '/add',
     method: 'post'
   });
+
+  deleteProject = Project.sign({
+    url: '/delete',
+    method: 'delete'
+  });
 }
 
 export default new Project();

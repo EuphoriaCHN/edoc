@@ -61,11 +61,6 @@ const instance = axios.create(config);
 
 // Axios 请求捕获，针对 get 请求需要序列化 Array 类型的参数
 instance.interceptors.request.use(value => {
-  if (!!value.params) {
-    value.params = {
-      data: value.params
-    }
-  }
   if (!!value.data) {
     value.data = {
       data: value.data
@@ -278,11 +273,13 @@ export abstract class API {
     const request: Signature<T, R> = async function (params) {
       // 参数格式化
       switch (requestOption.method.toLowerCase()) {
-        case 'get':
-          requestOption.params = params;
-          break;
         case 'post':
           requestOption.data = params;
+          break;
+        case 'get':
+        case 'delete':
+        case 'put':
+          requestOption.params = params;
           break;
       }
 

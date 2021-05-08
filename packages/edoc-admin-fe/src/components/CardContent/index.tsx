@@ -32,7 +32,7 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
 
   const { t } = useTranslation();
 
-  const handleOnDeleteItem = React.useCallback((info: MenuInfo) => {
+  const handleOnDeleteItem = (info: MenuInfo) => {
     const { domEvent } = info;
 
     domEvent.stopPropagation();
@@ -46,7 +46,7 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
       onCancel: () => {},
       okButtonProps: { danger: true }
     });
-  }, [onDelete, item]);
+  };
 
   const renderCardExtra = React.useMemo(() => (
     <Dropdown
@@ -60,7 +60,7 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
         {t('更多')} <DownOutlined />
       </a>
     </Dropdown>
-  ), []);
+  ), [handleOnDeleteItem]);
 
   return (
     <Card 
