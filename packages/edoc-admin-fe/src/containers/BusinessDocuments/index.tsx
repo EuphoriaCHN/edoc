@@ -155,8 +155,8 @@ function BusinessDocuments(props: IProps) {
     setLoading(true);
 
     try {
-      if (!projectState.project?.ID) {
-        const projectData = await ProjectAPI.getProjectByID({ siteID });
+      if (!projectState.project?.id) {
+        const projectData = await ProjectAPI.getProjectByID({ id: siteID });
         _dispatch(setProject({
           id: nanoid(),
           project: projectData

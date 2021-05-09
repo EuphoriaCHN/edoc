@@ -43,7 +43,7 @@ export type ApiHooksConfig<T> = {
 export type UseHooksReturns<T = any, R = any> = (configs?: ApiHooksConfig<R>, _deps?: any[]) => HookRequest<T, R>;
 
 export type HookRequest<T, R> = {
-  data: R;
+  data: { data: R, total: number | null };
   loading: boolean;
   error: Error | null;
   start: Signature<T, R>;
@@ -54,7 +54,7 @@ export type HookRequest<T, R> = {
 // 范型 R：响应数据结构
 // 因为 Axios Response 最后会被【去壳】
 // 所以这里应当返回的是 Promise<R>
-export type Signature<T = any, R = any> = (param?: T, options?: RequestExtraOption) => Promise<R>;
+export type Signature<T = any, R = any> = (param?: T, options?: RequestExtraOption) => Promise<{ data: R, total: number | null }>;
 
 // 构造 Axios 实例
 const instance = axios.create(config);
@@ -188,7 +188,7 @@ export abstract class API {
         }
       }, deps);
 
-      return { data, loading, error, start };
+      return { data: { data: data?.data, total: data?.total }, loading, error, start };
     }
   }
 

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, message } from 'antd';
 
 interface IProps {
   visible: boolean;
   onCancel: () => void;
+  onOk: (params: { pageName: string; pageDesc: string }) => Promise<void>;
 }
 
 function CreatePageLibraryModal (props: IProps) {
@@ -59,12 +60,20 @@ function CreatePageLibraryModal (props: IProps) {
       { name: 'description', errors: [] }
     ]);
 
-    // todo:: 发起请求
-    await new Promise<void>(resolve => {
-      setTimeout(() => resolve(), 1500);
-    });
-    setLoading(false);
-    props.onCancel();
+    const requestData = {
+      pageName: name,
+      pageDesc: description
+    };
+
+    try {
+      await props.onOk(requestData);
+      props.onCancel();
+    } catch (err) {
+      message.error(err.message || JSON.stringify(err));
+      message.error(t('新建页面库失败'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -74,6 +83,7 @@ function CreatePageLibraryModal (props: IProps) {
       okText={t('确定')}
       cancelText={t('取消')}
       title={t('新建页面库')}
+      onOk={handleOnOk}
       okButtonProps={{ loading }}
       cancelButtonProps={{ disabled: loading }}
       maskClosable={!loading}

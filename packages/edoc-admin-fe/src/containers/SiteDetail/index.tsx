@@ -43,8 +43,8 @@ function SiteDetail(props: IProps) {
     path: '/',
     breadcrumbName: t('首页'),
   }, {
-    path: `/siteDetail/${projectState.project?.ID || 0}`,
-    breadcrumbName: projectState.project?.name || t('加载中...')
+    path: `/siteDetail/${projectState.project?.id || 0}`,
+    breadcrumbName: projectState.project?.projectName || t('加载中...')
   }], [projectState.project]);
 
   /**
@@ -63,11 +63,11 @@ function SiteDetail(props: IProps) {
     setLoading(true);
     setIsError(false);
     try {
-      if (!projectState.project.ID) {
-        const projectData = await ProjectAPI.getProjectByID({ siteID });
+      if (!projectState.project.id) {
+        const projectData = await ProjectAPI.getProjectByID({ id: siteID });
         _dispatch(setProject({
           id: nanoid(),
-          project: projectData
+          project: projectData?.data
         }));
       }
     } catch (err) {

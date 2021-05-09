@@ -124,7 +124,10 @@ function CardFilterContent (props: IProps) {
 
     const options = {
       inputs: inputs.map(item => {
-        const onChange = item.onChange || (() => { });
+        const onChange = typeof item.onChange === 'function' ? (...args: any[]) => {
+          setPaginationData({ type: 'current', data: DEFAULT_PAGINATION_DATA.current || 0 });
+          item.onChange && item.onChange(...args);
+        } : (() => { });
         return Object.assign({}, item, {
           onChange: packageOnFilterChange(onChange)
         });

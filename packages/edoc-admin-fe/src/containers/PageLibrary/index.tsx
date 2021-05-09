@@ -20,6 +20,7 @@ interface IProps {
 }
 
 function PageLibrary(props: IProps) {
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [createPageLibraryModalVisible, setCreatePageLibraryModalVisible] = React.useState<boolean>(false);
 
   const { t } = useTranslation();
@@ -43,15 +44,40 @@ function PageLibrary(props: IProps) {
   }, [siteID]);
 
   const loadData = React.useCallback((queryData: any) => {
-    loadPageLibrary(Object.assign({ siteID }, queryData));
+    loadPageLibrary(Object.assign({ ownerProjectId: siteID }, queryData || {}));
   }, [siteID]);
 
   /**
    * 删除页面库
    */
   const handleDeleteBusiness = React.useCallback(async (business: any) => {
-    // todo:: 删除页面库
+    try {
+      setLoading(true);
+      await PageLibraryAPI.deletePageLibrary({ id: business.id });
+
+      message.success(t('页面库已删除'));
+      loadPageLibrary({ page: 1, size: 8 });
+    } catch (err) {
+      message.error(t('删除页面库失败'));
+      message.error(err.message || JSON.stringify(err));
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  /**
+   * 新增页面库
+   */
+  const handleCreateBusiness = React.useCallback(async (params: { pageName: string; pageDesc: string }) => {
+    await PageLibraryAPI.createPageLibrary({
+      ownerProjectId: siteID,
+      pageName: params.pageName,
+      pageDesc: params.pageDesc
+    });
+
+    message.success(t('站点已创建'));
+    loadPageLibrary({ page: 1, size: 8 });
+  }, [siteID]);
 
   React.useEffect(() => {
     if (!siteID) {
@@ -63,7 +89,7 @@ function PageLibrary(props: IProps) {
   return (
     <React.Fragment>
       <CardFilterContent
-        dataSource={pageLibrary?.list || []}
+        dataSource={pageLibrary?.data || []}
         headerOptions={{
           inputs: [{
             placeHolder: t('搜索页面库'),
@@ -80,7 +106,7 @@ function PageLibrary(props: IProps) {
         empty={{
           description: t('暂无数据')
         }}
-        loading={pageLibraryLoading}
+        loading={pageLibraryLoading || loading}
         total={pageLibrary?.total || 0}
         loadData={loadData}
         onCardClick={onCardClick}
@@ -89,6 +115,7 @@ function PageLibrary(props: IProps) {
       <CreatePageLibraryModal
         visible={createPageLibraryModalVisible}
         onCancel={setCreatePageLibraryModalVisible.bind(this, false)}
+        onOk={handleCreateBusiness}
       />
     </React.Fragment>
   );

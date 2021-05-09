@@ -2,9 +2,9 @@ import { createSlice, SliceCaseReducers } from '@reduxjs/toolkit';
 
 export interface ProjectStore {
   project: {
-    name: string;
-    ID: number;
-    description?: string;
+    projectName: string;
+    id: number;
+    projectDesc?: string;
   };
   pageLibrary: {
     name: string;
@@ -17,9 +17,9 @@ export const projectSlice = createSlice<ProjectStore, SliceCaseReducers<ProjectS
   name: 'project',
   initialState: {
     project: {
-      name: '',
-      ID: 0,
-      description: ''
+      projectName: '',
+      id: 0,
+      projectDesc: ''
     },
     pageLibrary: {
       name: '',

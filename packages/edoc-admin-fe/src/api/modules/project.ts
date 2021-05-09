@@ -10,7 +10,7 @@ class Project extends API {
   });
 
   getProjectByID = Project.sign({
-    url: '/getProjectByID',
+    url: '/getById',
   });
 
   createProject = Project.sign({

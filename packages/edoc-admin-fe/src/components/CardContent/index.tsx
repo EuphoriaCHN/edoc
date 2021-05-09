@@ -48,7 +48,7 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
     });
   };
 
-  const renderCardExtra = React.useMemo(() => (
+  const renderCardExtra = React.useMemo(() => props.loading ? null : (
     <Dropdown
       overlay={(
         <Menu>
@@ -60,14 +60,14 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
         {t('更多')} <DownOutlined />
       </a>
     </Dropdown>
-  ), [handleOnDeleteItem]);
+  ), [handleOnDeleteItem, props.loading]);
 
   return (
     <Card 
       onClick={() => onClick(item)} 
       className={'card-content-card'}
       extra={renderCardExtra}
-      title={item.projectName}
+      title={item.projectName || item.pageName}
       hoverable
     >
       <Skeleton loading={props.loading} active>
@@ -77,11 +77,11 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
             <Typography.Paragraph
               ellipsis={{
                 rows: 1,
-                tooltip: <Tooltip title={item.projectName}>{item.projectName}</Tooltip>
+                tooltip: <Tooltip title={item.projectName || item.pageName}>{item.projectName || item.pageName}</Tooltip>
               }}
               className={'card-content-cols-title'}
             >
-              {item.projectName}
+              {item.projectName || item.pageName}
             </Typography.Paragraph>
           )}
           description={(
@@ -89,10 +89,10 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
               className={'card-content-cols-description'}
               ellipsis={{
                 rows: 2,
-                tooltip: <Tooltip title={item.projectDesc}>{item.projectDesc}</Tooltip>
+                tooltip: <Tooltip title={item.projectDesc || item.pageDesc}>{item.projectDesc || item.pageDesc}</Tooltip>
               }}
             >
-              {item.projectDesc || '-'}
+              {item.projectDesc || item.pageDesc || '-'}
             </Typography.Paragraph>
           )}
           key={item.id}
