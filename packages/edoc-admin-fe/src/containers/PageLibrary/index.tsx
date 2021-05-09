@@ -40,8 +40,8 @@ function PageLibrary(props: IProps) {
       pageLibrary
     }));
 
-    _history.push(`/siteDetail/${siteID}/${pageLibrary.ID}`);
-  }, [siteID]);
+    _history.push(`/siteDetail/${pageLibrary.ownerProjectId}/${pageLibrary.id}`);
+  }, []);
 
   const loadData = React.useCallback((queryData: any) => {
     loadPageLibrary(Object.assign({ ownerProjectId: siteID }, queryData || {}));

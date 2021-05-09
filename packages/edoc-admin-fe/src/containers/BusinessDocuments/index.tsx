@@ -48,37 +48,59 @@ function BusinessDocuments(props: IProps) {
     data: sitePageLibraries,
     start: loadPageLibrary,
     loading: pageLibraryLoading
-  } = PageLibraryAPI.usePageLibraryList({ manual: true });
-
-  const {
-    data: documentsList,
-    start: loadDocumentList,
-    loading: documentsListLoading
-  } = DocumentAPI.useDocumentList({ manual: true });
+  } = PageLibraryAPI.useAllPageLibraryBySiteID({ manual: true });
 
   /**
    * 页面库树节点数据
    */
   const librariesTreeData = React.useMemo(() => {
-    const libraries = sitePageLibraries?.list || [];
+    const libraries = sitePageLibraries?.data || [];
 
     if (!libraries.length) {
       return null;
     }
 
     return libraries.map((item: any): DataNode => ({
-      title: item.name,
-      key: item.ID,
+      title: item.pageName,
+      key: item.id,
     }));
   }, [sitePageLibraries]);
+
+  /**
+   * 加载文档数据
+   */
+  const loadDocumentData = React.useCallback(async (params: any) => {
+    try {
+      const { data } = await DocumentAPI.getDocumentList(params);
+      if (!data || !Array.isArray(data) || !data.length) {
+        setTableData([]);
+      } else {
+        setTableData(data);
+      }
+    } catch (err) {
+      message.error(err.message || JSON.stringify(err));
+      message.error(t('获取文档失败'));
+      setTableData([]);
+    }
+  }, []);
 
   /**
    * 删除一个 Document
    */
   const handleDeleteDocument = React.useCallback(async (record: any) => {
-    // todo:: 删除 Document
+    const { ownerDirId, ownerPageId } = record;
+    return DocumentAPI.deleteDocument({ id: record.id }).then(res => {
+      message.success(!!record.isDir ? t('文件夹已删除') : t('文档已删除'));
+      loadDocumentData({ ownerDirId, ownerPageId });
+    }, err => {
+      message.error(err.message || JSON.stringify(err));
+      message.error(!!record.isDir ? t('删除文件夹失败') : t('删除文档失败'));
+    });
   }, []);
 
+  /**
+   * 删除 Document
+   */
   const handleOnClickDeleteDocument = React.useCallback((menuInfo: MenuInfo, record: any) => {
     const { domEvent } = menuInfo;
 
@@ -105,18 +127,18 @@ function BusinessDocuments(props: IProps) {
     width: 52
   }, {
     className: 'document-table-title',
-    render: (_, { title }) =>
+    render: (_, { documentName }) =>
       <React.Fragment>
-        <Typography.Title level={5}>{title}</Typography.Title>
+        <Typography.Title level={5}>{documentName}</Typography.Title>
       </React.Fragment>
   }, {
     render: (_, record) => (
       <Dropdown
         overlay={(
           <Menu>
-            <Menu.Item 
-              onClick={info => handleOnClickDeleteDocument(info, record)} 
-              icon={<DeleteOutlined />} 
+            <Menu.Item
+              onClick={info => handleOnClickDeleteDocument(info, record)}
+              icon={<DeleteOutlined />}
               danger
             >
               {t('删除')}
@@ -139,12 +161,14 @@ function BusinessDocuments(props: IProps) {
     onClick: event => {
       if (!record.isDir) {
         // 跳转到编辑页面
-        _history.push(`/siteDetail/${siteID}/${pageLibraryID}/${record.ID}`);
+        _history.push(`/siteDetail/${siteID}/${pageLibraryID}/${record.id}`);
         return;
       }
-      // 点击了文件夹，需要进入
       setPathStack(prev => prev.concat([record]));
-      setTableData(record.children);
+
+      // 点击了文件夹，需要进入
+      // 再次搜索
+      loadDocumentData({ ownerDirId: record.id });
     }
   }), [siteID, pageLibraryID]);
 
@@ -159,14 +183,14 @@ function BusinessDocuments(props: IProps) {
         const projectData = await ProjectAPI.getProjectByID({ id: siteID });
         _dispatch(setProject({
           id: nanoid(),
-          project: projectData
+          project: projectData?.data
         }));
       }
-      if (!projectState.pageLibrary?.ID) {
-        const pageLibraryData = await PageLibraryAPI.getPageLibraryByID({ pageLibraryID });
+      if (!projectState.pageLibrary?.id) {
+        const pageLibraryData = await PageLibraryAPI.getPageLibraryByID({ id: pageLibraryID });
         _dispatch(setPageLibrary({
           id: nanoid(),
-          pageLibrary: pageLibraryData
+          pageLibrary: pageLibraryData?.data
         }));
       }
     } catch (err) {
@@ -188,25 +212,49 @@ function BusinessDocuments(props: IProps) {
     setSelectedTreeNode(selectedNodes[0]);
   }, []);
 
-  React.useEffect(() => {
-    setIsError(false);
-    if (!siteID || !pageLibraryID) {
-      message.error(t('错误路由参数'));
-      setIsError(true);
+  const initData = React.useCallback(async () => {
+    if (isNaN(parseInt(siteID)) || isNaN(parseInt(pageLibraryID))) {
+      _history.push('/notFound');
       return;
     }
-    loadData();
-    loadPageLibrary({ siteID, type: 'all' });
+
+    try {
+      await loadData();
+      const value = await loadPageLibrary({ id: siteID });
+
+      // 树节点数据发生变化，默认设置第一个
+      if (value?.data && Array.isArray(value.data) && !!value.data.length) {
+        setSelectedTreeNode({ title: value.data[0].pageName, key: value.data[0].id });
+      }
+    } catch (err) {
+      setIsError(true);
+    }
   }, []);
 
   /**
-   * 树节点数据发生变化，默认设置第一个
+   * 创建文档
    */
+  const handleCreateDocument = React.useCallback(async (params: any) => {
+    console.log(pathStack);
+    return;
+
+    const requestData = Object.assign({
+      ownerProjectId: parseInt(siteID),
+      ownerPageId: parseInt(pageLibraryID),
+      ownerDirId: null, // todo ???
+    }, params);
+
+    await DocumentAPI.createDocument(requestData);
+
+    loadDocumentData({
+      ownerPageId: requestData.ownerPageId,
+      ownerDirId: requestData.ownerDirId
+    });
+  }, [pathStack]);
+
   React.useEffect(() => {
-    if (Array.isArray(librariesTreeData) && !!librariesTreeData.length) {
-      setSelectedTreeNode(librariesTreeData[0]);
-    }
-  }, [librariesTreeData]);
+    initData();
+  }, []);
 
   /**
    * 被选中的树节点发生变化（切换页面库），需要拉取当前页面库下的所有数据
@@ -217,21 +265,10 @@ function BusinessDocuments(props: IProps) {
     }
     setPathStack([selectedTreeNode]);
 
-    loadDocumentList({
-      pageLibraryID: selectedTreeNode.key,
+    loadDocumentData({
+      ownerPageId: selectedTreeNode.key,
     });
   }, [selectedTreeNode]);
-
-  /**
-   * 当前页面库文档结构发生变化（切换页面库导致），需要重刷 table 数据
-   */
-  React.useEffect(() => {
-    if (!Array.isArray(documentsList) || !documentsList.length) {
-      setTableData([]);
-    } else {
-      setTableData(documentsList);
-    }
-  }, [documentsList]);
 
   /**
    * 渲染页面库树节点
@@ -264,22 +301,13 @@ function BusinessDocuments(props: IProps) {
     <div className={'business-documents-list'}>
       <header>
         <Breadcrumb className={'business-documents-list-breadcrumb'} itemRender={breadcrumbItemRender}>
-          {pathStack.map((item, index) =>
-            <Breadcrumb.Item
-              key={index}
-              onClick={() => {
-                // 如果 index === 0，则展示页面库全部数据
-                if (index === 0) {
-                  setPathStack(prev => [prev[0]]);
-                  setTableData(documentsList);
-                }
-                // 反之，展示 pathStack 对应的数据
-                // todo:: index 只可能 === 0，目前 renderer 不支持二级目录
-              }}
-            >
-              {item.title}
-            </Breadcrumb.Item>
-          )}
+          {pathStack.map((item, index) => (
+              <Breadcrumb.Item
+                key={index}
+              >
+                {item.title || item.documentName}
+              </Breadcrumb.Item>
+            ))}
         </Breadcrumb>
         <div>
           <Button
@@ -303,6 +331,7 @@ function BusinessDocuments(props: IProps) {
         }}
         rowClassName={'document-table-row'}
         onRow={tableOnRow}
+        // loading={documentsListLoading}
       />
     </div>
   ), [selectedTreeNode, tableData, pathStack, tableOnRow]);
@@ -314,11 +343,11 @@ function BusinessDocuments(props: IProps) {
     <header className={'business-documents-header'}>
       <Breadcrumb itemRender={breadcrumbItemRender}>
         <Breadcrumb.Item href={'/'}>{t('首页')}</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/siteDetail/${projectState.project?.ID || 0}`}>
-          {projectState.project?.name || t('加载中...')}
+        <Breadcrumb.Item href={`/siteDetail/${projectState.project?.id || 0}`}>
+          {projectState.project?.projectName || t('加载中...')}
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          {projectState.pageLibrary?.name || t('加载中...')}
+          {projectState.pageLibrary?.pageName || t('加载中...')}
         </Breadcrumb.Item>
       </Breadcrumb>
     </header>
@@ -347,9 +376,11 @@ function BusinessDocuments(props: IProps) {
           {renderContent}
         </Spin>
       </div>
-      <CreateDocumentModal 
-        visible={createDocumentModalVisible} 
+      <CreateDocumentModal
+        visible={createDocumentModalVisible}
         onCancel={setCreateDocumentModalVisible.bind(this, false)}
+        onOk={handleCreateDocument}
+        disabledCreateDir={pathStack.length > 1}
       />
     </React.Fragment>
   );

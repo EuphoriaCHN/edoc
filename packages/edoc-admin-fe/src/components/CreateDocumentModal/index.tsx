@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Form, Modal, Input, Switch } from 'antd';
+import { Form, Modal, Input, Switch, message, Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
 interface IProps {
     visible: boolean;
     onCancel: () => void;
+    onOk: (params: any) => Promise<void>;
+    disabledCreateDir?: boolean;
 }
 
 function CreateDocumentModal(props: IProps) {
@@ -45,12 +48,22 @@ function CreateDocumentModal(props: IProps) {
       
         form.setFields([{ name: 'name', errors: [] }]);
 
-        // todo:: 发起请求
-        await new Promise<void>(resolve => {
-          setTimeout(() => resolve(), 1500);
-        });
-        setLoading(false);
-        props.onCancel();
+        const requestData = {
+          isDir,
+          documentName: name,
+          documentDesc: ''
+        };
+
+        try {
+          await props.onOk(requestData);
+          message.success(!!isDir ? t('文件夹已创建') : t('文档已创建'));
+          props.onCancel();
+        } catch (err) {
+          message.error(t('创建文档失败'));
+          message.error(err.message || JSON.stringify(err));
+        } finally {
+          setLoading(false);
+        }
     };
     
     return (
@@ -73,8 +86,14 @@ function CreateDocumentModal(props: IProps) {
                 >
                     <Input placeholder={t('请输入文档名称')} />
                 </Form.Item>
-                <Form.Item label={'是否为文件夹'} name={'isDir'}>
-                    <Switch />
+                <Form.Item 
+                  label={t('是否为文件夹')}
+                  name={'isDir'}
+                >
+                    <Switch disabled={!!props.disabledCreateDir} />
+                    {!!props.disabledCreateDir ? (
+                      <Tooltip title={t('仅支持二级目录')}><QuestionCircleOutlined style={{ display: 'inline-block', marginLeft: 8 }} /></Tooltip>
+                    ) : null}
                 </Form.Item>
             </Form>
         </Modal>

@@ -10,7 +10,13 @@ class PageLibrary extends API {
   });
 
   getPageLibraryByID = PageLibrary.sign({
-    url: '/getPageLibraryByID',
+    url: '/getById',
+  });
+
+  useAllPageLibraryBySiteID = PageLibrary.sign({
+    url: '/getAll',
+    method: 'post',
+    useHooks: true
   });
 
   createPageLibrary = PageLibrary.sign({

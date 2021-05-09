@@ -7,9 +7,9 @@ export interface ProjectStore {
     projectDesc?: string;
   };
   pageLibrary: {
-    name: string;
-    ID: number;
-    description?: string;
+    pageName: string;
+    id: number;
+    pageDesc?: string;
   };
 }
 
@@ -22,9 +22,9 @@ export const projectSlice = createSlice<ProjectStore, SliceCaseReducers<ProjectS
       projectDesc: ''
     },
     pageLibrary: {
-      name: '',
-      ID: 0,
-      description: ''
+      pageName: '',
+      id: 0,
+      pageDesc: ''
     }
   },
   reducers: {
