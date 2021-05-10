@@ -24,6 +24,8 @@ import { ColumnType } from 'antd/lib/table/interface';
 
 import './index.scss';
 
+const DEFAULT_OWNER_DIR_ID = 0;
+
 interface IProps {
 
 }
@@ -70,8 +72,9 @@ function BusinessDocuments(props: IProps) {
    * 加载文档数据
    */
   const loadDocumentData = React.useCallback(async (params: any) => {
+    setLoading(true);
     try {
-      const { data } = await DocumentAPI.getDocumentList(params);
+      const { data } = await DocumentAPI.getDocumentList(Object.assign({ ownerDirId: DEFAULT_OWNER_DIR_ID }, params));
       if (!data || !Array.isArray(data) || !data.length) {
         setTableData([]);
       } else {
@@ -81,6 +84,8 @@ function BusinessDocuments(props: IProps) {
       message.error(err.message || JSON.stringify(err));
       message.error(t('获取文档失败'));
       setTableData([]);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -235,13 +240,12 @@ function BusinessDocuments(props: IProps) {
    * 创建文档
    */
   const handleCreateDocument = React.useCallback(async (params: any) => {
-    console.log(pathStack);
-    return;
+    const ownerDirId = pathStack.length > 1 ? pathStack[pathStack.length - 1].id : DEFAULT_OWNER_DIR_ID;
 
     const requestData = Object.assign({
       ownerProjectId: parseInt(siteID),
       ownerPageId: parseInt(pageLibraryID),
-      ownerDirId: null, // todo ???
+      ownerDirId,
     }, params);
 
     await DocumentAPI.createDocument(requestData);
@@ -302,12 +306,18 @@ function BusinessDocuments(props: IProps) {
       <header>
         <Breadcrumb className={'business-documents-list-breadcrumb'} itemRender={breadcrumbItemRender}>
           {pathStack.map((item, index) => (
-              <Breadcrumb.Item
-                key={index}
-              >
-                {item.title || item.documentName}
-              </Breadcrumb.Item>
-            ))}
+            <Breadcrumb.Item
+              key={index}
+              onClick={() => {
+                if (index === 0) {
+                  setPathStack(prev => [prev[0]]);
+                  loadDocumentData({ ownerPageId: item.key });
+                }
+              }}
+            >
+              {item.title || item.documentName}
+            </Breadcrumb.Item>
+          ))}
         </Breadcrumb>
         <div>
           <Button
@@ -331,7 +341,7 @@ function BusinessDocuments(props: IProps) {
         }}
         rowClassName={'document-table-row'}
         onRow={tableOnRow}
-        // loading={documentsListLoading}
+      // loading={documentsListLoading}
       />
     </div>
   ), [selectedTreeNode, tableData, pathStack, tableOnRow]);

@@ -20,6 +20,20 @@ class DocumentAPI extends API {
     method: 'delete',
     url: '/delete'
   });
+
+  getLatestContent = DocumentAPI.sign({
+    url: '/getLatestContent'
+  });
+
+  saveDocumentContent = DocumentAPI.sign({
+    url: '/saveContent',
+    method: 'post',
+  });
+
+  publishDocument = DocumentAPI.sign({
+    url: '/deployed',
+    method: 'put'
+  });
 }
 
 export default new DocumentAPI();

@@ -1,6 +1,11 @@
 import { createElement } from 'react';
 import { Link } from 'react-router-dom';
 
+import prettier from 'prettier/standalone';
+import prettierMarkdown from 'prettier/parser-markdown';
+import prettierHTML from 'prettier/parser-html';
+import prettierJS from 'prettier/parser-babel';
+
 import { Route as BreadcrumbRoute } from 'antd/lib/breadcrumb/Breadcrumb';
 
 export function calculatePagination (current: number, pageSize: number) {
@@ -21,4 +26,17 @@ export function breadcrumbItemRender (
   return last
     ? createElement('span', {}, route.breadcrumbName)
     : createElement(Link, { to: route.path }, route.breadcrumbName);
+}
+
+/**
+ * 格式化 MDX 代码
+ * 
+ * @throws {SyntaxError}
+ */
+export function prettierMDX(content: string): string {
+  const prettierRes = prettier.format(content, {
+    parser: 'mdx',
+    plugins: [prettierMarkdown, prettierHTML, prettierJS]
+  });
+  return prettierRes;
 }
