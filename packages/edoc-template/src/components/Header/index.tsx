@@ -26,7 +26,7 @@ function Header(props: IProps) {
   const handleSelectBusiness = React.useCallback((info: SelectInfo) => {
     const { selectedKeys } = info;
     if (!!selectedKeys && selectedKeys.length === 1) {
-      _history.push(`${Edoc.prefix}/content/${selectedKeys[0]}`);
+      _history.push(`${Edoc.prefix}content/${selectedKeys[0]}`);
 
       setSelectBusiness(selectedKeys as string[]);
     }

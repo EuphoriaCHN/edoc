@@ -14,7 +14,7 @@ import './index.scss';
 
 function LayoutWrapper(props: React.PropsWithChildren<{}>) {
   const siteID = useSiteID();
-  const { data: businesses, loading } = useBusinesses({ projectID: siteID }, []);
+  const { data: businesses, loading } = useBusinesses({ id: siteID }, []);
 
   return (
     <AppContext.Provider

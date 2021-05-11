@@ -1,9 +1,11 @@
 import RequestCore from './core';
 
-export default function (method: string, bundling: boolean = false) {
+import { Method } from 'axios';
+
+export default function (url: string, method: Method = 'GET') {
     return async function (req: any = {}): ReturnType<typeof fetch> {
         try {
-            const res = await RequestCore(method, req, bundling);
+            const res = await RequestCore(url, req, method);
 
             return res.data;
         } catch (err) {

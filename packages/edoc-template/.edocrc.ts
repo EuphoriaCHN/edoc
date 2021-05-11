@@ -1,4 +1,5 @@
 export default {
     AK: 'fuck',
-    prefix: '/'
+    prefix: '/',
+    projectID: 1,
 };

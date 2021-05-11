@@ -2,7 +2,7 @@ import { GetDocuments } from './api';
 import useRequest, { UseRequestConfig } from './api/useRequest';
 
 export default function(
-    { pageId }: { pageId?: number } = {},
+    { id }: { id?: number } = {},
     useDeps: any[] = [],
     useConfig: UseRequestConfig = {}
 ) {
@@ -15,8 +15,8 @@ export default function(
     }
 
     return useRequest(
-        (manualParams: any) => GetDocuments(manualParams || { pageId }),
-        [pageId, ...deps],
+        (manualParams: any) => GetDocuments(manualParams || { id }),
+        [id, ...deps],
         {
             initialData: [],
             transform: _ => _,

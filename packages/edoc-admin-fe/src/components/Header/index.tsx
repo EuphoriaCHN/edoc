@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'umi';
 
 import { Layout, Menu, Typography } from 'antd';
 
-import Logo from '@/common/images/logo.png';
+import Logo from '@/common/images/Logo.png';
 
 import './index.scss';
 

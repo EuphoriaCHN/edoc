@@ -1,5 +1,5 @@
 import request from './request';
 
-export const GetBusinesses = request('getBusinessByProjectID');
-export const GetDocuments = request('getBusinessDocuments');
-export const GetDocumentContent = request('getDocumentContent');
+export const GetBusinesses = request('abs/page/getAll', 'POST');
+export const GetDocuments = request('abs/doc/getDocTreeByOwnerPageId');
+export const GetDocumentContent = request('abs/doc/getDeployedContentByDocId');

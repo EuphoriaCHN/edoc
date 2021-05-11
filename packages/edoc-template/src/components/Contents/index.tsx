@@ -24,12 +24,12 @@ function Contents(props: IProps) {
     if (!documentID) {
       return;
     }
-    start({ documentID });
+    start({ id: documentID });
   }, [documentID]);
 
   return (
     <Layout.Content className={'content-area'}>
-      <Renderer markdown={(data || {}).content || ''} components={Object.assign({}, override)} />
+      <Renderer markdown={data || ''} components={Object.assign({}, override)} />
     </Layout.Content>
   );
 }

@@ -1,0 +1,38 @@
+.loading {
+    width: 100vw;
+    height: calc(100vh - 121px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    > img {
+        width: 150px;
+    }
+
+    &-text {
+        position: relative;
+        margin-top: 8px;
+        font-size: 24px;
+        letter-spacing: 8px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            height: 100%;
+            top: 0;
+            right: 0;
+            background-color: #fff;
+            animation: LoadingTextAnimation linear 1.5s infinite;
+        }
+    }
+}
+
+@keyframes LoadingTextAnimation {
+    from {
+        width: 50px;
+    }
+    to {
+        width: 0;
+    }
+}

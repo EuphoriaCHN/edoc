@@ -2,11 +2,12 @@
   "private": true,
   "scripts": {
     "start": "umi dev",
-    "build": "umi build",
+    "build": "./build.sh",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "test:pro": "node ./__tests__/index.js"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -24,6 +25,7 @@
     "@ant-design/pro-layout": "^6.5.0",
     "@reduxjs/toolkit": "1.5.1",
     "@umijs/preset-react": "1.x",
+    "ali-oss": "^6.15.2",
     "axios": "^0.21.1",
     "edoc-mdx-renderer": "0.0.9",
     "edoc-webpack-plugin": "0.0.8",

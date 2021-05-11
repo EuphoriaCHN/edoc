@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Tooltip, Card, Typography, Skeleton, Row, Col, Avatar, Dropdown, Menu, Modal } from 'antd';
 import { DownOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import Logo from '@/common/images/logo.png';
+import Logo from '@/common/images/Logo.png';
 
 import { MenuInfo } from 'rc-menu/lib/interface';
 

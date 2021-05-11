@@ -1,18 +1,26 @@
-import axios from 'axios';
+import axios, { Method, AxiosRequestConfig } from 'axios';
 
-const prefix = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:9091/mock/14';
+// const prefix = 'http://localhost:9091/mock/14';
+const prefix = 'http://118.31.53.93:21002';
 
-export default async function requestCore<T extends any = any>(key: string, req: any, bundling: boolean = false): Promise<T> {
-    return axios.request({
+export default async function requestCore<T extends any = any>(key: string, req: any, method: Method = 'GET'): Promise<T> {
+    const requestParams: AxiosRequestConfig = {};
+
+    if (method.toLowerCase() === 'post') {
+        requestParams.data = req;
+    } else {
+        requestParams.params = req;
+    }
+
+    return axios.request(Object.assign({
         url: `${prefix}/${key}`,
-        params: req,
-        method: 'GET',
+        method: method,
         headers: {
             'X-Require-Node': 'true',
             'Content-Type': 'application/json'
         },
         withCredentials: false,
-    }).then(res => {
+    }, requestParams)).then(res => {
         if (res.status !== 200) {
             throw res;
         }

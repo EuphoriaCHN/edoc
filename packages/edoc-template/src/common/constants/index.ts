@@ -1,3 +1,3 @@
 export const REGEXPS = {
-  splitIDs: new RegExp(`^${Edoc.prefix}/content/(\\d+)(?:\/(\\d+))?$`)
+  splitIDs: new RegExp(`^${Edoc.prefix}content/(\\d+)(?:\/(\\d+))?$`)
 };

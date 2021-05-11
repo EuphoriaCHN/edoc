@@ -8,7 +8,7 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { 
+    {
       component: '@/layouts/index',
       path: '*',
       routes: [
@@ -29,10 +29,18 @@ export default defineConfig({
     config.plugin('edoc').use(new EdocWebpackPlugin());
 
     config.module
-    .rule('edoc-editor-preset-mdx-loader')
-    .test(/\.mdx?$/)
-    .use('raw-loader')
-    .loader('raw-loader')
-    .end();
-  }
+      .rule('edoc-editor-preset-mdx-loader')
+      .test(/\.mdx?$/)
+      .use('raw-loader')
+      .loader('raw-loader')
+      .end();
+  },
+  ignoreMomentLocale: true,
+  polyfill: {
+    imports: ['core-js/stable']
+  },
+  dynamicImport: {
+    loading: '@/containers/Loading'
+  },
+  publicPath: 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/'
 });
