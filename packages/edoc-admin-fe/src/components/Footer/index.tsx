@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
+import BeiAnLogo from '@/common/images/BeiAn.png';
+
 import { Layout, Typography } from 'antd';
 
 import './index.scss';
@@ -32,9 +34,15 @@ function Footer (props: IProps) {
 
   return (
     <Layout.Footer className={'site-footer'}>
+      <div>
       <Typography.Text>Qinhong Wang</Typography.Text>
       <Typography.Text>&copy; {nowYear === startYear ? startYear : `${startYear} ~ ${nowYear}`}</Typography.Text>
       <Typography.Text>Xi`an University of Science and Technology</Typography.Text>
+      </div>
+      <div className={'site-footer-beian'}>
+        <img src={BeiAnLogo} />
+        <a target={'__blank'} href={'http://www.beian.miit.gov.cn/'}>陕ICP备 19005593号-2</a>
+      </div>
     </Layout.Footer>
   );
 }
