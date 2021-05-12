@@ -42,5 +42,5 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/containers/Loading'
   },
-  publicPath: 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/'
+  publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/'
 });
