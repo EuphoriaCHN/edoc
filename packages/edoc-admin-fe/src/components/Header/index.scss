@@ -1,6 +1,10 @@
 $headerHeight: 60px;
 
 .site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   height: $headerHeight !important;
   box-sizing: border-box;
   
@@ -23,6 +27,12 @@ $headerHeight: 60px;
       margin-left: 16px !important;
       line-height: $headerHeight;
       color: var(--color-text-0) !important;
+    }
+  }
+
+  &-user {
+    > button {
+      margin-left: 12px;
     }
   }
 }

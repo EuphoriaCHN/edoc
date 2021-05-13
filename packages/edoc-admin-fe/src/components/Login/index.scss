@@ -9,11 +9,11 @@
     display: flex;
     width: 100%;
     height: 100%;
-    justify-content: space-evenly;
+    justify-content: center;
     transform: translateY(-40px);
 
     > div {
-      width: 45%;
+      width: 40%;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -28,14 +28,14 @@
 
       > h1 {
         font-size: 152px;
-        margin-bottom: 38px;
+        margin-bottom: 68px;
         letter-spacing: 4px;
       }
 
       > div {
         font-size: 24px;
         letter-spacing: 4px;
-        margin-bottom: 58px;
+        margin-bottom: 68px;
       }
 
       button {

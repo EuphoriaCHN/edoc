@@ -19,7 +19,7 @@ function Login(props: any) {
     Component: Typography.Paragraph,
     texts: [
       t('0 成本，会打字就能建站'),
-      t('支持 MDX 语法，不仅仅是 Markdown')
+      t('Markdown、富文本、JSX 全面支持'),
     ]
   }), []);
 

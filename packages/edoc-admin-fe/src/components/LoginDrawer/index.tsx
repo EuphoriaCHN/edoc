@@ -29,7 +29,7 @@ function LoginDrawer(props: IProps) {
     <Drawer
       visible={props.visible}
       onClose={props.onClose}
-      width={600}
+      width={680}
     >
       <Tabs activeKey={tabKey} onChange={value => setTabKey(value as keyof typeof tabs)}>
         {Object.keys(tabs).map(key => (

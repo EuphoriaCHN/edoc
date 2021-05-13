@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import config from './globalConfig';
-import { STATUS_CODE, HTTP_STATUS_CODE } from '@/common/utils/constants';
+import { HTTP_STATUS_CODE } from '@/common/utils/constants';
 import { isArray, each } from 'lodash-es';
+import Cookie from 'js-cookie';
 
 // 响应结构
 export type ResponseData<T = any> = {
@@ -76,6 +77,9 @@ instance.interceptors.request.use(value => {
       newParams[key] = isArray(val) ? JSON.stringify(val) : val;
     });
   }
+
+  const authorizationValue = Cookie.get(AUTHORIZATION_KEY);
+  value.headers[AUTHORIZATION_KEY] = authorizationValue || null;
 
   return value;
 }, (_: any) => { });

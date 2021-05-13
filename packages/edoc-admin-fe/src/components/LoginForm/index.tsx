@@ -4,6 +4,12 @@ import { Form, Button, Tabs, Input, Row, Col, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, AlipayOutlined } from '@ant-design/icons';
 import { debounce } from 'lodash-es';
 import isMobilePhone from 'validator/es/lib/isMobilePhone';
+import Cookie from 'js-cookie';
+import { useHistory } from 'umi';
+
+import { LoginAPI } from '@/api';
+
+import { REGEXPS } from '@/components/RegisterForm';
 
 import './index.scss';
 
@@ -16,8 +22,10 @@ const CAPTCHA_WAITING_TIME = 10;
 function LoginForm(this: any, props: IProps) {
   const [allowedSendCaptcha, setAllowedSendCaptcha] = React.useState<boolean>(false);
   const [waitingCaptcha, setWaitingCaptcha] = React.useState<number>(0);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const { t } = useTranslation();
+  const _history = useHistory();
 
   const [form] = Form.useForm();
 
@@ -78,7 +86,47 @@ function LoginForm(this: any, props: IProps) {
   /**
    * 提交【账号登陆】
    */
-  const handelSubmitLoginByAccount = React.useCallback(async () => {}, []);
+  const handelSubmitLoginByAccount = React.useCallback(async () => {
+    const { account, password } = form.getFieldsValue(['account', 'password']);
+
+    let flag = true;
+
+    if (!account) {
+      form.setFields([{ name: 'account', errors: [t('此项是必填项')] }]);
+      flag = false;
+    } else if (!REGEXPS.account.test(account)) {
+      form.setFields([{ name: 'account', errors: [t('账号仅能由 3 到 16 位数字、字母与下划线组成')] }]);
+      flag = false;
+    }
+
+    if (!password) {
+      form.setFields([{ name: 'password', errors: [t('此项是必填项')] }]);
+      flag = false;
+    } else if (!REGEXPS.password.test(account)) {
+      form.setFields([{ name: 'password', errors: [t('密码仅能由 6 到 16 位数字、字母及特殊字符组成')] }]);
+      flag = false;
+    }
+
+    if (!flag) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data } = await LoginAPI.accountLogin({account, password});
+      message.success(t('登录成功'));
+
+      const { headerValue } = data;
+      // LocalStorage
+      Cookie.set(AUTHORIZATION_KEY, headerValue, { expires: 1 });
+      _history.push('/');
+    } catch (err) {
+      message.error(err.message || JSON.stringify(err));
+      message.error(t('注册失败'));
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   /**
    * 提交【短信验证码登录】
@@ -99,7 +147,7 @@ function LoginForm(this: any, props: IProps) {
                 allowClear
               />
             </Form.Item>
-            <Button type={'primary'} block>{t('登录')}</Button>
+            <Button loading={loading} onClick={handelSubmitLoginByAccount} type={'primary'} block>{t('登录')}</Button>
           </Tabs.TabPane>
           <Tabs.TabPane tab={t('短信验证码登录')} key={'usePhone'}>
             <Form.Item name={'phoneNumber'} label={t('手机号')}>
@@ -136,7 +184,7 @@ function LoginForm(this: any, props: IProps) {
                 </Col>
               </Row>
             </Form.Item>
-            <Button type={'primary'} block>{t('登录')}</Button>
+            <Button loading={loading} type={'primary'} block>{t('登录')}</Button>
           </Tabs.TabPane>
         </Tabs>
       </Form>

@@ -11,7 +11,7 @@ export interface SignOptionDefault extends AxiosRequestConfig {
 }
 
 const config: SignOptionDefault = {
-  baseURL: 'http://118.31.53.93:21002',
+  baseURL: process.env.NODE_ENV === 'development' ? 'http://192.168.28.24:21002' : 'http://abs.bhj-noshampoo.site',
   timeout: 30 * 1000,
   withCredentials: false,
   retry: 1, // 重试 3 次

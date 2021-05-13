@@ -20,8 +20,8 @@ $aliBlue: rgb(20, 118, 254);
         position: absolute;
         top: 0;
         right: 0;
-        width: 60px;
-        height: 60px;
+        width: 65px;
+        height: 65px;
         background-color: #fff;
         border-top-right-radius: $boxRadius;
         overflow: hidden;
@@ -45,7 +45,7 @@ $aliBlue: rgb(20, 118, 254);
                 width: 200%;
                 height: 200%;
                 position: absolute;
-                transform: rotate(45deg) translate(-30px, 40px);
+                transform: rotate(45deg) translate(-37px, 43px);
 
                 background-color: #fff;
                 transition: all .3s ease-in-out;
@@ -53,13 +53,14 @@ $aliBlue: rgb(20, 118, 254);
 
                 &::after {
                     content: "";
-                    width: 33px;
-                    height: 33px;
+                    width: 55px;
+                    height: 55px;
                     border: 1px solid var(--color-border);
                     position: absolute;
                     top: 0;
                     right: 0;
-                    transform: rotate(-45deg) translate(-30px, -50px);
+                    transform: rotate(-45deg) translate(-3px, -62px);
+                    border-bottom-left-radius: $boxRadius;
                     box-shadow: 0 1px 2px -2px rgba(0, 0, 0, .16),
                     0 3px 6px 0 rgba(0, 0, 0, .12),
                     0 5px 12px 4px rgba(0, 0, 0, .09);
@@ -73,9 +74,7 @@ $aliBlue: rgb(20, 118, 254);
                 transform: rotate(45deg) translate(-30px, 55px);
 
                 &::after {
-                    width: 55px;
-                    height: 55px;
-                    transform: rotate(-45deg) translate(-13px, -52px);
+                    transform: rotate(-45deg) translate(-16px, -58px);
                 }
             }
         }

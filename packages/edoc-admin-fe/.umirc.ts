@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import Webpack from './node_modules/@umijs/deps/compiled/webpack';
 import EdocWebpackPlugin from 'edoc-webpack-plugin';
 
 import WebpackChain from 'webpack-chain';
@@ -27,6 +28,10 @@ export default defineConfig({
   },
   chainWebpack(config: WebpackChain) {
     config.plugin('edoc').use(new EdocWebpackPlugin());
+    
+    config.plugin('customDefine').use(new Webpack.DefinePlugin({
+      AUTHORIZATION_KEY: JSON.stringify('Authorization')
+    }));
 
     config.module
       .rule('edoc-editor-preset-mdx-loader')
