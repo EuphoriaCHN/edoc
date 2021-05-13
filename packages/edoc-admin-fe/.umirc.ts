@@ -45,5 +45,6 @@ export default defineConfig({
   publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/',
   define: {
     AUTHORIZATION_KEY: 'Authorization'
-  }
+  },
+  favicon: 'https://s2.aconvert.com/convert/p3r68-cdx67/aoybn-a6snw-001.ico'
 });
