@@ -3,6 +3,7 @@ import { Form, Input, Button, Row, Col, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { debounce } from 'lodash-es';
+import Cookie from 'js-cookie';
 import isMobilePhone from 'validator/es/lib/isMobilePhone';
 
 import { LoginAPI } from '@/api';
@@ -186,6 +187,11 @@ function RegisterForm(this: any, props: IProps) {
       });
       message.success(t('注册成功'));
       // todo:: Redirect
+
+      const { data } = await LoginAPI.accountLogin({ account, password });
+      const { headerValue } = data;
+      Cookie.set(AUTHORIZATION_KEY, headerValue, { expires: 1 });
+      location.reload();
     } catch (err) {
       message.error(err.message || JSON.stringify(err));
       message.error(t('注册失败'));
