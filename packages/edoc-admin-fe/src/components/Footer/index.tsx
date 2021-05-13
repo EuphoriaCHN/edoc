@@ -41,7 +41,7 @@ function Footer (props: IProps) {
       </div>
       <div className={'site-footer-beian'}>
         <img src={BeiAnLogo} />
-        <a target={'__blank'} href={'http://www.beian.miit.gov.cn/'}>陕ICP备 19005593号-2</a>
+        <a target={'__blank'} href={'http://www.beian.miit.gov.cn/'}>陕ICP备 2021006075号-1</a>
       </div>
     </Layout.Footer>
   );
