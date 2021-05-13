@@ -1,5 +1,4 @@
 import { defineConfig } from 'umi';
-import Webpack from './node_modules/@umijs/deps/compiled/webpack';
 import EdocWebpackPlugin from 'edoc-webpack-plugin';
 
 import WebpackChain from 'webpack-chain';
@@ -28,10 +27,6 @@ export default defineConfig({
   },
   chainWebpack(config: WebpackChain) {
     config.plugin('edoc').use(new EdocWebpackPlugin());
-    
-    config.plugin('customDefine').use(new Webpack.DefinePlugin({
-      AUTHORIZATION_KEY: JSON.stringify('Authorization')
-    }));
 
     config.module
       .rule('edoc-editor-preset-mdx-loader')
@@ -47,5 +42,8 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/containers/Loading'
   },
-  publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/'
+  publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/',
+  define: {
+    AUTHORIZATION_KEY: 'Authorization'
+  }
 });
