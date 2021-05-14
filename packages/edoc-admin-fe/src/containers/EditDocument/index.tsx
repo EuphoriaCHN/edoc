@@ -2,12 +2,14 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'umi';
 import { prettierMDX } from '@/common/utils';
+import axios from 'axios';
+import Cookie from 'js-cookie';
 
 import { Button, message, Spin } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import Editor from '@/components/Editor';
 
-import { DocumentAPI } from '@/api';
+import { DocumentAPI, MiddlewareAPI } from '@/api';
 
 import './index.scss';
 
@@ -109,6 +111,32 @@ function EditDocument(props: IProps) {
     }
   }, []);
 
+  /**
+   * 处理添加图片
+   */
+  const handleUploadImage = React.useCallback((blob: File, callback: (placeholder: string, alterName?: string | undefined) => void) => {
+    const formData = new FormData();
+    formData.append('multipartFile', blob, blob.name);
+
+    axios.post(MiddlewareAPI.uploadImage, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': Cookie.get(AUTHORIZATION_KEY)
+      }
+    }).then(({ data: resData }) => {
+      const { success, errorMsg, data } = resData;
+      if (!success) {
+        message.error(t('上传图片失败'));
+        message.error(errorMsg);
+      } else {
+        console.log(data);
+      }
+    }, err => {
+      message.error(t('上传图片失败'));
+      message.error(err.message || JSON.stringify(err));
+    });
+  }, [])
+
   React.useEffect(() => {
     if (!documentID || isNaN(parseInt(documentID))) {
       _history.push('/notFound');
@@ -131,6 +159,7 @@ function EditDocument(props: IProps) {
           height={'calc(100vh - 60px)'}
           previewWidth={'calc(50vw - 1px)'}
           editorThemeClsName={'cm-s-darcula'}
+          addImageBlobHook={handleUploadImage}
           onReady={onEditorReady}
         />
       </Spin>

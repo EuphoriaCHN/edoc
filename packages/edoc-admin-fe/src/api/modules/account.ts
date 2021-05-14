@@ -20,7 +20,7 @@ class Account extends API {
 
   updateAliPay = Account.sign({
     url: '/updateAlipay',
-    method: 'post'
+    method: 'post',
   });
 }
 

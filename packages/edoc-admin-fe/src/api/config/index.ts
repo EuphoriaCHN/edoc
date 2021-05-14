@@ -198,11 +198,12 @@ export abstract class API {
 
   // Override
   public static sign<T = any, R = any>(options: Partial<ApiOption> & { useHooks: boolean; }): UseHooksReturns<T, R>;
+  public static sign<T = any, R = any>(options: Partial<ApiOption> & { static: boolean; }): string;
   public static sign<T = any, R = any>(options: Partial<ApiOption>): Signature<T, R>;
 
   public static sign<T = any, R = any>(
-    options: Partial<ApiOption & { useHooks: boolean; }>
-  ): UseHooksReturns<T, R> | Signature<T, R> {
+    options: Partial<ApiOption & { useHooks: boolean; static: boolean; }>
+  ): UseHooksReturns<T, R> | Signature<T, R> | string {
     const { MOCK_ALL = false, MOCK_ENV, PREFIX = '', DEFAULT_OPTIONS } = this;
 
     const requestOption = Object.assign({}, SIGN_OPTION_DEFAULT, DEFAULT_OPTIONS, options);
@@ -269,6 +270,10 @@ export abstract class API {
     } else {
       // 直接拼接 base URL
       requestOption.url = config.baseURL.concat(requestOption.url);
+    }
+
+    if (!!options.static) {
+      return requestOption.url;
     }
 
     /**
