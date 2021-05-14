@@ -8,10 +8,12 @@ import { Store } from '@/store';
 import { nanoid } from '@reduxjs/toolkit';
 
 import { Descriptions, Avatar, Button, Tooltip, message, Dropdown, Menu, Spin } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, AlipayCircleOutlined } from '@ant-design/icons';
+
 import UploadImageModal from '@/components/UploadImageModal';
 import UpdateNickNameModal from '@/components/UpdateNickNameModal';
 import UpdateAccountModal from '@/components/UpdateAccountModal';
+import UpdatePasswordModal from '@/components/UpdatePasswordModal';
 
 import { AccountAPI } from '@/api';
 
@@ -26,6 +28,7 @@ interface IProps {
 function ProfileDescriptions(this: any, props: IProps) {
   const [updateNickNameModalVisible, setUpdateNickNameModalVisible] = React.useState<boolean>(false);
   const [updateAccountModalVisible, setUpdateAccountModalVisible] = React.useState<boolean>(false);
+  const [updatePasswordModalVisible, setUpdatePasswordModalVisible] = React.useState<boolean>(false);
 
   const [loading, setLoading] = React.useState<boolean>(false);
   const { t } = useTranslation();
@@ -92,6 +95,28 @@ function ProfileDescriptions(this: any, props: IProps) {
     }));
   }, []);
 
+  /**
+   * 修改密码
+   */
+  const handleChangePassword = React.useCallback(async (oldPassword, newPassword) => {
+    await AccountAPI.updatePassword({
+      userId: user.userId,
+      account: user.account,
+      newPassword,
+      originPassword: oldPassword
+    });
+  }, []);
+
+  /**
+   * 绑定 / 修改绑定支付宝账号
+   */
+  const handleChangeAliPayAccount = React.useCallback(() => {
+    window.open(
+      `https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2021002144604032&scope=auth_user&redirect_uri=http%3A%2F%2Fedoc.bhj-noshampoo.site%2FAliPayLogin%3FredirectBase%3DuserCenter%26ui%3D${user.userId}%26ac%3D${user.account}`,
+      '_self'
+    );
+  }, []);
+
   const GenderIcon = React.useMemo(() => GENDER_DICT[user.gender || GENDER.UNKNOWN].Component, [user.gender]);
 
   return (
@@ -148,13 +173,17 @@ function ProfileDescriptions(this: any, props: IProps) {
             <Button onClick={setUpdateAccountModalVisible.bind(this, true)}>{t('修改账号')}</Button>
           </Descriptions.Item>
           <Descriptions.Item span={3} label={t('密码')}>
-            <Button>{t('修改密码')}</Button>
+            <Button onClick={setUpdatePasswordModalVisible.bind(this, true)}>{t('修改密码')}</Button>
           </Descriptions.Item>
           <Descriptions.Item span={2} label={t('昵称')}>{user.userName || t('未设置')}</Descriptions.Item>
           <Descriptions.Item span={1}>
             <Button onClick={setUpdateNickNameModalVisible.bind(this, true)}>{t('修改昵称')}</Button>
           </Descriptions.Item>
           <Descriptions.Item span={3} label={t('手机号')}>{user.mobile || t('未设置')}</Descriptions.Item>
+          <Descriptions.Item span={2} label={t('支付宝账号')}>{user.alipayNickName || t('未绑定')}</Descriptions.Item>
+          <Descriptions.Item span={1}>
+            <Button onClick={handleChangeAliPayAccount} icon={<AlipayCircleOutlined />}>{user.alipayNickName ? t('修改绑定账号') : t('绑定支付宝')}</Button>
+          </Descriptions.Item>
         </Descriptions>
       </Spin>
       <UpdateNickNameModal
@@ -168,6 +197,11 @@ function ProfileDescriptions(this: any, props: IProps) {
         onCancel={setUpdateAccountModalVisible.bind(this, false)}
         defaultValue={user.account}
         onOk={handleChangeAccount}
+      />
+      <UpdatePasswordModal
+        visible={updatePasswordModalVisible}
+        onCancel={setUpdatePasswordModalVisible.bind(this, false)}
+        onOk={handleChangePassword}
       />
     </React.Fragment>
   );

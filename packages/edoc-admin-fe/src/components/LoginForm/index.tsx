@@ -138,7 +138,7 @@ function LoginForm(this: any, props: IProps) {
    */
   const handleRedirectAliPayScanQRCode = React.useCallback(() => {
     window.open(
-      'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2021002144604032&scope=auth_user&redirect_uri=http%3A%2F%2Fedoc.bhj-noshampoo.site%2FAliPayLogin',
+      'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2021002144604032&scope=auth_user&redirect_uri=http%3A%2F%2Fedoc.bhj-noshampoo.site%2FAliPayLogin%3FredirectBase%3Dhome',
       '_self'
     );
   }, []);

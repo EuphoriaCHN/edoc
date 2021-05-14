@@ -12,6 +12,16 @@ class Account extends API {
     url: '/updateInfo',
     method: 'post'
   });
+
+  updatePassword = Account.sign({
+    url: '/updatePassword',
+    method: 'post'
+  });
+
+  updateAliPay = Account.sign({
+    url: '/updateAlipay',
+    method: 'post'
+  });
 }
 
 export default new Account();

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import Cookie from 'js-cookie';
 import { useHistory } from 'umi';
+import { REGEXPS } from '@/components/RegisterForm';
 
 import { Modal, Form, Input, message, Typography } from 'antd';
 
@@ -21,6 +22,13 @@ function UpdateAccountModal(props: IProps) {
 
     const handleOnOk = React.useCallback(async () => {
         const account = form.getFieldValue('account');
+
+        if (!account || !account.length) {
+            return form.setFields([{ name: 'account', errors: [t('此项是必填项')] }]);
+        }
+        if (!REGEXPS.account.test(account)) {
+            return form.setFields([{ name: 'account', errors: [t('用户名仅能由 3 到 16 位数字、字母与下划线组成')] }]);
+        }
 
         setLoading(true);
         try {
