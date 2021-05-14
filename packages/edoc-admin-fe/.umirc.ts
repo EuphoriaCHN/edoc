@@ -48,7 +48,8 @@ export default defineConfig({
   define: {
     AUTHORIZATION_KEY: 'Authorization',
     DEV_IP: 'http://192.168.28.24:21002',
-    PROD_URL: 'http://abs.bhj-noshampoo.site'
+    PROD_URL: 'http://abs.bhj-noshampoo.site',
+    ONLINE_URL: 'http://edoc.bhj-noshampoo.site'
   },
   favicon: 'https://s2.aconvert.com/convert/p3r68-cdx67/aoybn-a6snw-001.ico'
 });

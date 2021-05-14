@@ -84,7 +84,7 @@ function PageLibrary(props: IProps) {
    */
   const handleGoOnline = React.useCallback(() => {
     window.open(
-      `http://edoc.bhj-noshampoo.site/content/${siteID}`,
+      `${ONLINE_URL}/content/${siteID}`,
       '_blank'
     );
   }, [siteID]);

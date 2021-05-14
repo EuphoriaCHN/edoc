@@ -26,7 +26,7 @@ function EditDocument(props: IProps) {
   const { t } = useTranslation();
 
   const _history = useHistory();
-  const { documentID } = useParams<{ documentID: string }>();
+  const { documentID, pageLibraryID, siteID } = useParams<{ documentID: string; pageLibraryID: string; siteID: string }>();
 
   const handleRouteBack = React.useCallback(() => {
     _history.goBack();
@@ -86,6 +86,7 @@ function EditDocument(props: IProps) {
       await DocumentAPI.publishDocument({ id: parseInt(documentID) });
 
       message.success(t('文档已发布'));
+      message.success(t('线上地址：').concat(`${ONLINE_URL}/content/${siteID}/${pageLibraryID}/${documentID}`));
     } catch (err) {
       message.error(t('文档发布失败'));
       message.error(err.message || JSON.stringify(err));
