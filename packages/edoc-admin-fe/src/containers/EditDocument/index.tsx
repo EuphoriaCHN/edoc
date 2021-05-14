@@ -129,7 +129,7 @@ function EditDocument(props: IProps) {
         message.error(t('上传图片失败'));
         message.error(errorMsg);
       } else {
-        console.log(data);
+        callback(data);
       }
     }, err => {
       message.error(t('上传图片失败'));

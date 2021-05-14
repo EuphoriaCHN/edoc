@@ -27,6 +27,7 @@
     "@umijs/preset-react": "1.x",
     "ali-oss": "^6.15.2",
     "axios": "^0.21.1",
+    "edoc-mdx-materials": "^0.0.4",
     "edoc-mdx-renderer": "0.0.9",
     "edoc-webpack-plugin": "0.0.8",
     "i18next": "^20.2.2",

@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { debounce } from 'lodash-es';
 import { Renderer } from 'edoc-mdx-renderer';
+import { override } from 'edoc-mdx-materials';
 
 export interface IViewerProps {
   instance: tuiEditor.Editor;
@@ -49,7 +50,12 @@ class Viewer extends React.Component<IViewerProps, IViewerState> {
 
   render() {
     return (
-        <Renderer markdown={this.state.markdown} withoutAnchor={false} withoutLinkTitle />
+      <Renderer
+        components={Object.assign({}, override)}
+        markdown={this.state.markdown}
+        withoutAnchor={false}
+        withoutLinkTitle
+      />
     );
   }
 }
