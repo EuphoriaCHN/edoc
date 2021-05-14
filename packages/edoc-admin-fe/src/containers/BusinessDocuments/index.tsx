@@ -10,7 +10,7 @@ import { nanoid } from '@reduxjs/toolkit';
 
 import { ProjectAPI, PageLibraryAPI, DocumentAPI } from '@/api';
 
-import { Spin, message, Tree, Typography, Breadcrumb, Button, Table, Dropdown, Menu, Modal } from 'antd';
+import { Spin, message, Tree, Typography, Breadcrumb, Button, Table, Dropdown, Menu, Modal, Badge, Tooltip } from 'antd';
 import { PlusOutlined, DownOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import CreateDocumentModal from '@/components/CreateDocumentModal';
@@ -25,6 +25,11 @@ import { ColumnType } from 'antd/lib/table/interface';
 import './index.scss';
 
 const DEFAULT_OWNER_DIR_ID = 0;
+
+enum DOCUMENT_STATUS_ENUM {
+  deployed = 'deployed',
+  onlySave = 'only_save'
+}
 
 interface IProps {
 
@@ -131,11 +136,20 @@ function BusinessDocuments(props: IProps) {
     render: (isDir: number) => isDir ? <FolderImage /> : <DocumentImage />,
     width: 52
   }, {
-    className: 'document-table-title',
-    render: (_, { documentName }) =>
-      <React.Fragment>
-        <Typography.Title level={5}>{documentName}</Typography.Title>
-      </React.Fragment>
+    render: (_, { documentName, documentStatusEnum, isDir }) => {
+      const deployed = documentStatusEnum === DOCUMENT_STATUS_ENUM.deployed;
+
+      return (
+        <div className={'document-table-title'}>
+          {isDir ? null : (
+            <Tooltip title={deployed ? t('已发布') : t('未发布')}>
+              <Badge status={deployed ? 'processing' : 'default'} dot />
+            </Tooltip>
+          )}
+          <Typography.Title level={5}>{documentName}</Typography.Title>
+        </div>
+      );
+    }
   }, {
     render: (_, record) => (
       <Dropdown
