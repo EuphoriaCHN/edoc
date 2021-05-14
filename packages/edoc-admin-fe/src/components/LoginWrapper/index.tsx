@@ -11,8 +11,11 @@ import { useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { setUser } from '@/store/UserStore';
 
+const IGNORED = [/\/AliPayLogin/];
+
 export default function LoginWrapper<T>(Component: React.ComponentType<T>) {
   function HOC(props: T) {
+    const [skipped, setSkipped] = React.useState<boolean>(false);
     const [logged, setLogged] = React.useState<boolean>(false);
     const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -49,12 +52,18 @@ export default function LoginWrapper<T>(Component: React.ComponentType<T>) {
         setLogged(true);
       } catch (err) {
         message.error(err.message);
+        Cookie.remove(AUTHORIZATION_KEY);
       } finally {
         setLoading(false);
       }
     }, []);
 
     React.useEffect(() => {
+      for (const ignored of IGNORED) {
+        if (ignored.test(_location.pathname)) {
+          return setSkipped(true);
+        }
+      }
       checkLoginStatus();
     }, []);
 
@@ -62,7 +71,7 @@ export default function LoginWrapper<T>(Component: React.ComponentType<T>) {
       return <Loading />
     }
 
-    if (logged) {
+    if (logged || skipped) {
       return <Component {...props} />
     }
 

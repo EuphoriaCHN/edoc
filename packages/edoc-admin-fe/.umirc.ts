@@ -12,6 +12,7 @@ export default defineConfig({
       component: '@/layouts/index',
       path: '*',
       routes: [
+        { path: '/aliPayLogin', component: '@/containers/AliPayLogin' },
         { path: '/siteDetail/:siteID/:pageLibraryID/:documentID', component: '@/containers/EditDocument' },
         { path: '/siteDetail/:siteID/:pageLibraryID', component: '@/containers/BusinessDocuments' },
         { path: '/siteDetail/:siteID', component: '@/containers/SiteDetail' },

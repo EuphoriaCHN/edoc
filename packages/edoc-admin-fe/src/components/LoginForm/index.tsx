@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Button, Tabs, Input, Row, Col, message } from 'antd';
+import { Form, Button, Tabs, Input, Row, Col, message, Tooltip } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, AlipayOutlined } from '@ant-design/icons';
 import { debounce } from 'lodash-es';
 import isMobilePhone from 'validator/es/lib/isMobilePhone';
@@ -113,7 +113,7 @@ function LoginForm(this: any, props: IProps) {
 
     setLoading(true);
     try {
-      const { data } = await LoginAPI.accountLogin({account, password});
+      const { data } = await LoginAPI.accountLogin({ account, password });
       message.success(t('登录成功'));
 
       const { headerValue } = data;
@@ -131,7 +131,17 @@ function LoginForm(this: any, props: IProps) {
   /**
    * 提交【短信验证码登录】
    */
-  const handleSubmitLoginByCaptcha = React.useCallback(async () => {}, []);
+  const handleSubmitLoginByCaptcha = React.useCallback(async () => { }, []);
+
+  /**
+   * 支付宝扫码登陆
+   */
+  const handleRedirectAliPayScanQRCode = React.useCallback(() => {
+    window.open(
+      'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2021002144604032&scope=auth_user&redirect_uri=http%3A%2F%2Fedoc.bhj-noshampoo.site%2FAliPayLogin',
+      '_self'
+    );
+  }, []);
 
   return (
     <div className={'login-form'}>
@@ -188,12 +198,14 @@ function LoginForm(this: any, props: IProps) {
           </Tabs.TabPane>
         </Tabs>
       </Form>
-      <div className={'alipay-box'}>
-        <div className={'alipay-box-inner'}>
-          <AlipayOutlined className={'alipay-box-inner-icon'} />
-          <div className={'alipay-box-inner-mask'} />
+      <Tooltip title={t('支付宝扫码登陆')}>
+        <div className={'alipay-box'} onClick={handleRedirectAliPayScanQRCode}>
+          <div className={'alipay-box-inner'}>
+            <AlipayOutlined className={'alipay-box-inner-icon'} />
+            <div className={'alipay-box-inner-mask'} />
+          </div>
         </div>
-      </div>
+      </Tooltip>
     </div>
   )
 }
