@@ -44,7 +44,7 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/containers/Loading'
   },
-  publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/',
+  publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/edoc_admin/',
   define: {
     AUTHORIZATION_KEY: 'Authorization',
     DEV_IP: 'http://192.168.28.24:21002',

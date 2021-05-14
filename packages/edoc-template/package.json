@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "start": "umi dev",
-    "build": "umi build",
+    "start": "node ./scripts/dev.js",
+    "build": "./build.sh",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
@@ -34,6 +34,7 @@
     "@types/react-dom": "^17.0.0",
     "@umijs/plugin-sass": "^1.1.1",
     "@umijs/test": "^3.4.14",
+    "ali-oss": "^6.15.2",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "react": "17.x",

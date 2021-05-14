@@ -38,7 +38,6 @@ function LayoutWrapper(props: React.PropsWithChildren<{}>) {
               <NotFound />
             </Layout.Content>
           )}
-
         </Layout>
       </Layout>
     </AppContext.Provider>

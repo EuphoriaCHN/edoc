@@ -1,5 +1,5 @@
 const ossClient = require('./client');
-const { EDOC_ADMIN_BUCKET_PREFIX } = require('./constants');
+const { EDOC_USERS_BUCKET_PREFIX } = require('./constants');
 
 const path = require('path');
 const fs = require('fs');
@@ -30,7 +30,7 @@ function put(filesData, resourcePath) {
             put(filesData[fullFilePath], resourcePath);
             return;
         }
-        const bucketFilePath = EDOC_ADMIN_BUCKET_PREFIX.concat(fullFilePath.replace(resourcePath, '').replace(/^\\/, '').replace(/\\/g, '/'));
+        const bucketFilePath = EDOC_USERS_BUCKET_PREFIX.concat(fullFilePath.replace(resourcePath, '').replace(/^\\/, '').replace(/\\/g, '/'));
         promiseList.push(ossClient.put(bucketFilePath, fullFilePath));
     });
 }
