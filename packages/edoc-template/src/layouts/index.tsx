@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 import Header from '@/components/Header';
 import Sider from '@/components/Sider';
 import Content from '@/components/Contents';
+import NotFound from '@/components/NotFound';
 
 import AppContext from '@/contexts/AppContext';
 
@@ -14,20 +15,30 @@ import './index.scss';
 
 function LayoutWrapper(props: React.PropsWithChildren<{}>) {
   const siteID = useSiteID();
-  const { data: businesses, loading } = useBusinesses({ id: siteID }, []);
+  const { data: businesses, loading } = useBusinesses({ id: siteID || null }, []);
 
   return (
     <AppContext.Provider
       value={{
         businesses,
-        appLoading: loading
+        appLoading: loading,
+        siteID
       }}
     >
       <Layout>
-        <Header />
+        {!!siteID ? <Header /> : null}
         <Layout className={'site-container'}>
-          <Sider />
-          <Content />
+          {!!siteID ? (
+            <React.Fragment>
+              <Sider />
+              <Content />
+            </React.Fragment>
+          ) : (
+            <Layout.Content>
+              <NotFound />
+            </Layout.Content>
+          )}
+
         </Layout>
       </Layout>
     </AppContext.Provider>

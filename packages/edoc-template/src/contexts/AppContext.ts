@@ -2,10 +2,12 @@ import { createContext } from 'react';
 
 const AppContext = createContext<{
     businesses: any[],
-    appLoading: boolean
+    appLoading: boolean,
+    siteID: string
 }>({
     businesses: [],
-    appLoading: false
+    appLoading: false,
+    siteID: ''
 });
 
 export default AppContext;

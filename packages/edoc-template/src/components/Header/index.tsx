@@ -18,22 +18,30 @@ export interface IProps {
 function Header(props: IProps) {
   const [selectBusiness, setSelectBusiness] = React.useState<string[]>([]);
 
-  const { businesses } = React.useContext(AppContext);
+  const { businesses, siteID } = React.useContext(AppContext);
 
   const _history = useHistory();
   const _location = useLocation();
 
+  const businessIDFromURL = _location.pathname.split(REGEXPS.splitIDs)[2];
+
   const handleSelectBusiness = React.useCallback((info: SelectInfo) => {
     const { selectedKeys } = info;
     if (!!selectedKeys && selectedKeys.length === 1) {
-      _history.push(`${Edoc.prefix}content/${selectedKeys[0]}`);
+      _history.push(`${Edoc.prefix}content/${siteID}/${selectedKeys[0]}`);
 
       setSelectBusiness(selectedKeys as string[]);
     }
   }, []);
 
   React.useEffect(() => {
-    const businessIDFromURL = _location.pathname.split(REGEXPS.splitIDs)[1];
+    if (!businessIDFromURL && !!businesses.length) {
+      _history.replace(`${Edoc.prefix}content/${siteID}/${businesses[0].id}`);
+      setSelectBusiness([`${businesses[0].id}`])
+    }
+  }, [businesses]);
+
+  React.useEffect(() => {
     if (!!businessIDFromURL) {
       setSelectBusiness([businessIDFromURL])
     }

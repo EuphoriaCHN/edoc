@@ -18,7 +18,7 @@ function Contents(props: IProps) {
   const _location = useLocation();
   const { data, start } = useDocumentContent({}, [], { manual: true });
 
-  const documentID = _location.pathname.split(REGEXPS.splitIDs)[2];
+  const documentID = _location.pathname.split(REGEXPS.splitIDs)[3];
 
   React.useEffect(() => {
     if (!documentID) {
