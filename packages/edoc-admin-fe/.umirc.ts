@@ -12,6 +12,7 @@ export default defineConfig({
       component: '@/layouts/index',
       path: '*',
       routes: [
+        { path: '/userCenter', component: '@/containers/UserCenter' },
         { path: '/aliPayLogin', component: '@/containers/AliPayLogin' },
         { path: '/siteDetail/:siteID/:pageLibraryID/:documentID', component: '@/containers/EditDocument' },
         { path: '/siteDetail/:siteID/:pageLibraryID', component: '@/containers/BusinessDocuments' },
@@ -45,7 +46,9 @@ export default defineConfig({
   },
   publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/',
   define: {
-    AUTHORIZATION_KEY: 'Authorization'
+    AUTHORIZATION_KEY: 'Authorization',
+    DEV_IP: 'http://192.168.28.24:21002',
+    PROD_URL: 'http://abs.bhj-noshampoo.site'
   },
   favicon: 'https://s2.aconvert.com/convert/p3r68-cdx67/aoybn-a6snw-001.ico'
 });

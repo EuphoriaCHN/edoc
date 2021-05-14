@@ -58,12 +58,12 @@ function TypingWrapper<T extends any>(option: ITypingWrapperOptions<T>) {
         >
           {texts.map(text => (
             <React.Fragment>
-              <ReactTyping.Speed ms={typingSpeed || 90} />
+              <ReactTyping.Speed ms={typingSpeed || 75} />
               {!!TextWrapperElement ? (
                 <TextWrapperElement className={textWrapperElementClassName}>{text}</TextWrapperElement>
               ) : <span className={textWrapperElementClassName}>{text}</span>}
               <ReactTyping.Delay ms={delaySpeed || 1200} />
-              <ReactTyping.Speed ms={deleteSpeed || 20} />
+              <ReactTyping.Speed ms={deleteSpeed || 15} />
               <ReactTyping.Backspace count={text.length + 1} />
               <ReactTyping.Delay ms={delaySpeed || 1200} />
             </React.Fragment>

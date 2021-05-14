@@ -9,7 +9,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '@/store/UserStore';
 import { Store } from '@/store';
 
-import { Layout, Typography, Button, message } from 'antd';
+import { Layout, Typography, Button, message, Avatar, Dropdown, Menu } from 'antd';
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 
 import Logo from '@/common/images/Logo.png';
 
@@ -19,7 +20,7 @@ interface IProps {
 
 }
 
-function Header (this: any, props: IProps) {
+function Header(this: any, props: IProps) {
   const [visible, setVisible] = React.useState<boolean>(true);
   const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -66,6 +67,13 @@ function Header (this: any, props: IProps) {
     }
   }, []);
 
+  /**
+   * 前往个人中心
+   */
+  const handleRouteToProfile = React.useCallback(() => {
+    _history.push('/userCenter');
+  }, []);
+
   const renderUser = React.useMemo(() => {
     const { user } = userStore;
     if (!user.account) {
@@ -74,8 +82,49 @@ function Header (this: any, props: IProps) {
 
     return (
       <div className={'site-header-user'}>
-        <Typography.Text>{t('欢迎！{{__edocUserName}}', { __edocUserName: user.account })}</Typography.Text>
-        <Button loading={loading} size={'small'} onClick={handleLogout.bind(this, user.account)}>{t('注销')}</Button>
+        <Dropdown
+          placement={'bottomRight'}
+          trigger={['click']}
+          overlay={(
+            <div className={'site-header-user-dropdown'}>
+              <div className={'site-header-user-dropdown-info'}>
+                <Avatar
+                  src={user.avatarLink || undefined}
+                  icon={!!user.avatarLink ? undefined : <UserOutlined />}
+                />
+                <div>
+                  <Typography.Text
+                    className={'site-header-user-dropdown-info-name'}
+                  >
+                    {user.userName || user.account}
+                  </Typography.Text>
+                  <Typography.Text
+                    className={'site-header-user-dropdown-info-phone'}
+                  >
+                    {user.mobile || t('未设置手机号')}
+                  </Typography.Text>
+                </div>
+              </div>
+              <Menu className={'site-header-user-dropdown-menu'} selectable={false}>
+                <Menu.Item onClick={handleRouteToProfile} icon={<UserOutlined />}>{t('个人中心')}</Menu.Item>
+                <Menu.Item 
+                  icon={<LogoutOutlined />} 
+                  onClick={handleLogout.bind(this, user.account)} 
+                  danger
+                >
+                  {t('登出账号')}
+                </Menu.Item>
+              </Menu>
+            </div>
+          )}
+          arrow
+        >
+          <Avatar
+            className={'site-header-user-avatar'}
+            src={user.avatarLink || undefined}
+            icon={!!user.avatarLink ? undefined : <UserOutlined />}
+          />
+        </Dropdown>
       </div>
     );
   }, [userStore.user, loading]);

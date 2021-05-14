@@ -1,0 +1,20 @@
+.user-center {
+    &-menu,
+    &-content {
+        height: calc(100vh - 120px);
+    }
+
+    &-content {
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-container {
+            box-sizing: border-box;
+            padding: 48px 0;
+            width: 864px;
+            height: 100%;
+        }
+    }
+}
