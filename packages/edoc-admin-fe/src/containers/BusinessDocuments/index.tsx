@@ -229,7 +229,12 @@ function BusinessDocuments(props: IProps) {
 
       // 树节点数据发生变化，默认设置第一个
       if (value?.data && Array.isArray(value.data) && !!value.data.length) {
-        setSelectedTreeNode({ title: value.data[0].pageName, key: value.data[0].id });
+        for (const item of value.data) {
+          if (item.id == pageLibraryID) {
+            setSelectedTreeNode({ title: item.pageName, key: item.id });
+            break;
+          }
+        }
       }
     } catch (err) {
       setIsError(true);
@@ -357,11 +362,11 @@ function BusinessDocuments(props: IProps) {
           {projectState.project?.projectName || t('加载中...')}
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          {projectState.pageLibrary?.pageName || t('加载中...')}
+          {selectedTreeNode.title || t('加载中...')}
         </Breadcrumb.Item>
       </Breadcrumb>
     </header>
-  ), [projectState]);
+  ), [projectState, selectedTreeNode]);
 
   /**
    * 渲染主要结构
