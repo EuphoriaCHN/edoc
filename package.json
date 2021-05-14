@@ -1,0 +1,19 @@
+{
+  "name": "edoc",
+  "version": "1.0.0",
+  "description": "> This project is monorepo",
+  "scripts": {
+    "count": "node ./utils/counter.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EuphoriaCHN/edoc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EuphoriaCHN/edoc/issues"
+  },
+  "homepage": "https://github.com/EuphoriaCHN/edoc#readme"
+}

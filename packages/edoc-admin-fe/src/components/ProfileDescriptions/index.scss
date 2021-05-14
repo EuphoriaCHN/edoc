@@ -1,0 +1,12 @@
+.profile {
+    &-gender {
+        font-size: 18px;
+
+        &-male {
+            color: #40a9ff;
+        }
+        &-female {
+            color: #ffa39e;
+        }
+    }
+}
