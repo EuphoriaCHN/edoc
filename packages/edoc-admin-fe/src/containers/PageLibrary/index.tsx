@@ -7,7 +7,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { setPageLibrary } from '@/store/ProjectStore';
 
 import { message } from 'antd';
-import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
+import { SearchOutlined, PlusOutlined, SendOutlined } from '@ant-design/icons';
 import CreatePageLibraryModal from '@/components/CreatePageLibraryModal';
 import CardFilterContent from '@/components/CardFilterContent';
 
@@ -79,6 +79,16 @@ function PageLibrary(props: IProps) {
     loadPageLibrary({ page: 1, size: 8 });
   }, [siteID]);
 
+  /**
+   * 前往线上
+   */
+  const handleGoOnline = React.useCallback(() => {
+    window.open(
+      `http://edoc.bhj-noshampoo.site/content/${siteID}`,
+      '_blank'
+    );
+  }, [siteID]);
+
   React.useEffect(() => {
     if (!siteID) {
       message.error(t('错误的站点 ID'));
@@ -101,6 +111,12 @@ function PageLibrary(props: IProps) {
             icon: <PlusOutlined />,
             type: 'primary',
             onClick: setCreatePageLibraryModalVisible.bind(this, true)
+          }, {
+            text: t('前往线上'),
+            icon: <SendOutlined />,
+            type: 'primary',
+            onClick: handleGoOnline,
+            disabled: pageLibraryLoading || loading || !pageLibrary?.total,
           }]
         }}
         empty={{

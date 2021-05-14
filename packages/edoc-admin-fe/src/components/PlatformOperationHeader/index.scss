@@ -3,4 +3,18 @@
   align-items: center;
   justify-content: space-between;
   margin: 16px 0;
+
+  &-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    > button {
+      margin-right: 8px;
+
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
 }

@@ -22,6 +22,7 @@ interface ButtonsItem {
   text: string;
   onClick?: () => void;
   type?: ButtonType;
+  disabled?: boolean;
 }
 
 export interface IProps {
@@ -51,9 +52,9 @@ function PlatformOperationHeader (props: IProps) {
           />
         )}
       </div>
-      <div>
+      <div className={'platform-operation-header-buttons'}>
         {props.baseButtons.map((item, index) =>
-          <Button key={index} type={item.type} onClick={item.onClick} icon={item.icon}>{item.text}</Button>
+          <Button disabled={item.disabled} key={index} type={item.type} onClick={item.onClick} icon={item.icon}>{item.text}</Button>
         )}
       </div>
     </header>
