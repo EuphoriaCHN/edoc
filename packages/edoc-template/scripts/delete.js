@@ -17,8 +17,8 @@ module.exports = async function() {
     await client.deleteMulti(deletedItems, { quiet: true });
 };
 
-(async function() {
-    const result = await client.list();
+// (async function() {
+//     const result = await client.list();
 
-    console.log(result.objects.filter(item => new RegExp('/edoc_admin/').test(item.url)));
-})();
+//     console.log(result.objects.filter(item => new RegExp('/edoc_admin/').test(item.url)));
+// })();
