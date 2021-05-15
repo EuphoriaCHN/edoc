@@ -7,9 +7,10 @@ import { useHistory, useLocation } from 'umi';
 import Loading from '@/containers/Loading';
 import Login from '@/components/Login';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { setUser } from '@/store/UserStore';
+import { Store } from '@/store';
 
 const IGNORED = [/\/AliPayLogin/];
 
@@ -22,6 +23,8 @@ export default function LoginWrapper<T>(Component: React.ComponentType<T>) {
     const _dispatch = useDispatch();
     const _history = useHistory();
     const _location = useLocation();
+
+    const userStore = useSelector<Store, Store['user']>(state => state.user);
 
     const checkLoginStatus = React.useCallback(async () => {
       setLoading(true);
@@ -63,6 +66,10 @@ export default function LoginWrapper<T>(Component: React.ComponentType<T>) {
         if (ignored.test(_location.pathname)) {
           return setSkipped(true);
         }
+      }
+      if (!!userStore.user.userId) {
+        setLogged(true);
+        return;
       }
       checkLoginStatus();
     }, []);

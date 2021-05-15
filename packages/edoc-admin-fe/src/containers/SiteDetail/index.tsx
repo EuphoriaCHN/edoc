@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams, useHistory } from 'umi';
+import { useParams, useHistory, useLocation } from 'umi';
 import { breadcrumbItemRender } from '@/common/utils';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +12,7 @@ import { ProjectAPI } from '@/api';
 
 import { PageHeader, Spin, message, Tabs } from 'antd';
 import PageLibrary from '@/containers/PageLibrary';
+import ProjectSetting from '@/containers/ProjectSetting';
 
 import { Route as BreadcrumbRoute } from 'antd/lib/breadcrumb/Breadcrumb';
 
@@ -22,7 +23,8 @@ interface IProps {
 }
 
 enum SiteDetailTabPane {
-  pageLibrary = 'pageLibrary'
+  pageLibrary = 'pageLibrary',
+  projectSetting = 'projectSetting'
 }
 
 function SiteDetail(props: IProps) {
@@ -35,6 +37,7 @@ function SiteDetail(props: IProps) {
   const { siteID } = useParams<{ siteID: string }>();
   const _dispatch = useDispatch();
   const _history = useHistory();
+  const _location = useLocation();
 
   /**
    * 面包屑导航
@@ -54,6 +57,10 @@ function SiteDetail(props: IProps) {
     activeKey: SiteDetailTabPane.pageLibrary,
     tabName: t('页面库'),
     component: <PageLibrary />
+  }, {
+    activeKey: SiteDetailTabPane.projectSetting,
+    tabName: t('项目设置'),
+    component: <ProjectSetting />
   }], []);
 
   /**
@@ -84,7 +91,7 @@ function SiteDetail(props: IProps) {
    */
   const handleTabChange = React.useCallback((activeKey: SiteDetailTabPane) => {
     setTabPaneActiveKey(activeKey);
-    window.location.hash = `#${activeKey}`;
+    _history.push(`${_location.pathname}#${activeKey}`);
   }, []);
 
 
@@ -94,8 +101,10 @@ function SiteDetail(props: IProps) {
       setIsError(true);
       return;
     }
-    if (!window.location.hash.length) {
-      window.location.hash = `#${SiteDetailTabPane.pageLibrary}`;
+    if (!_location.hash.length) {
+      _location.hash = `#${SiteDetailTabPane.pageLibrary}`;
+    } else {
+      setTabPaneActiveKey(_location.hash.split(/^#(.+)/)[1] as any);
     }
     loadData();
   }, []);
@@ -110,7 +119,7 @@ function SiteDetail(props: IProps) {
           breadcrumb={{ routes: breadcrumbRoutes, itemRender: breadcrumbItemRender }}
           onBack={() => _history.replace('/')}
           footer={(
-            <Tabs activeKey={tabPaneActiveKey} onChange={handleTabChange.bind(this)}>
+            <Tabs activeKey={tabPaneActiveKey} onTabClick={handleTabChange}>
               {tabsData.map(item =>
                 <Tabs.TabPane tab={item.tabName} key={item.activeKey}>
                   {isError ? null : item.component}

@@ -27,8 +27,51 @@ export default defineConfig({
   history: {
     type: 'browser'
   },
+  chunks: ['antdesigns', 'vendors', 'standalone', 'edocs', 'umi'],
   chainWebpack(config: WebpackChain) {
     config.plugin('edoc').use(new EdocWebpackPlugin());
+
+    config.optimization.splitChunks({
+      chunks: 'all',
+      automaticNameDelimiter: '.',
+      name: true,
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 10,
+      maxInitialRequests: 5,
+      cacheGroups: {
+        vendors: {
+          name: 'vendors',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|lodash|lodash-decorators|lodash-es|moment|axios|classnames|@redux-toolkit|react-redux|validator|jquery)[\\/]/,
+          priority: -10,
+        },
+        antdesigns: {
+          name: 'antdesigns',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](rc-|@ant-design|antd|@antv)[\\/]/,
+          priority: -11,
+        },
+        standalone: {
+          name: 'standalone',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](@babel|prettier|remark-mdx|@mdx-js)[\\/]/,
+          priority: -12,
+        },
+        edocs: {
+          name: 'edocs',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](edoc-mdx-materials|edoc-mdx-renderer|edoc-mdx-parser|tui-editor|codemirror|markdown-it|highlight.js)[\\/]/,
+          priority: -14,
+        },
+        // default: {
+        //   minChunks: 1,
+        //   priority: -20,
+        //   reuseExistingChunk: true
+        // }
+      }
+    })
 
     config.module
       .rule('edoc-editor-preset-mdx-loader')
@@ -41,9 +84,9 @@ export default defineConfig({
   polyfill: {
     imports: ['core-js/stable']
   },
-  dynamicImport: {
-    loading: '@/containers/Loading'
-  },
+  // dynamicImport: {
+  //   loading: '@/containers/Loading'
+  // },
   publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/edoc_admin/',
   define: {
     AUTHORIZATION_KEY: 'Authorization',
@@ -51,5 +94,15 @@ export default defineConfig({
     PROD_URL: 'http://abs.bhj-noshampoo.site',
     ONLINE_URL: 'http://edoc.bhj-noshampoo.site'
   },
-  favicon: 'https://s2.aconvert.com/convert/p3r68-cdx67/aoybn-a6snw-001.ico'
+  favicon: 'https://s2.aconvert.com/convert/p3r68-cdx67/aoybn-a6snw-001.ico',
+  analyze: {
+    analyzerMode: 'server',
+    analyzerPort: 8888,
+    openAnalyzer: true,
+    // generate stats file while ANALYZE_DUMP exist
+    generateStatsFile: false,
+    statsFilename: 'stats.json',
+    logLevel: 'info',
+    defaultSizes: 'parsed', // stat  // gzip
+  }
 });
