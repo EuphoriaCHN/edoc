@@ -1,13 +1,17 @@
-import { createContext } from 'react';
+import * as React from 'react';
 
-const AppContext = createContext<{
+const AppContext = React.createContext<{
     businesses: any[],
     appLoading: boolean,
-    siteID: string
+    siteID: string,
+    emptyBusinessDocument: boolean,
+    setEmptyBusinessDocument: React.Dispatch<React.SetStateAction<boolean>>,
 }>({
     businesses: [],
     appLoading: false,
-    siteID: ''
+    siteID: '',
+    emptyBusinessDocument: false,
+    setEmptyBusinessDocument: () => {}
 });
 
 export default AppContext;

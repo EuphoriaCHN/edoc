@@ -27,6 +27,8 @@
     "edoc-mdx-materials": "^0.0.4",
     "edoc-mdx-renderer": "^0.0.9",
     "edoc-webpack-plugin": "^0.0.8",
+    "i18next": "^20.2.4",
+    "react-i18next": "^11.8.15",
     "umi": "^3.4.14"
   },
   "devDependencies": {

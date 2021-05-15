@@ -1,7 +1,7 @@
 import axios, { Method, AxiosRequestConfig } from 'axios';
 
 // const prefix = 'http://localhost:9091/mock/14';
-const prefix = 'http://118.31.53.93:21002';
+const prefix = process.env.NODE_ENV === 'development' ? 'http://192.168.28.24:21002' : 'http://abs.bhj-noshampoo.site';
 
 export default async function requestCore<T extends any = any>(key: string, req: any, method: Method = 'GET'): Promise<T> {
     const requestParams: AxiosRequestConfig = {};

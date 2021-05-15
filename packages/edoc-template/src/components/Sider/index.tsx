@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useLocation, useHistory } from 'umi';
 import { REGEXPS } from '@/common/constants';
 
+import AppContext from '@/contexts/AppContext';
 import useBusinessDocuments from '@/hooks/useBusinessDocuments';
 
 import { Layout, Menu } from 'antd';
@@ -16,6 +17,7 @@ export interface IProps {
 
 function Sider(props: IProps) {
   const [selectDocID, setSelectDocID] = React.useState<string[]>([]);
+  const { setEmptyBusinessDocument } = React.useContext(AppContext);
 
   const _location = useLocation();
   const _history = useHistory();
@@ -32,7 +34,7 @@ function Sider(props: IProps) {
     // 切换了页面库
     loadBusinessDocument({ id: businessID }).then(value => {
       if (!value) {
-        return _history.replace('/');
+        return setEmptyBusinessDocument(true);
       }
       const first = value[0];
       if (!first) {
@@ -42,11 +44,11 @@ function Sider(props: IProps) {
         const firstChild = (value.children || [])[0];
         if (!!firstChild) {
           setSelectDocID([`${firstChild.id}`]); 
-          _history.replace(`${Edoc.prefix}content/${siteID}/${businessID}/${firstChild.id}`);
+          _history.replace(`${Edoc.prefix}/${siteID}/${businessID}/${firstChild.id}`);
         }
       } else {
         setSelectDocID([`${first.id}`]);
-        _history.replace(`${Edoc.prefix}content/${siteID}/${businessID}/${first.id}`);
+        _history.replace(`${Edoc.prefix}/${siteID}/${businessID}/${first.id}`);
       }
     });
   }, [businessID]);
@@ -59,7 +61,7 @@ function Sider(props: IProps) {
 
   const handleSiderSelect = React.useCallback((info: SelectInfo) => {
     if (!!info.selectedKeys && !!info.selectedKeys.length) {
-      _history.push(`${Edoc.prefix}content/${siteID}/${businessID}/${info.selectedKeys[0]}`);
+      _history.push(`${Edoc.prefix}/${siteID}/${businessID}/${info.selectedKeys[0]}`);
       setSelectDocID(info.selectedKeys as string[]);
     }
   }, [businessID]);

@@ -10,7 +10,5 @@ declare module '*.svg' {
 }
 
 declare var Edoc: {
-  AK: string;
-  projectID: number;
   prefix: string;
 };

@@ -18,7 +18,7 @@ export interface IProps {
 function Header(props: IProps) {
   const [selectBusiness, setSelectBusiness] = React.useState<string[]>([]);
 
-  const { businesses, siteID } = React.useContext(AppContext);
+  const { businesses, siteID, setEmptyBusinessDocument } = React.useContext(AppContext);
 
   const _history = useHistory();
   const _location = useLocation();
@@ -28,7 +28,8 @@ function Header(props: IProps) {
   const handleSelectBusiness = React.useCallback((info: SelectInfo) => {
     const { selectedKeys } = info;
     if (!!selectedKeys && selectedKeys.length === 1) {
-      _history.push(`${Edoc.prefix}content/${siteID}/${selectedKeys[0]}`);
+      setEmptyBusinessDocument(false);
+      _history.push(`${Edoc.prefix}/${siteID}/${selectedKeys[0]}`);
 
       setSelectBusiness(selectedKeys as string[]);
     }
@@ -36,7 +37,7 @@ function Header(props: IProps) {
 
   React.useEffect(() => {
     if (!businessIDFromURL && !!businesses.length) {
-      _history.replace(`${Edoc.prefix}content/${siteID}/${businesses[0].id}`);
+      _history.replace(`${Edoc.prefix}/${siteID}/${businesses[0].id}`);
       setSelectBusiness([`${businesses[0].id}`])
     }
   }, [businesses]);

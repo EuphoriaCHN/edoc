@@ -6,7 +6,7 @@ import { REGEXPS } from '@/common/constants';
 
 import useDocumentContent from '@/hooks/useDocumentContent';
 
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 
 import './index.scss';
 
@@ -16,7 +16,7 @@ export interface IProps {
 
 function Contents(props: IProps) {
   const _location = useLocation();
-  const { data, start } = useDocumentContent({}, [], { manual: true });
+  const { data, start, loading } = useDocumentContent({}, [], { manual: true });
 
   const documentID = _location.pathname.split(REGEXPS.splitIDs)[3];
 
@@ -29,7 +29,9 @@ function Contents(props: IProps) {
 
   return (
     <Layout.Content className={'content-area'}>
-      <Renderer markdown={data || ''} components={Object.assign({}, override)} />
+      <Spin spinning={loading}>
+        <Renderer markdown={data || ''} components={Object.assign({}, override)} />
+      </Spin>
     </Layout.Content>
   );
 }

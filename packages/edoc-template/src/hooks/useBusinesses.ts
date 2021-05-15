@@ -2,7 +2,7 @@ import { GetBusinesses } from './api';
 import useRequest, { UseRequestConfig } from './api/useRequest';
 
 export default function(
-    { id }: { id?: number } = {},
+    { ownerProjectId }: { ownerProjectId?: number | string | null } = {},
     useDeps: any[] = [],
     useConfig: UseRequestConfig = {}
 ) {
@@ -15,8 +15,8 @@ export default function(
     }
 
     return useRequest(
-        (manualParams: any) => GetBusinesses(manualParams || { data: { id } }),
-        [id, ...deps],
+        (manualParams: any) => GetBusinesses(manualParams || { data: { ownerProjectId } }),
+        [ownerProjectId, ...deps],
         {
             initialData: [],
             transform: _ => _,
