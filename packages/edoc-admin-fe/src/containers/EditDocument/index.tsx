@@ -4,8 +4,9 @@ import { useHistory, useParams } from 'umi';
 import { prettierMDX } from '@/common/utils';
 import axios from 'axios';
 import Cookie from 'js-cookie';
+import copy from 'copy-to-clipboard';
 
-import { Button, message, Spin } from 'antd';
+import { Button, message, Spin, Typography } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import Editor from '@/components/Editor';
 
@@ -85,8 +86,16 @@ function EditDocument(props: IProps) {
 
       await DocumentAPI.publishDocument({ id: parseInt(documentID) });
 
+      const onlineURL = `${ONLINE_URL}/content/${siteID}/${pageLibraryID}/${documentID}`;
+      
+      copy(onlineURL);
       message.success(t('文档已发布'));
-      message.success(t('线上地址：').concat(`${ONLINE_URL}/content/${siteID}/${pageLibraryID}/${documentID}`));
+      message.success((
+        <React.Fragment>
+          <Typography.Text>{t('线上地址：').concat(onlineURL)}</Typography.Text>
+          <Typography.Link style={{ display: 'inline-block', marginLeft: 8 }} href={onlineURL} target={'__blank'}>{t('前往线上')}</Typography.Link>
+        </React.Fragment>
+      ));
     } catch (err) {
       message.error(t('文档发布失败'));
       message.error(err.message || JSON.stringify(err));
