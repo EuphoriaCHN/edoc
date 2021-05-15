@@ -1,0 +1,9 @@
+.site-detail {
+  &-tabs {
+    > div[role="tablist"] {
+      .ant-tabs-nav-wrap {
+        border-bottom: 1px solid var(--color-border);
+      }
+    }
+  }
+}

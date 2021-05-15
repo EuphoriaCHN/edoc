@@ -119,7 +119,7 @@ function SiteDetail(props: IProps) {
           breadcrumb={{ routes: breadcrumbRoutes, itemRender: breadcrumbItemRender }}
           onBack={() => _history.replace('/')}
           footer={(
-            <Tabs activeKey={tabPaneActiveKey} onTabClick={handleTabChange}>
+            <Tabs className={'site-detail-tabs'} activeKey={tabPaneActiveKey} onTabClick={handleTabChange}>
               {tabsData.map(item =>
                 <Tabs.TabPane tab={item.tabName} key={item.activeKey}>
                   {isError ? null : item.component}
