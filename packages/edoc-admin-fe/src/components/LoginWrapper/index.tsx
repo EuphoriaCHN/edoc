@@ -14,7 +14,7 @@ import { Store } from '@/store';
 
 const IGNORED = [/\/AliPayLogin/];
 
-export default function LoginWrapper<T>(Component: React.ComponentType<T>) {
+export default function LoginWrapper<T extends object>(Component: React.ComponentType<T>) {
   function HOC(props: T) {
     const [skipped, setSkipped] = React.useState<boolean>(false);
     const [logged, setLogged] = React.useState<boolean>(false);

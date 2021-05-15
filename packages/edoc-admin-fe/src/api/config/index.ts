@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import config from './globalConfig';
-import { HTTP_STATUS_CODE } from '@/common/utils/constants';
+import { HTTP_STATUS_CODE, ERR_CODE } from '@/common/utils/constants';
 import { isArray, each } from 'lodash-es';
 import Cookie from 'js-cookie';
+
+import { setForbidden } from '@/store/GlobalStore';
+import Store from '@/store';
 
 // 响应结构
 export type ResponseData<T = any> = {
   success: boolean;
   data?: T;
   errorMsg?: string;
-  errorCode?: number;
+  errorCode?: string;
   total?: number;
 };
 
@@ -95,7 +98,15 @@ const onAxiosInstanceFulfilled = async (value: AxiosResponse<ResponseData>) => {
   const { data, success, errorMsg, errorCode, total } = value.data;
 
   if (!!success) {
+    Store.dispatch(setForbidden({ forbidden: false }));
     return Promise.resolve({ data, total });
+  }
+
+  switch (errorCode) {
+    case ERR_CODE.PERMISSION_DENIED:
+    case ERR_CODE.IDENTITY_MATCH_FAIL:
+      Store.dispatch(setForbidden({ forbidden: true }));
+      break;
   }
 
   return Promise.reject({ message: errorMsg, errorCode });
