@@ -1,11 +1,11 @@
 const fs = require('fs');
 const { fork } = require('child_process');
 const path = require('path');
+const { ROOT_PATH, NODE_MODULES_PATH } = require('./constants');
 
-const ROOT = process.cwd();
-const DIST = `${ROOT}\\dist`;
+const DIST = `${ROOT_PATH}\\dist`;
 
-const UMI_SCRIPT = path.resolve(ROOT, 'node_modules', 'umi', 'bin', 'umi.js');
+const UMI_SCRIPT = path.resolve(NODE_MODULES_PATH, 'umi', 'bin', 'umi.js');
 
 if (fs.existsSync(DIST)) {
     fs.readdirSync(DIST).forEach(name => {

@@ -31,6 +31,20 @@ $headerHeight: 60px;
     }
   }
 
+  &-options {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    >* {
+      margin-right: 16px;
+
+      &:last-child {
+        margin: 0 !important;
+      }
+    }
+  }
+
   &-user {
     &-avatar {
       cursor: pointer;

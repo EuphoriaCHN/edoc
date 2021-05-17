@@ -10,9 +10,11 @@ import { setUser } from '@/store/UserStore';
 import { Store } from '@/store';
 
 import { Layout, Typography, Button, message, Avatar, Dropdown, Menu } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UserOutlined, LogoutOutlined, TranslationOutlined } from '@ant-design/icons';
 
 import Logo from '@/common/images/Logo.png';
+
+import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 
 import './index.scss';
 
@@ -24,7 +26,7 @@ function Header(this: any, props: IProps) {
   const [visible, setVisible] = React.useState<boolean>(true);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const _history = useHistory();
   const _location = useLocation();
   const _dispatch = useDispatch();
@@ -74,6 +76,16 @@ function Header(this: any, props: IProps) {
     _history.push('/userCenter');
   }, []);
 
+  /**
+   * 切换语言
+   */
+  const handleChangeLocale = React.useCallback<MenuClickEventHandler>(({ key }) => {
+    if (Cookie.get(I18N_COOKIE_KEY) !== key) {
+      Cookie.set(I18N_COOKIE_KEY, key as string, { expires: 365 });
+      location.reload();
+    }
+  }, []);
+
   const renderUser = React.useMemo(() => {
     const { user } = userStore;
     if (!user.account) {
@@ -107,9 +119,9 @@ function Header(this: any, props: IProps) {
               </div>
               <Menu className={'site-header-user-dropdown-menu'} selectable={false}>
                 <Menu.Item onClick={handleRouteToProfile} icon={<UserOutlined />}>{t('个人中心')}</Menu.Item>
-                <Menu.Item 
-                  icon={<LogoutOutlined />} 
-                  onClick={handleLogout.bind(this, user.account)} 
+                <Menu.Item
+                  icon={<LogoutOutlined />}
+                  onClick={handleLogout.bind(this, user.account)}
                   danger
                 >
                   {t('登出账号')}
@@ -139,7 +151,21 @@ function Header(this: any, props: IProps) {
         <img className={'site-header-title-logo'} src={Logo} />
         <Typography.Title level={4}>{t('Edoc 管理端')}</Typography.Title>
       </div>
-      {renderUser}
+      <div className={'site-header-options'}>
+        <Dropdown
+          trigger={['click']}
+          placement={'bottomRight'}
+          overlay={(
+            <Menu selectedKeys={[Cookie.get(I18N_COOKIE_KEY) || 'zh-CN']} onClick={handleChangeLocale}>
+              <Menu.Item key={'zh-CN'}>简体中文</Menu.Item>
+              <Menu.Item key={'en-US'}>English</Menu.Item>
+            </Menu>
+          )}
+        >
+          <Button type={'text'} icon={<TranslationOutlined />}>{i18n.language.startsWith('zh') ? '简体中文' : 'English'}</Button>
+        </Dropdown>
+        {renderUser}
+      </div>
     </Layout.Header>
   );
 }

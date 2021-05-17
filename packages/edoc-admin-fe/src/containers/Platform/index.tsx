@@ -88,7 +88,7 @@ function Platform(props: IProps) {
           subTitle={t('选择并管理你的文档站点')}
           footer={(
             <Tabs defaultActiveKey={'all'}>
-              <Tabs.TabPane tab={t('全部站点')} tabKey={'all'} />
+              <Tabs.TabPane tab={t('我的站点')} tabKey={'all'} />
             </Tabs>
           )}
           className={'platform-header'}
