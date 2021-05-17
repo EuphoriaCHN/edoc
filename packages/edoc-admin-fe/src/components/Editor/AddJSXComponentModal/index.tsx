@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Modal, Select } from 'antd';
 import { Renderer } from 'edoc-mdx-renderer';
+import { useTranslation } from 'react-i18next';
 
 import {
   mdxAntDComponentMap,
@@ -19,6 +20,8 @@ function AddJSXComponentModal(props: IAddJSXComponentModalProps) {
   const [mdxContent, setMdxContent] = React.useState<string>('');
   const [openSelect, setOpenSelect] = React.useState<boolean>(false);
 
+  const { t } = useTranslation();
+
   const handleOnSelect = React.useCallback((value: string) => {
     const content = mdxAntDComponentMap[value] || mdxAntDVComponentMap[value];
     setMdxContent(content || '');
@@ -36,7 +39,7 @@ function AddJSXComponentModal(props: IAddJSXComponentModalProps) {
     <Modal
       visible={props.visible}
       onCancel={props.onCancel}
-      title={'选择前端组件'}
+      title={t('选择前端组件')}
       width={920}
       className={'add-jsx-component-modal'}
       onOk={() => typeof props.onOk === 'function' && props.onOk(mdxContent)}
@@ -52,7 +55,7 @@ function AddJSXComponentModal(props: IAddJSXComponentModalProps) {
         open={openSelect}
         showSearch
       >
-        <Select.OptGroup label={'AntD 组件'}>
+        <Select.OptGroup label={t('AntD 组件')}>
           {mdxAntDComponentList.map(name => (
             <Select.Option value={name} key={name}>{name}</Select.Option>
           ))}

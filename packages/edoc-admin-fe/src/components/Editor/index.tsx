@@ -85,7 +85,7 @@ export interface IEdocEditorProps {
 }
 
 function EdocEditor(props: IEdocEditorProps) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [addJSXComponentModalVisible, setAddJSXComponentModalVisible] =
         React.useState<boolean>(false);
@@ -145,7 +145,7 @@ function EdocEditor(props: IEdocEditorProps) {
         const editor = new TuiEditor({
             el: editorElementRef.current,
             height: props.height || '500px',
-            language: 'zh_CN',
+            language: i18n.language.replace(/_/, '-'),
             initialEditType: 'markdown',
             previewStyle: 'vertical',
             hideModeSwitch: true,

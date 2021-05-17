@@ -24,7 +24,7 @@ function LoginForm(this: any, props: IProps) {
   const [waitingCaptcha, setWaitingCaptcha] = React.useState<number>(0);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const _history = useHistory();
 
   const [form] = Form.useForm();
@@ -145,7 +145,7 @@ function LoginForm(this: any, props: IProps) {
 
   return (
     <div className={'login-form'}>
-      <Form labelCol={{ span: 4 }} form={form}>
+      <Form labelCol={{ span: i18n.language.startsWith('zh') ? 4 : 6 }} form={form}>
         <Tabs defaultActiveKey={'useAccount'}>
           <Tabs.TabPane tab={t('账号登录')} key={'useAccount'}>
             <Form.Item name={'account'} label={t('账号')}>
