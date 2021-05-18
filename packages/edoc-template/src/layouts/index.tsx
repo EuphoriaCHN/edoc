@@ -9,6 +9,7 @@ import EmptyBusinessDocument from '@/components/EmptyBusinessDocument';
 
 import AppContext from '@/contexts/AppContext';
 
+import useProjectByID from '@/hooks/useProjectByID';
 import useSiteID from '@/hooks/useSiteID';
 import useBusinesses from '@/hooks/useBusinesses';
 
@@ -17,16 +18,19 @@ import './index.scss';
 function LayoutWrapper(props: React.PropsWithChildren<{}>) {
   const [emptyBusinessDocument, setEmptyBusinessDocument] = React.useState<boolean>(false);
   const siteID = useSiteID();
-  const { data: businesses, loading } = useBusinesses({ ownerProjectId: siteID || null }, []);
+
+  const { data: businesses, loading: getBusinessesLoading } = useBusinesses({ ownerProjectId: siteID || null }, []);
+  const { data: projectData, loading: getProjectLoading } = useProjectByID({ projectID: siteID || null }, []);
 
   return (
     <AppContext.Provider
       value={{
         businesses,
-        appLoading: loading,
+        appLoading: getBusinessesLoading || getProjectLoading,
         siteID,
         emptyBusinessDocument,
-        setEmptyBusinessDocument
+        setEmptyBusinessDocument,
+        projectData
       }}
     >
       <Layout>

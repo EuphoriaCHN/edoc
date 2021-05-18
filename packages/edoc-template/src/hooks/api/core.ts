@@ -17,7 +17,8 @@ export default async function requestCore<T extends any = any>(key: string, req:
         method: method,
         headers: {
             'X-Require-Node': 'true',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Edcs_482qr53fc': 'EgvF9E!2%NtIr5wmjL7Y@WFn@YrvvRa5v&j'
         },
         withCredentials: false,
     }, requestParams)).then(res => {

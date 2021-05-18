@@ -6,12 +6,14 @@ const AppContext = React.createContext<{
     siteID: string,
     emptyBusinessDocument: boolean,
     setEmptyBusinessDocument: React.Dispatch<React.SetStateAction<boolean>>,
+    projectData: any
 }>({
     businesses: [],
     appLoading: false,
     siteID: '',
     emptyBusinessDocument: false,
-    setEmptyBusinessDocument: () => {}
+    setEmptyBusinessDocument: () => {},
+    projectData: {}
 });
 
 export default AppContext;

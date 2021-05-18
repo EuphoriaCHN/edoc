@@ -18,40 +18,16 @@
         cursor: pointer;
     }
 
-    &-footer {
+    &-title {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        margin-right: 8px;
+        cursor: pointer;
 
-        > * {
-            margin-right: 8px;
-
-            &:last-child {
-                margin: 0;
-            }
-        }
-
-        &-search {
-            display: flex;
-            align-items: center;
-            padding: 10px 13px;
-            margin-right: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 20px;
-            background: var(--color-fill-0);
-            border-radius: 20px;
-            min-width: fit-content;
-            cursor: pointer;
-
-            > svg {
-                display: inline-block;
-                margin-right: 8px;
-            }
-
-            > span {
-                color: var(--color-text-2);
-            }
+        > h1 {
+            margin: 0 0 0 16px !important;
+            font-size: 22px !important;
         }
     }
 }

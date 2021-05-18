@@ -5,7 +5,7 @@ import { REGEXPS } from '@/common/constants';
 
 import AppContext from '@/contexts/AppContext';
 
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Typography, Avatar } from 'antd';
 
 import { SelectInfo } from 'rc-menu/lib/interface';
 
@@ -18,7 +18,7 @@ export interface IProps {
 function Header(props: IProps) {
   const [selectBusiness, setSelectBusiness] = React.useState<string[]>([]);
 
-  const { businesses, siteID, setEmptyBusinessDocument } = React.useContext(AppContext);
+  const { businesses, siteID, setEmptyBusinessDocument, projectData } = React.useContext(AppContext);
 
   const _history = useHistory();
   const _location = useLocation();
@@ -48,10 +48,18 @@ function Header(props: IProps) {
     }
   }, []);
 
+  const handleTitleClick = React.useCallback(() => {
+    window.location.pathname = `${Edoc.prefix}/${siteID}`;
+  }, [projectData]);
+
   return (
     <Layout.Header
       className={classnames(props.className, 'wrap', 'site-header')}
     >
+      <div className={'site-header-title'} onClick={handleTitleClick}>
+        <Avatar src={projectData.feature?.logoSrc} />
+        <Typography.Title level={1}>{projectData.projectName}</Typography.Title>
+      </div>
       <Menu
         selectedKeys={selectBusiness} 
         theme={'light'}
