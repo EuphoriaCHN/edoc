@@ -56,12 +56,14 @@ function Header(props: IProps) {
     <Layout.Header
       className={classnames(props.className, 'wrap', 'site-header')}
     >
-      <div className={'site-header-title'} onClick={handleTitleClick}>
-        <Avatar src={(projectData || {}).feature?.logoSrc} />
-        <Typography.Title level={1}>{(projectData || {}).projectName || ''}</Typography.Title>
-      </div>
+      {!!projectData ? (
+        <div className={'site-header-title'} onClick={handleTitleClick}>
+          <Avatar src={(projectData || {}).feature?.logoSrc} />
+          <Typography.Title level={1}>{(projectData || {}).projectName || ''}</Typography.Title>
+        </div>
+      ) : null}
       <Menu
-        selectedKeys={selectBusiness} 
+        selectedKeys={selectBusiness}
         theme={'light'}
         mode={'horizontal'}
         onSelect={handleSelectBusiness}
