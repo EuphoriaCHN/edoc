@@ -9,7 +9,7 @@ $aliBlue: rgb(20, 118, 254);
     margin: 0 auto;
     padding: 24px;
     border-radius: $boxRadius;
-    margin-top: 50%;
+    margin-top: 50% !important;
     transform: translateY(-50%);
 
     .ant-tabs-nav {
