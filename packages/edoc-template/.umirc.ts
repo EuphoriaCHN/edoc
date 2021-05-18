@@ -23,7 +23,7 @@ export default defineConfig({
       prefix: '/content'
     }
   },
-  chunks: ['antdesigns', 'vendors', 'default.umi', 'umi', 'edocs'],
+  chunks: ['antdesigns', 'vendors', 'standalone', 'edocs', 'umi'],
   async chainWebpack(config: WebpackChain) {
     config.plugin('edoc').use(new EdocWebpackPlugin());
 
@@ -40,26 +40,32 @@ export default defineConfig({
         vendors: {
           name: 'vendors',
           chunks: 'all',
-          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|lodash|lodash-decorators|moment|axios)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|lodash|lodash-decorators|moment|axios|classnames)[\\/]/,
           priority: -10,
         },
         antdesigns: {
           name: 'antdesigns',
           chunks: 'all',
-          test: /[\\/]node_modules[\\/](@ant-design|antd)[\\/]/,
+          test: /[\\/]node_modules[\\/](@ant-design|antd|@antv)[\\/]/,
           priority: -11,
+        },
+        standalone: {
+          name: 'standalone',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/](@babel|remark-mdx|@mdx-js)[\\/]/,
+          priority: -12,
         },
         edocs: {
           name: 'edocs',
           chunks: 'all',
-          test: /[\\/]node_modules[\\/](edoc-mdx-materials|edoc-mdx-renderer)[\\/]/,
-          priority: -12,
+          test: /[\\/]node_modules[\\/](edoc-mdx-materials|edoc-mdx-parser|edoc-mdx-renderer)[\\/]/,
+          priority: -13,
         },
-        default: {
-          minChunks: 1,
-          priority: -20,
-          reuseExistingChunk: true
-        }
+        // default: {
+        //   minChunks: 1,
+        //   priority: -20,
+        //   reuseExistingChunk: true
+        // }
       }
     })
   },
