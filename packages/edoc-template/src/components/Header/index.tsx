@@ -18,7 +18,7 @@ export interface IProps {
 function Header(props: IProps) {
   const [selectBusiness, setSelectBusiness] = React.useState<string[]>([]);
 
-  const { businesses, siteID, setEmptyBusinessDocument, projectData } = React.useContext(AppContext);
+  const { businesses, siteID, setEmptyBusinessDocument, projectData = {} } = React.useContext(AppContext);
 
   const _history = useHistory();
   const _location = useLocation();
@@ -57,8 +57,8 @@ function Header(props: IProps) {
       className={classnames(props.className, 'wrap', 'site-header')}
     >
       <div className={'site-header-title'} onClick={handleTitleClick}>
-        <Avatar src={projectData.feature?.logoSrc} />
-        <Typography.Title level={1}>{projectData.projectName}</Typography.Title>
+        <Avatar src={(projectData || {}).feature?.logoSrc} />
+        <Typography.Title level={1}>{(projectData || {}).projectName || ''}</Typography.Title>
       </div>
       <Menu
         selectedKeys={selectBusiness} 

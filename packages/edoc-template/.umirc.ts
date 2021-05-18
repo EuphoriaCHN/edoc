@@ -21,7 +21,8 @@ export default defineConfig({
   define: {
     Edoc: {
       prefix: '/content'
-    }
+    },
+    I18N_COOKIE_KEY: 'locale'
   },
   chunks: ['antdesigns', 'vendors', 'standalone', 'edocs', 'umi'],
   async chainWebpack(config: WebpackChain) {
@@ -40,7 +41,7 @@ export default defineConfig({
         vendors: {
           name: 'vendors',
           chunks: 'all',
-          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|lodash|lodash-decorators|moment|axios|classnames)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|lodash|lodash-decorators|moment|axios|classnames|js-cookie)[\\/]/,
           priority: -10,
         },
         antdesigns: {

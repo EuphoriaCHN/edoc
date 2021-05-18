@@ -12,3 +12,4 @@ declare module '*.svg' {
 declare var Edoc: {
   prefix: string;
 };
+declare var I18N_COOKIE_KEY: 'locale';
