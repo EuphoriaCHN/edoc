@@ -5,6 +5,10 @@ export interface ProjectStore {
     projectName: string;
     id: number;
     projectDesc?: string;
+    creator: string;
+    feature: null | {
+      logoSrc?: string;
+    };
   };
   pageLibrary: {
     pageName: string;
@@ -19,7 +23,9 @@ export const projectSlice = createSlice<ProjectStore, SliceCaseReducers<ProjectS
     project: {
       projectName: '',
       id: 0,
-      projectDesc: ''
+      projectDesc: '',
+      creator: '',
+      feature: null
     },
     pageLibrary: {
       pageName: '',
@@ -31,12 +37,15 @@ export const projectSlice = createSlice<ProjectStore, SliceCaseReducers<ProjectS
     setProject: (state, action) => {
       state.project = action.payload.project;
     },
+    updateProjectInfo: (state, action) => {
+      Object.assign(state.project, action.payload.project);
+    },
     setPageLibrary: (state, action) => {
       state.pageLibrary = action.payload.pageLibrary;
-    }
+    },
   }
 });
 
-export const { setProject, setPageLibrary } = projectSlice.actions;
+export const { setProject, setPageLibrary, updateProjectInfo } = projectSlice.actions;
 
 export default projectSlice.reducer;

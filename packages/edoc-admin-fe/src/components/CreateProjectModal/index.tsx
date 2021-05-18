@@ -62,7 +62,8 @@ function CreateProjectModal (props: IProps) {
 
     const requestData = {
       projectName: name,
-      projectDesc: description
+      projectDesc: description,
+      feature: { logoSrc: 'http://abs-image.oss-cn-hangzhou.aliyuncs.com/20210518/1621331663279680.png' }
     };
 
     try {

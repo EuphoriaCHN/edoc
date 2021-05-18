@@ -43,6 +43,7 @@ function Platform(props: IProps) {
    * 跳转至【站点详情页】
    */
   const handleCardClick = React.useCallback((project: any) => {
+    console.log(project);
     _dispatch(setProject({
       id: nanoid(),
       project

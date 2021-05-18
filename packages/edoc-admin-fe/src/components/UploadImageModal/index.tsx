@@ -4,6 +4,7 @@ import Cookie from 'js-cookie';
 
 import { Upload, Modal, message } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
+import { MiddlewareAPI } from '@/api';
 
 import { UploadProps } from 'antd';
 
@@ -49,7 +50,7 @@ function UploadImageModal(this: any, props: IProps) {
         setUploadModalVisible(false);
       }
     }
-  }, []);
+  }, [props.onSuccess]);
 
   return (
     <React.Fragment>
@@ -66,7 +67,7 @@ function UploadImageModal(this: any, props: IProps) {
         <Upload.Dragger
           accept={'image/*'}
           name={'multipartFile'}
-          action={process.env.NODE_ENV === 'development' ? `${DEV_IP}/abs/middleware/uploadImage` : `${PROD_URL}/abs/middleware/uploadImage`}
+          action={MiddlewareAPI.uploadImage}
           method={'post'}
           headers={{
             Authorization: Cookie.get(AUTHORIZATION_KEY) || ''

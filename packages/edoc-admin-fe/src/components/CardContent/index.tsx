@@ -72,7 +72,7 @@ export function DefaultCardContent (props: IDefaultCardContentProps) {
     >
       <Skeleton loading={props.loading} active>
         <Card.Meta
-          avatar={<Avatar src={Logo} />}
+          avatar={<Avatar src={props.data?.feature?.logoSrc || Logo} />}
           title={(
             <Typography.Paragraph
               ellipsis={{

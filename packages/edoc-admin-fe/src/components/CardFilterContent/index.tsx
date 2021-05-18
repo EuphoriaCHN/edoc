@@ -103,7 +103,7 @@ function CardFilterContent (props: IProps) {
         onClick={props.onCardClick} 
         onDelete={handleOnCardDelete}
         dataSource={props.dataSource} 
-        colKey={'ID'} 
+        colKey={'id'} 
         loading={props.loading}
       />
       <Pagination

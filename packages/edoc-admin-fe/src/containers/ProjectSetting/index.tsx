@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Tabs } from 'antd';
 
-import AvatarSetting from './AvatarSetting';
+import ProjectBaseInfo from './ProjectBaseInfo';
 
 import './index.scss';
 
@@ -17,7 +17,7 @@ function ProjectSetting(props: IProps) {
   const tabPanes = React.useMemo(() => ([{
     tab: t('基本信息'),
     key: 'baseInfo',
-    component: <AvatarSetting />
+    component: <ProjectBaseInfo />
   }]), []);
 
   return (
