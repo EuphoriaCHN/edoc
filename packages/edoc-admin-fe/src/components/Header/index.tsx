@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'umi';
 import Cookie from 'js-cookie';
 import { LoginAPI } from '@/api';
+import { LANGS } from '@/common/utils/constants';
 
 import { nanoid } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
@@ -157,12 +158,11 @@ function Header(this: any, props: IProps) {
           placement={'bottomRight'}
           overlay={(
             <Menu selectedKeys={[Cookie.get(I18N_COOKIE_KEY) || 'zh-CN']} onClick={handleChangeLocale}>
-              <Menu.Item key={'zh-CN'}>简体中文</Menu.Item>
-              <Menu.Item key={'en-US'}>English</Menu.Item>
+              {Object.keys(LANGS).map(locale => <Menu.Item key={locale}>{(LANGS as any)[locale]}</Menu.Item>)}
             </Menu>
           )}
         >
-          <Button type={'text'} icon={<TranslationOutlined />}>{i18n.language.startsWith('zh') ? '简体中文' : 'English'}</Button>
+          <Button type={'text'} icon={<TranslationOutlined />}>{(LANGS as any)[i18n.language]}</Button>
         </Dropdown>
         {renderUser}
       </div>

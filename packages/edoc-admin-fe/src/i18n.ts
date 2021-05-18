@@ -24,7 +24,6 @@ export async function initI18nextInstance () {
       },
       keySeparator: false,
       resources: locales,
-      fallbackLng: ['zh-CN', 'en-US'],
       lng: langFromCookie || 'zh-CN'
     }, resolve);
   });

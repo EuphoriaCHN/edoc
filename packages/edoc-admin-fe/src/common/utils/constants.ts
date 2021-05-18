@@ -26,3 +26,11 @@ export enum ERR_CODE {
   IDENTITY_MATCH_FAIL = 'IDENTITY_MATCH_FAIL',
   PERMISSION_DENIED = 'PERMISSION_DENIED',
 }
+
+export const LANGS = {
+  'zh-CN': '简体中文',
+  'zh-TW': '繁體中文',
+  'en-US': 'English',
+  'ja-JP': '日本語',
+  'ko-KR': '한국어'
+};

@@ -13,5 +13,5 @@ module.exports = {
     I18N_PATH,
 
     I18N_DEFAULTS: 'zh-CN',
-    I18N_LANGS: ['zh-CN', 'en-US']
+    I18N_LANGS: ['zh-CN', 'zh-TW', 'en-US', 'ja-JP', 'ko-KR']
 };
