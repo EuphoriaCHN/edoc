@@ -107,7 +107,7 @@
   "修改账号失败": "Failed to modify account",
   "修改": "modify",
   "请输入账号": "please enter account",
-  "修改成功后需要重新登陆": "You need to log in again after the modification is successful",
+  "修改成功后需要重新登陆": "After the modification is successful, you need to log in again",
   "昵称已更新": "Nickname has been updated",
   "昵称更新失败": "Nickname update failed",
   "请输入昵称": "Please enter a nickname",
@@ -175,5 +175,17 @@
   "项目设置": "Project settings",
   "获取项目详情失败": "Failed to get project details",
   "站点详情": "Site details",
-  "进行页面库配置与站点管理": "Perform page library configuration and site management"
+  "进行页面库配置与站点管理": "Perform page library configuration and site management",
+  "选择前端组件": "Choose front-end components",
+  "AntD 组件": "AntD component",
+  "项目简介已更新": "The project profile has been updated",
+  "项目简介更新失败": "Project profile update failed",
+  "修改项目简介": "Modify the project profile",
+  "项目简介": "Project Description",
+  "请输入项目简介": "Please enter the project introduction",
+  "项目 Logo 已更新": "The project logo has been updated",
+  "更新项目 Logo 失败": "Failed to update project logo",
+  "项目名称": "project name",
+  "项目 Logo": "Project logo",
+  "点击修改": "Click edit"
 }
