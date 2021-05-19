@@ -27,6 +27,19 @@ function LayoutWrapper(props: React.PropsWithChildren<{}>) {
     Edcs_482qr53fc: 'EgvF9E!2%NtIr5wmjL7Y@WFn@YrvvRa5v&j'
   }, []);
 
+  React.useEffect(() => {
+    if (!!(projectData || {}).projectName) {
+      const titleElement: HTMLTitleElement | null = document.querySelector('head > title');
+      if (!!titleElement) {
+        titleElement.innerText = projectData.projectName;
+      } else {
+        const titleEl = document.createElement('title');
+        titleEl.innerText = projectData.projectName;
+        document.head.appendChild(titleEl);
+      }
+    }
+  }, [projectData]);
+
   return (
     <AppContext.Provider
       value={{
