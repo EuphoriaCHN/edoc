@@ -2,7 +2,7 @@ import { GetProjectByID } from './api';
 import useRequest, { UseRequestConfig } from './api/useRequest';
 
 export default function(
-    { projectID }: { projectID?: any } = {},
+    { projectID, Edcs_482qr53fc }: { projectID?: any, 'Edcs_482qr53fc'?: any } = {},
     useDeps: any[] = [],
     useConfig: UseRequestConfig = {}
 ) {
@@ -15,8 +15,8 @@ export default function(
     }
 
     return useRequest(
-        (manualParams: any) => GetProjectByID(manualParams || { id: projectID }),
-        [projectID, ...deps],
+        (manualParams: any) => GetProjectByID(manualParams || { id: projectID, Edcs_482qr53fc }),
+        [projectID, Edcs_482qr53fc, ...deps],
         {
             initialData: [],
             transform: _ => _,

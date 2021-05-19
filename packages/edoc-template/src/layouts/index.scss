@@ -1,0 +1,17 @@
+.site-footer {
+    &-beian {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > a {
+            display: inline-block;
+            margin-left: 8px;
+            color: var(--color-text-1) !important;
+
+            &:hover {
+                color: var(--color-text-2) !important;
+            }
+        }
+    }
+}

@@ -1,7 +1,8 @@
 import axios, { Method, AxiosRequestConfig } from 'axios';
 
 // const prefix = 'http://localhost:9091/mock/14';
-const prefix = process.env.NODE_ENV === 'development' ? 'http://192.168.28.24:21002' : 'http://abs.bhj-noshampoo.site';
+// const prefix = process.env.NODE_ENV === 'development' ? 'http://192.168.28.24:21002' : 'http://abs.bhj-noshampoo.site';
+const prefix = 'http://abs.bhj-noshampoo.site';
 
 export default async function requestCore<T extends any = any>(key: string, req: any, method: Method = 'GET'): Promise<T> {
     const requestParams: AxiosRequestConfig = {};
@@ -17,8 +18,7 @@ export default async function requestCore<T extends any = any>(key: string, req:
         method: method,
         headers: {
             'X-Require-Node': 'true',
-            'Content-Type': 'application/json',
-            'Edcs_482qr53fc': 'EgvF9E!2%NtIr5wmjL7Y@WFn@YrvvRa5v&j'
+            'Content-Type': 'application/json'
         },
         withCredentials: false,
     }, requestParams)).then(res => {

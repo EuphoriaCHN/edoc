@@ -86,7 +86,7 @@ pre {
   flex-direction: column;
   box-sizing: border-box;
   // padding-left: $nav-width;
-  height: calc(100vh - 65px);
+  height: calc(100vh - 65px - 70px);
   padding-top: 30px;
 
   overflow-y: auto;
@@ -267,7 +267,7 @@ body {
 .site-container {
   padding-top: 65px !important;
   width: 100% !important;
-  min-height: calc(100vh - 65px) !important;
+  min-height: calc(100vh - 65px - 70px) !important;
   box-sizing: initial !important;
 }
 
