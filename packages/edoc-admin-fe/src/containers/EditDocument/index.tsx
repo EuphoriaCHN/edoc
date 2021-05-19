@@ -127,6 +127,7 @@ function EditDocument(props: IProps) {
   const handleUploadImage = React.useCallback((blob: File, callback: (placeholder: string, alterName?: string | undefined) => void) => {
     const formData = new FormData();
     formData.append('multipartFile', blob, blob.name);
+    setLoading(true);
 
     axios.post(MiddlewareAPI.uploadImage, formData, {
       headers: {
@@ -144,7 +145,7 @@ function EditDocument(props: IProps) {
     }, err => {
       message.error(t('上传图片失败'));
       message.error(err.message || JSON.stringify(err));
-    });
+    }).finally(() => setLoading(false));
   }, [])
 
   React.useEffect(() => {
