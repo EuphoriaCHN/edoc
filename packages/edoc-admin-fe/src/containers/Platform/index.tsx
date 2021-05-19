@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { setProject } from '@/store/ProjectStore';
+import { setHelmet } from '@/store/GlobalStore';
 
 import { PageHeader, Tabs, message } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
@@ -34,6 +35,13 @@ function Platform(props: IProps) {
   } = ProjectAPI.useProjectList({ manual: true });
 
   React.useEffect(() => {
+    _dispatch(setHelmet({
+      id: nanoid(),
+      helmet: t('站点列表')
+    }));
+  }, []);
+
+  React.useEffect(() => {
     if (!!loadProjectListDataError) {
       message.error(loadProjectListDataError.message);
     }
@@ -43,7 +51,6 @@ function Platform(props: IProps) {
    * 跳转至【站点详情页】
    */
   const handleCardClick = React.useCallback((project: any) => {
-    console.log(project);
     _dispatch(setProject({
       id: nanoid(),
       project

@@ -6,6 +6,7 @@ import { breadcrumbItemRender } from '@/common/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { Store } from '@/store';
 import { setProject } from '@/store/ProjectStore';
+import { setHelmet } from '@/store/GlobalStore';
 import { nanoid } from '@reduxjs/toolkit';
 
 import { ProjectAPI } from '@/api';
@@ -47,7 +48,7 @@ function SiteDetail(props: IProps) {
     breadcrumbName: t('首页'),
   }, {
     path: `/siteDetail/${projectState.project?.id || 0}`,
-    breadcrumbName: projectState.project?.projectName || t('加载中...')
+    breadcrumbName: projectState.project?.projectName || t('加载中...'),
   }], [projectState.project]);
 
   /**
@@ -96,6 +97,11 @@ function SiteDetail(props: IProps) {
 
 
   React.useEffect(() => {
+    _dispatch(setHelmet({
+      id: nanoid(),
+      helmet: t('站点详情')
+    }));
+
     if (!siteID) {
       message.error(t('错误的站点 ID'));
       setIsError(true);
@@ -116,7 +122,7 @@ function SiteDetail(props: IProps) {
         <PageHeader
           title={t('站点详情')}
           subTitle={t('进行页面库配置与站点管理')}
-          breadcrumb={{ routes: breadcrumbRoutes, itemRender: breadcrumbItemRender }}
+          breadcrumb={{ routes: breadcrumbRoutes as any, itemRender: breadcrumbItemRender}}
           onBack={() => _history.replace('/')}
           footer={(
             <Tabs className={'site-detail-tabs'} activeKey={tabPaneActiveKey} onTabClick={handleTabChange}>

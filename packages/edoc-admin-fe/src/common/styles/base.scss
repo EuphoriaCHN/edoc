@@ -143,3 +143,23 @@ table {
 .typing-cursor {
   color: #fff !important;
 }
+
+.project-breadcrumb-text {
+  cursor: pointer;
+  outline: none;
+  color: var(--color-text-1) !important;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #40a9ff !important;
+  }
+
+  &-active {
+    cursor: default;
+    color: #1890ff !important;
+
+    &:hover {
+      color: #40a9ff !important;
+    }
+  }
+}

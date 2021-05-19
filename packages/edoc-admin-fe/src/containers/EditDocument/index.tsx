@@ -10,6 +10,10 @@ import { Button, message, Spin, Typography } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import Editor from '@/components/Editor';
 
+import { useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { setHelmet } from '@/store/GlobalStore';
+
 import { DocumentAPI, MiddlewareAPI } from '@/api';
 
 import './index.scss';
@@ -25,6 +29,7 @@ function EditDocument(props: IProps) {
   const editorInstanceRef = React.useRef<tuiEditor.Editor>();
 
   const { t } = useTranslation();
+  const _dispatch = useDispatch();
 
   const _history = useHistory();
   const { documentID, pageLibraryID, siteID } = useParams<{ documentID: string; pageLibraryID: string; siteID: string }>();
@@ -153,6 +158,10 @@ function EditDocument(props: IProps) {
       _history.push('/notFound');
       return;
     }
+    _dispatch(setHelmet({
+      id: nanoid(),
+      helmet: t('编辑文档')
+    }));
     setIsError(false);
   }, []);
 

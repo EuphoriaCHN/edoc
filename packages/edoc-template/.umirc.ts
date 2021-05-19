@@ -70,6 +70,7 @@ export default defineConfig({
       }
     })
   },
+  favicon: 'https://abs-image.oss-cn-hangzhou.aliyuncs.com/20210519040428160_easyicon_net_32.ico',
   publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/edoc_users/',
   polyfill: {
     imports: ['core-js/stable']

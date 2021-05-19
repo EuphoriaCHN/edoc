@@ -95,7 +95,7 @@ export default defineConfig({
     ONLINE_URL: 'http://edoc.bhj-noshampoo.site',
     I18N_COOKIE_KEY: 'locale'
   },
-  favicon: 'https://s2.aconvert.com/convert/p3r68-cdx67/aoybn-a6snw-001.ico',
+  favicon: 'https://abs-image.oss-cn-hangzhou.aliyuncs.com/20210519040428160_easyicon_net_32.ico',
   analyze: {
     analyzerMode: 'server',
     analyzerPort: 8888,

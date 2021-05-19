@@ -6,6 +6,7 @@ import { breadcrumbItemRender } from '@/common/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { Store } from '@/store';
 import { setProject, setPageLibrary } from '@/store/ProjectStore';
+import { setHelmet } from '@/store/GlobalStore';
 import { nanoid } from '@reduxjs/toolkit';
 
 import { ProjectAPI, PageLibraryAPI, DocumentAPI } from '@/api';
@@ -276,6 +277,10 @@ function BusinessDocuments(props: IProps) {
   }, [pathStack]);
 
   React.useEffect(() => {
+    _dispatch(setHelmet({
+      id: nanoid(),
+      helmet: t('页面库详情')
+    }));
     initData();
   }, []);
 
@@ -370,15 +375,19 @@ function BusinessDocuments(props: IProps) {
    */
   const renderHeader = React.useMemo(() => (
     <header className={'business-documents-header'}>
-      <Breadcrumb itemRender={breadcrumbItemRender}>
-        <Breadcrumb.Item href={'/'}>{t('首页')}</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/siteDetail/${projectState.project?.id || 0}`}>
-          {projectState.project?.projectName || t('加载中...')}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          {selectedTreeNode.title || t('加载中...')}
-        </Breadcrumb.Item>
-      </Breadcrumb>
+      <Breadcrumb
+        routes={[{
+          path: '/',
+          breadcrumbName: t('首页'),
+        }, {
+          path: `/siteDetail/${projectState.project?.id || 0}`,
+          breadcrumbName: projectState.project?.projectName || t('加载中...'),
+        }, {
+          path: `/siteDetail/${projectState.project?.id || 0}`,
+          breadcrumbName: selectedTreeNode.title || t('加载中...'),
+        }]}
+        itemRender={breadcrumbItemRender}
+      />
     </header>
   ), [projectState, selectedTreeNode]);
 

@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Typography, Button } from 'antd';
 import TypingWrapper from '@/components/TypingWrapper';
 
+import { nanoid } from '@reduxjs/toolkit';
+import { setHelmet } from '@/store/GlobalStore';
+import { useDispatch } from 'react-redux';
+
 import LoginDrawer from '@/components/LoginDrawer';
 
 import './index.scss';
@@ -14,6 +18,14 @@ interface IProps {
 function Login(props: any) {
   const [loginDrawerVisible, setLoginDrawerVisible] = React.useState<boolean>(false);
   const { t } = useTranslation();
+  const _dispatch = useDispatch();
+
+  React.useEffect(() => {
+    _dispatch(setHelmet({
+      id: nanoid(),
+      helmet: t('海弘建站')
+    }));
+  }, []);
 
   const TypingParagraph = React.useMemo(() => TypingWrapper({
     Component: Typography.Paragraph,

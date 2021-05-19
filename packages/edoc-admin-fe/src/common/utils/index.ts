@@ -1,14 +1,15 @@
 import { createElement } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'umi';
 
 import prettier from 'prettier/standalone';
 import prettierMarkdown from 'prettier/parser-markdown';
 import prettierHTML from 'prettier/parser-html';
 import prettierJS from 'prettier/parser-babel';
+import { Typography } from 'antd';
 
 import { Route as BreadcrumbRoute } from 'antd/lib/breadcrumb/Breadcrumb';
 
-export function calculatePagination (current: number, pageSize: number) {
+export function calculatePagination(current: number, pageSize: number) {
   return {
     limit: pageSize,
     offset: (current - 1) * pageSize
@@ -19,13 +20,22 @@ export function calculatePagination (current: number, pageSize: number) {
 /**
  * AntD 面包屑配合 Browser Router 使用
  */
-export function breadcrumbItemRender (
+export function breadcrumbItemRender(
   route: BreadcrumbRoute, params: any, routes: Array<BreadcrumbRoute>, paths: Array<string>
 ) {
+  const _history = useHistory();
+
   const last = routes.indexOf(route) === routes.length - 1;
   return last
-    ? createElement('span', {}, route.breadcrumbName)
-    : createElement(Link, { to: route.path }, route.breadcrumbName);
+    ? createElement('span', { className: 'project-breadcrumb-text project-breadcrumb-text-active' }, route.breadcrumbName)
+    : createElement(
+      Typography.Link,
+      {
+        onClick: () => _history.push(route.path),
+        className: 'project-breadcrumb-text'
+      },
+      route.breadcrumbName
+    );
 }
 
 /**

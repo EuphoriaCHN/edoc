@@ -34,6 +34,7 @@
     "i18next": "^20.2.2",
     "js-cookie": "^2.2.1",
     "lodash-es": "^4.17.21",
+    "react-helmet": "^6.1.0",
     "react-i18next": "^11.8.14",
     "react-redux": "7.2.4",
     "react-typing-animation": "^1.6.2",
