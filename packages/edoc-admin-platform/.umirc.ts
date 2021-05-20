@@ -65,11 +65,6 @@ export default defineConfig({
           test: /[\\/]node_modules[\\/](edoc-mdx-materials|edoc-mdx-renderer|edoc-mdx-parser|tui-editor|codemirror|markdown-it|highlight.js)[\\/]/,
           priority: -14,
         },
-        // default: {
-        //   minChunks: 1,
-        //   priority: -20,
-        //   reuseExistingChunk: true
-        // }
       }
     })
 
@@ -87,7 +82,7 @@ export default defineConfig({
   // dynamicImport: {
   //   loading: '@/containers/Loading'
   // },
-  publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/edoc_admin/',
+  publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/edoc_platform/',
   define: {
     AUTHORIZATION_KEY: 'Authorization',
     DEV_IP: 'http://192.168.28.24:21002',
