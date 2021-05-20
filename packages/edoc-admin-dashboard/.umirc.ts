@@ -8,9 +8,9 @@ export default defineConfig({
   routes: [
     {
       component: '@/layout/index',
-      path: '*',
+      path: '/admin',
       routes: [
-        { path: '/', component: '@/containers/Platform', exact: true },
+        { path: '/admin', component: '@/containers/Platform', exact: true },
         { path: '*', component: '@/containers/NotFound' }
       ]
     },

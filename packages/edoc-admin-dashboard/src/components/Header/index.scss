@@ -1,0 +1,103 @@
+$headerHeight: 60px;
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px 0 50px !important;
+
+  height: $headerHeight !important;
+  box-sizing: border-box;
+  
+  background-color: #fff !important;
+  border-bottom: 1px solid var(--color-border);
+
+  &-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    &-logo {
+      height: 32px;
+      width: 32px;
+    }
+  
+    > h4 {
+      margin: 0 !important;
+      margin-left: 16px !important;
+      line-height: $headerHeight;
+      color: var(--color-text-0) !important;
+    }
+  }
+
+  &-options {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    >* {
+      margin-right: 16px;
+
+      &:last-child {
+        margin: 0 !important;
+      }
+    }
+  }
+
+  &-user {
+    &-avatar {
+      cursor: pointer;
+    }
+
+    &-dropdown {
+      background-color: #fff;
+      border: 1px solid var(--color-border);
+      box-sizing: border-box;
+      width: 200px;
+
+      &-info {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 16px 16px 4px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        > .ant-avatar {
+          flex-shrink: 0;
+          flex-grow: 0;
+        }
+
+        > div {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+          margin-left: 8px;
+        }
+
+        &-name {
+          color: var(--color-text-0) !important;
+          font-weight: 600;
+        }
+
+        &-phone {
+          color: var(--color-text-2) !important;
+          font-size: 12px;
+        }
+      }
+
+      &-menu {
+        .ant-menu-item {
+          border-top: 1px solid var(--color-border);
+          margin-bottom: 0 !important;
+
+          &:last-child {
+            margin-bottom: 4px !important;
+          }
+        }
+      }
+    }
+  }
+}
