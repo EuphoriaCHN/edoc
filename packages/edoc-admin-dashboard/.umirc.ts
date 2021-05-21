@@ -51,7 +51,8 @@ export default defineConfig({
     DEV_IP: 'http://192.168.28.24:21002',
     PROD_URL: 'http://abs.bhj-noshampoo.site',
     ONLINE_URL: 'http://edoc.bhj-noshampoo.site',
-    I18N_COOKIE_KEY: 'locale'
+    I18N_COOKIE_KEY: 'locale',
+    PREFIX: '/admin'
   },
   publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/edoc_dashboard/',
   favicon: 'https://abs-image.oss-cn-hangzhou.aliyuncs.com/20210519040428160_easyicon_net_32.ico',
