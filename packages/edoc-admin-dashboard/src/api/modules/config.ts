@@ -8,6 +8,11 @@ class ConfigApi extends API {
         method: 'post'
     });
 
+    getTaskList = ConfigApi.sign({
+        url: '/getTaskList',
+        method: 'get'
+    });
+
     getCpu = ConfigApi.sign({
         url: '/getCpu',
         method: 'get'

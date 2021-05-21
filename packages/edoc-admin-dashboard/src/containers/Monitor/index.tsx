@@ -45,7 +45,7 @@ function Monitor(props: IProps) {
     <div className={'content-container monitor'}>
       <PageHeader
         title={t('定时任务监控')}
-        subTitle={t('进行动态配置完成定时任务的创建。').concat(t('无需接入定时调度系统或手写代码即可完成对数据文本的定时持久化操作'))}
+        subTitle={t('进行动态配置完成定时任务的管理')}
         ghost={false}
         className={'monitor-title'}
       />

@@ -68,7 +68,7 @@ export default defineConfig({
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
   },
-  ignoreMomentLocale: true,
+  // ignoreMomentLocale: true,
   polyfill: {
     imports: ['core-js/stable']
   },
