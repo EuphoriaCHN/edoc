@@ -49,7 +49,7 @@ export default defineConfig({
   },
   define: {
     AUTHORIZATION_KEY: 'Authorization',
-    DEV_IP: 'http://192.168.28.24:21002',
+    DEV_IP: 'http://192.168.28.24:30156',
     PROD_URL: 'http://abs.bhj-noshampoo.site',
     ONLINE_URL: 'http://edoc.bhj-noshampoo.site',
     I18N_COOKIE_KEY: 'locale',
