@@ -18,7 +18,7 @@ function Configuration(props: IProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const { t } = useTranslation();
   const [form] = Form.useForm();
-
+  
   const handleOnClearForm = React.useCallback((verbose: boolean = false) => {
     form.setFields(['topic', 'resource', 'version', 'type', 'callbackTime'].map(v => ({
       name: v,
@@ -75,7 +75,7 @@ function Configuration(props: IProps) {
     <div className={'content-container configuration'}>
       <PageHeader
         title={t('定时任务配置')}
-        subTitle={t('进行动态配置完成定时任务的创建。无需接入定时调度系统或手写代码即可完成对数据文本的定时持久化操作')}
+        subTitle={t('进行动态配置完成定时任务的创建。').concat(t('无需接入定时调度系统或手写代码即可完成对数据文本的定时持久化操作'))}
         ghost={false}
         className={'configuration-title'}
       />
