@@ -1,7 +1,8 @@
 .site-content {
-    min-height: calc(100vh - 120px) !important;
+    height: calc(100vh - 120px) !important;
     background-color: #fff;
     box-sizing: border-box !important;
+    overflow-y: auto;
   }
   
   .content-container {

@@ -1,0 +1,11 @@
+.dashboard {
+    padding: 0 18px 28px;
+
+    &-rows {
+        margin-bottom: 24px;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
+}
