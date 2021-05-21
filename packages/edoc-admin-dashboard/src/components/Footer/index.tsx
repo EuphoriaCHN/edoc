@@ -16,7 +16,7 @@ function Footer(props: IProps) {
   return (
     <Layout.Footer className={'site-footer'}>
       <div>
-        <Typography.Text>海弘建站</Typography.Text>
+        <Typography.Text>EnhanceTimer</Typography.Text>
         <Typography.Text>&copy; {nowYear === startYear ? startYear : `${startYear} ~ ${nowYear}`}</Typography.Text>
         <Typography.Text>Xi`an University of Science and Technology</Typography.Text>
       </div>

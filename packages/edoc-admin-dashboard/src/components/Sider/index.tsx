@@ -35,16 +35,18 @@ function Sider(props: IProps) {
   }, []);
 
   React.useEffect(() => {
-    const activeKey = _location.pathname.split(new RegExp(PREFIX))[1] || '';
+    const activeKey = _location.pathname.split(/^\//)[1] || '';
     if (!!activeKey) {
       for (const item of menuItems) {
-        if (item.key === activeKey.split(/^\//)[1]) {
+        if (item.key === activeKey) {
           setActiveKey(item.key);
           return;
         }
       }
+    } else {
+      _history.replace(`${PREFIX}/config`);
+      setActiveKey('config');
     }
-    setActiveKey('config');
   }, []);
 
   return (

@@ -8,9 +8,10 @@ export default defineConfig({
   routes: [
     {
       component: '@/layout/index',
-      path: '/admin',
+      path: '/',
       routes: [
-        { path: '/admin', component: '@/containers/Platform', exact: true },
+        { path: '/monitor', component: '@/containers/Monitor' },
+        { path: '/config', component: '@/containers/Configuration' },
         { path: '*', component: '@/containers/NotFound' }
       ]
     },
@@ -52,10 +53,10 @@ export default defineConfig({
     PROD_URL: 'http://abs.bhj-noshampoo.site',
     ONLINE_URL: 'http://edoc.bhj-noshampoo.site',
     I18N_COOKIE_KEY: 'locale',
-    PREFIX: '/admin'
+    PREFIX: ''
   },
   publicPath: process.env.NODE_ENV === 'development' ? undefined : 'https://abs-console.oss-cn-hangzhou.aliyuncs.com/edoc_dashboard/',
-  favicon: 'https://abs-image.oss-cn-hangzhou.aliyuncs.com/20210519040428160_easyicon_net_32.ico',
+  favicon: 'https://abs-image.oss-cn-hangzhou.aliyuncs.com/enhance-timer.ico',
   analyze: {
     analyzerMode: 'server',
     analyzerPort: 8888,

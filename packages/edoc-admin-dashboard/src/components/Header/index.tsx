@@ -42,7 +42,7 @@ function Header(props: IProps) {
     <Layout.Header className={'site-header'}>
       <div className={'site-header-title'} onClick={handleTitleClick}>
         <img className={'site-header-title-logo'} src={Logo} />
-        <Typography.Title level={4}>{t('Edoc 管理后台')}</Typography.Title>
+        <Typography.Title level={4}>{t('EnhanceTimer 控制台')}</Typography.Title>
       </div>
       <div className={'site-header-options'}>
         <Dropdown
