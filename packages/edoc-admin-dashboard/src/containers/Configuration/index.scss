@@ -3,14 +3,22 @@
         margin-bottom: 24px;
     }
 
+    .ant-form > .ant-row {
+        margin-bottom: 56px;
+
+        label {
+            font-size: 16px;
+        }
+    }
+
     &-buttons {
-        margin-top: 24px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        padding-top: 54px;
 
         > button {
-            margin-right: 8px;
+            margin-right: 86px;
 
             &:last-child {
                 margin-right: 0;

@@ -24,8 +24,8 @@ function Configuration(props: IProps) {
       <Form labelCol={{ span: 6 }} form={form}>
         <Row gutter={24}>
           <Col span={12}>
-            <Form.Item name={'topic'} label={t('发送目标 Topic')}>
-              <Select placeholder={t('请选择 Topic')}>
+            <Form.Item name={'topic'} label={t('目标 Topic')}>
+              <Select size={'large'} placeholder={t('请选择 Topic')}>
                 <Select.OptGroup label={t('中心正式机房 - HZ')}>
                   <Select.Option value={'QUEUE_EnhanceTimer'}>{t('持久化 Topic')}</Select.Option>
                   <Select.Option value={'QUEUE_EnhanceTimer_delay'}>{t('延时持久化 Topic')}</Select.Option>
@@ -39,7 +39,7 @@ function Configuration(props: IProps) {
           </Col>
           <Col span={12}>
             <Form.Item name={'resource'} label={t('文本来源')}>
-              <Select placeholder={t('请选择文本来源')}>
+              <Select size={'large'} placeholder={t('请选择文本来源')}>
                 <Select.Option value={'db'}>{t('数据库')}</Select.Option>
                 <Select.Option value={'oss'}>{t('对象存储')}</Select.Option>
               </Select>
@@ -49,12 +49,12 @@ function Configuration(props: IProps) {
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item label={t('文案版本')} name={'version'}>
-              <Input placeholder={t('请输入文案版本')} />
+              <Input size={'large'} placeholder={t('请输入文案版本')} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name={'type'} label={t('文案操作类型')}>
-              <Select placeholder={t('请选择操作类型')}>
+            <Form.Item name={'type'} label={t('操作类型')}>
+              <Select size={'large'} placeholder={t('请选择操作类型')}>
                 <Select.Option value={'deploy'}>{t('发布文案')}</Select.Option>
                 <Select.Option value={'update'}>{t('更新文案')}</Select.Option>
               </Select>
@@ -64,7 +64,7 @@ function Configuration(props: IProps) {
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item name={'callbackType'} label={t('回调时间')}>
-              <Select placeholder={t('请选择回调时间')}>
+              <Select size={'large'} placeholder={t('请选择回调时间')}>
                 <Select.OptGroup label={t('单次回调')}>
                   <Select.Option value={'zero_o_clock'}>{t('凌晨 0 点')}</Select.Option>
                   <Select.Option value={'twelve_o_clock'} disabled>{t('中午 12 点')}</Select.Option>
@@ -79,8 +79,8 @@ function Configuration(props: IProps) {
           </Col>
         </Row>
         <div className={'configuration-buttons'}>
-          <Button icon={<ClearOutlined />}>{t('清空配置')}</Button>
-          <Button type={'primary'} icon={<SendOutlined />}>{t('确认创建')}</Button>
+          <Button size={'large'} icon={<ClearOutlined />}>{t('清空配置')}</Button>
+          <Button size={'large'} type={'primary'} icon={<SendOutlined />}>{t('确认创建')}</Button>
         </div>
       </Form>
     </div>
