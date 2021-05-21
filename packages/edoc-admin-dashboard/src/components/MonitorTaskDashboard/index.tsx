@@ -7,6 +7,9 @@ import { Row, Col } from 'antd';
 import { Gauge, Line, Pie } from '@ant-design/charts';
 import ChartsLabelWrapper from '@/components/ChartsLabelWrapper';
 
+import { makeRequestInterval } from '@/common/utils';
+import { ConfigApi } from '@/api';
+
 import { getGaugeConfig } from './settings/gauge';
 import { getLineConfig } from './settings/line';
 import { getPieConfig } from './settings/pie';
@@ -18,24 +21,6 @@ interface IProps {
 }
 
 const ROW_HEIGHT = 200;
-
-function interval(callback: Function, timeout: number) {
-  let stopped = false;
-
-  setTimeout(function inner() {
-    callback();
-    if (stopped) {
-      return;
-    }
-    return setTimeout(inner, timeout);
-  }, timeout);
-
-  return {
-    clearInterval() {
-      stopped = true;
-    }
-  };
-}
 
 function MonitorTaskDashboard(props: IProps) {
   // CPU 负载
@@ -59,12 +44,8 @@ function MonitorTaskDashboard(props: IProps) {
   const { t } = useTranslation();
 
   React.useEffect(() => {
-    // const cpuInterval = interval(function() {
-    //   setCPUOccupancyRatePercent(prev => prev + 0.1 > 1 ? 0.1 : prev + 0.1);
-    // }, 780);
-    // const memoryInterval = interval(function() {
-    //   setMemoryOccupancyRatePercent(prev => prev + 0.1 > 1 ? 0.1 : prev + 0.1);
-    // }, 600);
+    const cpuOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getCpu, [], setCPUOccupancyRatePercent, true);
+    const memoryOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getMem, [], setMemoryOccupancyRatePercent, true);
 
     axios.request({
       url: 'https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json',
@@ -86,10 +67,10 @@ function MonitorTaskDashboard(props: IProps) {
       value: 64,
     }]);
 
-    // return function() {
-    //   cpuInterval.clearInterval();
-    //   memoryInterval.clearInterval();
-    // };
+    return function() {
+      cpuOccupancyRateRequestInterval.clearInterval();
+      memoryOccupancyRateRequestInterval.clearInterval();
+    };
   }, []);
 
   /**
