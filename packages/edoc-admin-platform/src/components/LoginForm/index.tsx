@@ -17,7 +17,7 @@ interface IProps {
 
 }
 
-const CAPTCHA_WAITING_TIME = 10;
+const CAPTCHA_WAITING_TIME = 60;
 
 function LoginForm(this: any, props: IProps) {
   const [allowedSendCaptcha, setAllowedSendCaptcha] = React.useState<boolean>(false);
@@ -32,7 +32,7 @@ function LoginForm(this: any, props: IProps) {
   /**
    * Check 手机号
    */
-  const handleOnPhoneChangeDebounced = React.useCallback(debounce((data: string) => {
+  const handleOnPhoneChange = React.useCallback((data: string) => {
     if (!data || !data.length) {
       setAllowedSendCaptcha(false);
       form.setFields([{ name: 'phoneNumber', errors: [t('此项是必填项')] }]);
@@ -46,7 +46,10 @@ function LoginForm(this: any, props: IProps) {
     form.setFields([{ name: 'phoneNumber', errors: [] }]);
     setAllowedSendCaptcha(true);
     return true;
-  }, 500), []);
+  }, []);
+
+
+  const handleOnPhoneChangeDebounced = React.useCallback(debounce(handleOnPhoneChange, 500), []);
 
   const handleOnFormInputItemChange = React.useCallback((debouncedFunc: ReturnType<typeof debounce>, event: React.ChangeEvent<HTMLInputElement>) => {
     debouncedFunc(event.target.value);
@@ -58,8 +61,15 @@ function LoginForm(this: any, props: IProps) {
   const handleSendCaptcha = React.useCallback(async () => {
     setWaitingCaptcha(-1);
 
+    const { phoneNumber } = form.getFieldsValue(['phoneNumber']);
+    const phoneNumberCheckedResult = handleOnPhoneChange(phoneNumber);
+
+    if (!phoneNumberCheckedResult) {
+      return;
+    }
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await LoginAPI.getVerificationCode({ mobile: phoneNumber });
       message.success(t('验证码将以短信形式发送到手机，请注意查收'));
     } catch (err) {
       setWaitingCaptcha(0);

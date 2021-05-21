@@ -6,7 +6,7 @@ import { debounce } from 'lodash-es';
 import Cookie from 'js-cookie';
 import isMobilePhone from 'validator/es/lib/isMobilePhone';
 
-import { LoginAPI } from '@/api';
+import { LoginAPI, AccountAPI } from '@/api';
 
 import { ColProps } from 'antd/lib/grid/col';
 
@@ -22,7 +22,7 @@ export const REGEXPS = {
   captcha: /^\d{6}$/
 };
 
-const CAPTCHA_WAITING_TIME = 10;
+const CAPTCHA_WAITING_TIME = 60;
 
 function RegisterForm(this: any, props: IProps) {
   const [allowedSendCaptcha, setAllowedSendCaptcha] = React.useState<boolean>(false);
