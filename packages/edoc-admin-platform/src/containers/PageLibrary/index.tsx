@@ -56,7 +56,7 @@ function PageLibrary(props: IProps) {
       await PageLibraryAPI.deletePageLibrary({ id: business.id });
 
       message.success(t('页面库已删除'));
-      loadPageLibrary({ page: 1, size: 8 });
+      loadPageLibrary({ page: 1, size: 8, ownerProjectId: siteID });
     } catch (err) {
       message.error(t('删除页面库失败'));
       message.error(err.message || JSON.stringify(err));
@@ -76,7 +76,7 @@ function PageLibrary(props: IProps) {
     });
 
     message.success(t('站点已创建'));
-    loadPageLibrary({ page: 1, size: 8 });
+    loadPageLibrary({ page: 1, size: 8, ownerProjectId: siteID });
   }, [siteID]);
 
   /**

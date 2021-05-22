@@ -240,7 +240,7 @@ function BusinessDocuments(props: IProps) {
 
     try {
       await loadData();
-      const value = await loadPageLibrary({ id: siteID });
+      const value = await loadPageLibrary({ ownerProjectId: siteID });
 
       // 树节点数据发生变化，默认设置第一个
       if (value?.data && Array.isArray(value.data) && !!value.data.length) {
