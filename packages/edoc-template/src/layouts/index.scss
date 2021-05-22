@@ -1,7 +1,9 @@
 .site-footer {
+    padding: 10px 50px !important;
+    
     &-beian {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
 
         > a {
