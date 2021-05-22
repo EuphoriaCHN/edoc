@@ -7,8 +7,6 @@
   "第 {{start}}~{{end}} 项，共 {{total}} 项": "Item {{start}}~{{end}} out of {{total}}",
   "文档名称是必填项": "Document name is required",
   "文档名称开头不能是空格": "The document name cannot start with a space",
-  "文档名称不能大于 16 个字符": "Document name cannot be greater than 16 characters",
-  "文档名称必须由中文、英文字母、空格或下划线组成": "The document name must be composed of Chinese, English letters, spaces or underscores",
   "文件夹已创建": "Folder created",
   "文档已创建": "Document created",
   "创建文档失败": "Failed to create document",
@@ -190,5 +188,8 @@
   "点击修改": "Click edit",
   "海弘建站": "Haihong Construction Station",
   "页面库详情": "Page library details",
-  "编辑文档": "Edit document"
+  "编辑文档": "Edit document",
+  "文档名称不能大于 24 个字符": "Document name cannot be greater than 24 characters",
+  "文档名称必须由中文、英文字母、空格、短线或下划线组成": "The document name must be composed of Chinese, English letters, spaces, dashes or underscores",
+  "用户手册": "User Manual"
 }
