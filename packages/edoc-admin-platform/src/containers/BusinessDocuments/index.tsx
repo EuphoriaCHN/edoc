@@ -261,10 +261,11 @@ function BusinessDocuments(props: IProps) {
    */
   const handleCreateDocument = React.useCallback(async (params: any) => {
     const ownerDirId = pathStack.length > 1 ? pathStack[pathStack.length - 1].id : DEFAULT_OWNER_DIR_ID;
+    const ownerPageId = pathStack[0].key;
 
     const requestData = Object.assign({
       ownerProjectId: parseInt(siteID),
-      ownerPageId: parseInt(pageLibraryID),
+      ownerPageId: parseInt(ownerPageId),
       ownerDirId,
     }, params);
 
