@@ -39,6 +39,7 @@ $headerHeight: 60px;
     >* {
       margin-right: 16px;
 
+      &:first-child,
       &:last-child {
         margin: 0 !important;
       }

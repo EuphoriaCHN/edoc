@@ -31,11 +31,11 @@ function CreateDocumentModal(props: IProps) {
       case name[0] === ' ':
         nameErrors.push(t('文档名称开头不能是空格'));
         break;
-      case name.length > 16:
-        nameErrors.push(t('文档名称不能大于 16 个字符'));
+      case name.length > 24:
+        nameErrors.push(t('文档名称不能大于 24 个字符'));
         break;
-      case !/^[\u4E00-\u9FA5a-zA-Z][\u4E00-\u9FA5a-zA-Z0-9 _]*$/.test(name):
-        nameErrors.push(t('文档名称必须由中文、英文字母、空格或下划线组成'));
+      case !/^[\u4E00-\u9FA5a-zA-Z][\u4E00-\u9FA5a-zA-Z0-9 _-]*$/.test(name):
+        nameErrors.push(t('文档名称必须由中文、英文字母、空格、短线或下划线组成'));
         break;
     }
 

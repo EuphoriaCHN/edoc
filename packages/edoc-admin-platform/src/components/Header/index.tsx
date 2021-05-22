@@ -10,8 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '@/store/UserStore';
 import { Store } from '@/store';
 
-import { Layout, Typography, Button, message, Avatar, Dropdown, Menu } from 'antd';
-import { UserOutlined, LogoutOutlined, TranslationOutlined } from '@ant-design/icons';
+import { Layout, Typography, Button, message, Avatar, Dropdown, Menu, Tooltip } from 'antd';
+import { UserOutlined, LogoutOutlined, TranslationOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 import Logo from '@/common/images/Logo.png';
 
@@ -85,6 +85,16 @@ function Header(this: any, props: IProps) {
       Cookie.set(I18N_COOKIE_KEY, key as string, { expires: 365 });
       location.reload();
     }
+  }, []);
+
+  /**
+   * 前往用户手册
+   */
+  const handleOpenUsersGuide = React.useCallback(() => {
+    window.open(
+      'http://edoc.bhj-noshampoo.site/content/5/7/34',
+      '_blank'
+    );
   }, []);
 
   const renderUser = React.useMemo(() => {
@@ -164,6 +174,9 @@ function Header(this: any, props: IProps) {
         >
           <Button type={'text'} icon={<TranslationOutlined />}>{(LANGS as any)[i18n.language]}</Button>
         </Dropdown>
+        <Tooltip title={t('用户手册')}>
+          <Button onClick={handleOpenUsersGuide} icon={<QuestionCircleOutlined />} shape={'circle'} type={'text'} />
+        </Tooltip>
         {renderUser}
       </div>
     </Layout.Header>
