@@ -36,7 +36,7 @@ export default defineConfig({
         vendors: {
           name: 'vendors',
           chunks: 'all',
-          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|lodash|lodash-decorators|lodash-es|moment|axios|classnames|i18next|react-i18next)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|react-helmet|lodash|lodash-decorators|lodash-es|moment|axios|classnames|i18next|react-i18next|js-cookie|)[\\/]/,
           priority: -10,
         },
         antdesigns: {
@@ -69,7 +69,7 @@ export default defineConfig({
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
   },
-  // ignoreMomentLocale: true,
+  ignoreMomentLocale: true,
   polyfill: {
     imports: ['core-js/stable']
   },
