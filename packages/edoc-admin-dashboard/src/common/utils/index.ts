@@ -82,7 +82,7 @@ export function makeRequestInterval<T>(
   delay: number = 5000,
   onError: (err: Error) => void = noop,
   onErrorDispatchValue: T = 0 as any,
-  transform: (data: T) => T  = data => parseFloat((data as any / 100).toFixed(2)) as any,
+  transform: (data: T) => T  = data => parseFloat((data as any / 100).toFixed(4)) as any,
 ) {
   return asyncInterval(async function() {
     try {

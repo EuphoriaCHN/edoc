@@ -22,6 +22,11 @@ class ConfigApi extends API {
         url: '/getMem',
         method: 'get'
     });
+
+    getStorage = ConfigApi.sign({
+        url: '/getStorage',
+        method: 'get'
+    });
 }
 
 export default new ConfigApi();

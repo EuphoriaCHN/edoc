@@ -16,15 +16,8 @@ const GAUGE_CONFIG = {
     },
     statistic: {
         title: {
-            offsetY: 0,
             formatter(_ref: any) {
-                return Math.ceil(Number(_ref?.percent || 0) * 100) + '%';
-            },
-            style() {
-                return {
-                    fontSize: '20px',
-                    lineHeight: 1,
-                };
+                return ((_ref?.percent || 0) * 100).toFixed(2) + ' %';
             },
         },
     }

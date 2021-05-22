@@ -46,6 +46,7 @@ function MonitorTaskDashboard(props: IProps) {
   React.useEffect(() => {
     const cpuOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getCpu, [], setCPUOccupancyRatePercent, true);
     const memoryOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getMem, [], setMemoryOccupancyRatePercent, true);
+    const diskOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getStorage, [], setDistOccupancyRatePercent, true, 10 * 60 * 1000);
 
     axios.request({
       url: 'https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json',
@@ -70,6 +71,7 @@ function MonitorTaskDashboard(props: IProps) {
     return function() {
       cpuOccupancyRateRequestInterval.clearInterval();
       memoryOccupancyRateRequestInterval.clearInterval();
+      diskOccupancyRateRequestInterval.clearInterval();
     };
   }, []);
 
