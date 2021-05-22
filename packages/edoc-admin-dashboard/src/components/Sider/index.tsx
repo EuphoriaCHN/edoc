@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Layout, Menu } from 'antd';
 import { useHistory, useLocation } from 'umi';
 
-import { SettingOutlined, DashboardOutlined } from '@ant-design/icons';
+import { SettingOutlined, DashboardOutlined, FileSearchOutlined } from '@ant-design/icons';
 
 import { MenuClickEventHandler } from 'rc-menu/lib/interface';
 
@@ -27,6 +27,10 @@ function Sider(props: IProps) {
     title: t('定时任务监控'),
     key: 'monitor',
     icon: <DashboardOutlined />
+  }, {
+    title: t('任务操作日志'),
+    key: 'log',
+    icon: <FileSearchOutlined />
   }], []);
 
   const handleOnMenuClick = React.useCallback<MenuClickEventHandler>(({ key }) => {

@@ -10,6 +10,7 @@ export default defineConfig({
       component: '@/layout/index',
       path: '/',
       routes: [
+        { path: '/log', component: '@/containers/TaskOperateLog' },
         { path: '/monitor', component: '@/containers/Monitor' },
         { path: '/config', component: '@/containers/Configuration' },
         { path: '*', component: '@/containers/NotFound' }

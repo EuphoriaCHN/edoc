@@ -32,6 +32,11 @@ class ConfigApi extends API {
         url: '/getByVersion',
         method: 'get'
     });
+
+    getLog = ConfigApi.sign({
+        url: '/getLog',
+        method: 'get'
+    });
 }
 
 export default new ConfigApi();
