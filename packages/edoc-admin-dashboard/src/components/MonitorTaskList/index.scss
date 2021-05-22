@@ -1,0 +1,16 @@
+.monitor-task-table {
+    &-cols {
+        &-version {
+            margin-bottom: 0 !important;
+            cursor: pointer;
+            width: 168px;
+            color: #40a9ff !important;
+            text-decoration: underline;
+            transition: color .3s ease-in-out;
+
+            &:hover {
+                color: #0050b3 !important;
+            }
+        }
+    }
+}

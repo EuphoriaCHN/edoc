@@ -2,11 +2,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { Table, message } from 'antd';
+import { Table, message, Typography } from 'antd';
+import { CopyOutlined, CheckOutlined } from '@ant-design/icons';
+import TextPreviewModal from '@/components/TextPreviewModal';
 
 import { ConfigApi } from '@/api';
 
 import { ColumnsType, TablePaginationConfig } from 'antd/lib/table/interface';
+
+import './index.scss';
 
 export enum TaskOrigin {
   oss = 'oss',
@@ -22,6 +26,7 @@ interface IProps {
 function MonitorTaskList(props: IProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [dataSource, setDataSource] = React.useState<any[]>([]);
+  const [textPreviewModalData, setTextPreviewModalData] = React.useState<string>('');
 
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [total, setTotal] = React.useState<number>(0);
@@ -51,7 +56,8 @@ function MonitorTaskList(props: IProps) {
 
   const tableColumns = React.useMemo<ColumnsType<any>>(() => [{
     title: t('任务 ID'),
-    dataIndex: 'taskId'
+    dataIndex: 'taskId',
+    width: 200,
   }, {
     title: t('创建时间'),
     dataIndex: 'createdDate',
@@ -84,7 +90,33 @@ function MonitorTaskList(props: IProps) {
     }
   }, {
     title: t('文案版本'),
-    dataIndex: 'docVersion'
+    dataIndex: 'docVersion',
+    width: 200,
+    render(version: string) {
+      return (
+        <Typography.Paragraph
+          onClick={() => setTextPreviewModalData(version)}
+          ellipsis={{
+            rows: 1,
+            tooltip: (
+              <Typography.Paragraph
+                copyable={{
+                  text: version,
+                  tooltips: [t('点击复制'), t('已复制')],
+                  icon: [<CopyOutlined style={{ color: '#fff', marginLeft: 8 }} />, <CheckOutlined style={{ color: '#b7eb8f', marginLeft: 8 }} />]
+                }}
+                style={{ color: '#fff' }}
+              >
+                {version}
+              </Typography.Paragraph>
+            )
+          }}
+          className={'monitor-task-table-cols-version'}
+        >
+          {version}
+        </Typography.Paragraph>
+      );
+    }
   }], []);
 
   const tablePagination = React.useMemo<TablePaginationConfig>(() => ({
@@ -98,12 +130,20 @@ function MonitorTaskList(props: IProps) {
   }), [total, currentPage]);
 
   return (
-    <Table
-      loading={loading}
-      columns={tableColumns}
-      dataSource={dataSource}
-      pagination={tablePagination}
-    />
+    <React.Fragment>
+      <Table
+        loading={loading}
+        columns={tableColumns}
+        dataSource={dataSource}
+        pagination={tablePagination}
+        className={'monitor-task-table'}
+      />
+      <TextPreviewModal
+        visible={!!textPreviewModalData}
+        onCancel={() => setTextPreviewModalData('')}
+        version={textPreviewModalData}
+      />
+    </React.Fragment>
   );
 }
 

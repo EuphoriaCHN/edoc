@@ -30,6 +30,7 @@
     "i18next": "^20.2.4",
     "js-cookie": "^2.2.1",
     "lodash-es": "^4.17.21",
+    "prism-react-renderer": "^1.2.1",
     "react-i18next": "^11.8.15",
     "umi": "^3.4.21"
   },

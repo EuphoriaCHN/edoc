@@ -54,7 +54,7 @@ function Header(props: IProps) {
             </Menu>
           )}
         >
-          <Button type={'text'} icon={<TranslationOutlined />}>{(LANGS as any)[i18n.language]}</Button>
+          <Button icon={<TranslationOutlined />}>{(LANGS as any)[i18n.language]}</Button>
         </Dropdown>
         {/* {renderUser} */}
       </div>

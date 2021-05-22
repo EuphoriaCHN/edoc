@@ -27,6 +27,11 @@ class ConfigApi extends API {
         url: '/getStorage',
         method: 'get'
     });
+
+    getByVersion = ConfigApi.sign({
+        url: '/getByVersion',
+        method: 'get'
+    });
 }
 
 export default new ConfigApi();

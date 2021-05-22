@@ -22,6 +22,7 @@ export function rootContainer(LastRootContainer: any) {
 
 export function render(oldRender: any) {
   initI18nextInstance().then(() => {
+    // moment setting
     let momentLocale = I18n.language;
 
     if (momentLocale.startsWith('zh')) {

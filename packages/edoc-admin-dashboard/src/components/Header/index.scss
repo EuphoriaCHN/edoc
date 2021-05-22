@@ -8,7 +8,7 @@ $headerHeight: 60px;
 
   height: $headerHeight !important;
   box-sizing: border-box;
-  
+
   background-color: #fff !important;
   border-bottom: 1px solid var(--color-border);
 
@@ -22,12 +22,12 @@ $headerHeight: 60px;
       height: 32px;
       width: 32px;
     }
-  
+
     > h4 {
       margin: 0 !important;
       margin-left: 16px !important;
       line-height: $headerHeight;
-      color: var(--color-text-0) !important;
+      // color: #fff !important;
     }
   }
 
@@ -36,13 +36,17 @@ $headerHeight: 60px;
     justify-content: flex-start;
     align-items: center;
 
-    >* {
+    > * {
       margin-right: 16px;
 
       &:last-child {
         margin: 0 !important;
       }
     }
+
+    // button {
+    //   color: #fff;
+    // }
   }
 
   &-user {
