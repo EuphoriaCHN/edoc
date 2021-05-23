@@ -4,6 +4,8 @@ import { PageHeader, Form, Input, Row, Col, Select, Button, message, Spin } from
 import { ConfigApi } from '@/api';
 import { isEmpty } from '@/common/utils';
 
+import { TargetTopic, TextResource, OperationType, CallbackTime } from '@/common/utils/constants';
+
 import { SendOutlined, ClearOutlined } from '@ant-design/icons';
 
 import { FieldData } from 'rc-field-form/es/interface';
@@ -18,7 +20,7 @@ function Configuration(props: IProps) {
   const [loading, setLoading] = React.useState<boolean>(false);
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  
+
   const handleOnClearForm = React.useCallback((verbose: boolean = false) => {
     form.setFields(['topic', 'resource', 'version', 'type', 'callbackTime'].map(v => ({
       name: v,
@@ -85,22 +87,32 @@ function Configuration(props: IProps) {
             <Col span={12}>
               <Form.Item name={'topic'} label={t('目标 Topic')}>
                 <Select size={'large'} placeholder={t('请选择 Topic')}>
-                  <Select.OptGroup label={t('中心正式机房 - HZ')}>
-                    <Select.Option value={'QUEUE_EnhanceTimer'}>{t('持久化 Topic')}</Select.Option>
-                    <Select.Option value={'QUEUE_EnhanceTimer_delay'}>{t('延时持久化 Topic')}</Select.Option>
-                    <Select.Option value={'QUEUE_EnhanceTimer_without_delay'}>{t('非延时持久化 Topic')}</Select.Option>
-                  </Select.OptGroup>
-                  <Select.OptGroup label={t('中心预发机房 - HZ')}>
-                    <Select.Option value={'QUEUE_EnhanceTimer_pre'} disabled>{t('持久化 Topic')}</Select.Option>
-                  </Select.OptGroup>
+                  {Object.keys(TargetTopic).map(categoryKey => {
+                    const categoryData = TargetTopic[categoryKey];
+                    return (
+                      <Select.OptGroup key={categoryKey} label={categoryData.label}>
+                        {Object.keys(categoryData.children).map(item => {
+                          const itemData = categoryData.children[item];
+                          return (
+                            <Select.Option key={item} value={item} disabled={itemData.disabled}>
+                              {itemData.label}
+                            </Select.Option>
+                          );
+                        })}
+                      </Select.OptGroup>
+                    );
+                  })}
                 </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item name={'resource'} label={t('文本来源')}>
                 <Select size={'large'} placeholder={t('请选择文本来源')}>
-                  <Select.Option value={'db'} disabled>{t('数据库')}</Select.Option>
-                  <Select.Option value={'oss'}>{t('对象存储')}</Select.Option>
+                  {Object.keys(TextResource).map(key => (
+                    <Select.Option value={key} disabled={TextResource[key].disabled}>
+                      {TextResource[key].label}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
@@ -114,8 +126,11 @@ function Configuration(props: IProps) {
             <Col span={12}>
               <Form.Item name={'type'} label={t('操作类型')}>
                 <Select size={'large'} placeholder={t('请选择操作类型')}>
-                  <Select.Option value={'deploy'}>{t('发布文案')}</Select.Option>
-                  <Select.Option value={'update'}>{t('更新文案')}</Select.Option>
+                  {Object.keys(OperationType).map(key => (
+                    <Select.Option value={key} disabled={OperationType[key].disabled}>
+                      {OperationType[key].label}
+                    </Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
@@ -124,15 +139,21 @@ function Configuration(props: IProps) {
             <Col span={12}>
               <Form.Item name={'callbackTime'} label={t('回调时间')}>
                 <Select size={'large'} placeholder={t('请选择回调时间')}>
-                  <Select.OptGroup label={t('单次回调')}>
-                    <Select.Option value={'zero_o_clock'}>{t('凌晨 0 点')}</Select.Option>
-                    <Select.Option value={'twelve_o_clock'} disabled>{t('中午 12 点')}</Select.Option>
-                  </Select.OptGroup>
-                  <Select.OptGroup label={t('周期回调')}>
-                    <Select.Option value={'each_half_day'} disabled>{t('每半天')}</Select.Option>
-                    <Select.Option value={'each_three_days'} disabled>{t('每三天')}</Select.Option>
-                    <Select.Option value={'each_week'} disabled>{t('每周')}</Select.Option>
-                  </Select.OptGroup>
+                  {Object.keys(CallbackTime).map(categoryKey => {
+                    const categoryData = CallbackTime[categoryKey];
+                    return (
+                      <Select.OptGroup key={categoryKey} label={categoryData.label}>
+                        {Object.keys(categoryData.children).map(item => {
+                          const itemData = categoryData.children[item];
+                          return (
+                            <Select.Option key={item} value={item} disabled={itemData.disabled}>
+                              {itemData.label}
+                            </Select.Option>
+                          );
+                        })}
+                      </Select.OptGroup>
+                    );
+                  })}
                 </Select>
               </Form.Item>
             </Col>
