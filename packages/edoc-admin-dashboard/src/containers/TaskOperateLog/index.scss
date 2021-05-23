@@ -1,0 +1,23 @@
+.task-log {
+  &-filters {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 12px;
+
+    > * {
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &-table {
+    &-search-highlight {
+      color: #f00;
+      font-weight: 600;
+    }
+  }
+}

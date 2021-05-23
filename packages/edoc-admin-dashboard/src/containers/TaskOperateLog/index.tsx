@@ -1,16 +1,23 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { debounce } from 'lodash-es';
+import fuzzy from 'fuzzy';
 
-import { Table, PageHeader, message } from 'antd';
+import { Table, PageHeader, message, Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 import { ConfigApi } from '@/api';
 import { TargetTopicLabel, TextResource, OperationType, CallbackTimeLabel } from '@/common/utils/constants';
 
 import { ColumnsType } from 'antd/lib/table/interface';
 
+import './index.scss';
+
 interface IProps {
 
 }
+
+let originalData: any[] = [];
 
 function TaskOperateLog(props: IProps) {
   const [data, setData] = React.useState<any[]>([]);
@@ -20,8 +27,9 @@ function TaskOperateLog(props: IProps) {
   const loadData = React.useCallback(async () => {
     try {
       setLoading(true);
-      const { data, total } = await ConfigApi.getLog();
+      const { data } = await ConfigApi.getLog();
 
+      originalData = data;
       setData(data);
     } catch (err) {
       message.error(err.message || JSON.stringify(err));
@@ -34,7 +42,9 @@ function TaskOperateLog(props: IProps) {
 
   const tableColumns = React.useMemo<ColumnsType<any>>(() => [{
     title: 'ID',
-    dataIndex: 'id'
+    render(_, record: any) {
+      return <span dangerouslySetInnerHTML={{ __html: record.searchedId || record.id }} />
+    }
   }, {
     title: 'Topic',
     dataIndex: 'topicEnum',
@@ -46,7 +56,7 @@ function TaskOperateLog(props: IProps) {
     dataIndex: 'callBackTimeEnum',
     render(key: any) {
       return CallbackTimeLabel[key].label;
-    }
+    },
   }, {
     title: t('操作类型'),
     dataIndex: 'operatorEnum',
@@ -61,8 +71,42 @@ function TaskOperateLog(props: IProps) {
     }
   }, {
     title: t('文案版本'),
-    dataIndex: 'docOssVersionId'
+    render(_, record: any) {
+      return <span dangerouslySetInnerHTML={{ __html: record.searchedDocOssVersionId || record.docOssVersionId }} />
+    }
   }], []);
+
+  const onSearchTextVersionChangeDebounced = React.useCallback<React.ChangeEventHandler<HTMLInputElement>>(debounce(ev => {
+    if (!ev.target.value) {
+      return setData(originalData);
+    }
+
+    const ans = fuzzy.filter(ev.target.value, data, {
+      extract(el) {
+        return el.docOssVersionId
+      },
+      pre: '<span class="task-log-table-search-highlight">',
+      post: '</span>'
+    }).map(({ original, string }) => Object.assign({}, original, { searchedDocOssVersionId: string }));
+
+    setData(ans);
+  }, 500), [data]);
+
+  const onSearchIDChangeDebounced = React.useCallback<React.ChangeEventHandler<HTMLInputElement>>(debounce(ev => {
+    if (!ev.target.value) {
+      return setData(originalData);
+    }
+
+    const ans = fuzzy.filter(ev.target.value, data, {
+      extract(el) {
+        return el.id
+      },
+      pre: '<span class="task-log-table-search-highlight">',
+      post: '</span>'
+    }).map(({ original, string }) => Object.assign({}, original, { searchedId: string }));
+
+    setData(ans);
+  }, 500), [data]);
 
   React.useEffect(() => {
     loadData();
@@ -76,11 +120,30 @@ function TaskOperateLog(props: IProps) {
         ghost={false}
         className={'task-log-header'}
       />
+      <div className={'task-log-filters'}>
+        <Input
+          style={{ width: 200 }}
+          onChange={onSearchIDChangeDebounced}
+          prefix={<SearchOutlined />}
+          placeholder={t('搜索 ID')}
+          allowClear
+        />
+        <Input
+          style={{ width: 200 }}
+          onChange={onSearchTextVersionChangeDebounced}
+          prefix={<SearchOutlined />}
+          placeholder={t('搜索文案版本')}
+          allowClear
+        />
+      </div>
       <Table
         loading={loading}
         columns={tableColumns}
         dataSource={data}
-        className={'monitor-task-table'}
+        className={'task-log-table'}
+        pagination={{
+          pageSize: 10
+        }}
       />
     </div>
   );
