@@ -67,5 +67,8 @@
   "任务监控": "Task monitoring",
   "进行动态配置完成定时任务的管理": "Perform dynamic configuration to complete the management of timed tasks",
   "拉取操作日志失败": "Failed to pull operation log",
-  "在这里查看定时任务操作日志": "View the operation log of the scheduled task here"
+  "在这里查看定时任务操作日志": "View the operation log of the scheduled task here",
+  "文案来源": "Copy source",
+  "搜索 ID": "Search ID",
+  "搜索文案版本": "Search copy version"
 }
