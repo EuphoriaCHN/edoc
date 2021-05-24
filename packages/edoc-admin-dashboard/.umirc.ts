@@ -10,10 +10,10 @@ export default defineConfig({
       component: '@/layout/index',
       path: '/',
       routes: [
-        { path: '/log', component: '@/containers/TaskOperateLog' },
-        { path: '/monitor', component: '@/containers/Monitor' },
-        { path: '/config', component: '@/containers/Configuration' },
-        { path: '*', component: '@/containers/NotFound' }
+        { path: '/log', component: '@/containers/TaskOperateLog', title: 'EnhanceTimer' },
+        { path: '/monitor', component: '@/containers/Monitor', title: 'EnhanceTimer' },
+        { path: '/config', component: '@/containers/Configuration', title: 'EnhanceTimer' },
+        { path: '*', component: '@/containers/NotFound', title: 'EnhanceTimer' }
       ]
     },
   ],

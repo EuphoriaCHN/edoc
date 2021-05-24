@@ -6,7 +6,7 @@ import { Button, Result } from 'antd';
 
 interface IProps { }
 
-function NotFound (props: IProps) {
+function NotFound(props: IProps) {
   const { t } = useTranslation();
   const _history = useHistory();
 
