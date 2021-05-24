@@ -1,7 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
-import { chunk } from 'lodash-es';
 
 import { Row, Col } from 'antd';
 import { Gauge, Line, Pie } from '@ant-design/charts';
@@ -44,31 +42,36 @@ function MonitorTaskDashboard(props: IProps) {
   const { t } = useTranslation();
 
   React.useEffect(() => {
-    const cpuOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getCpu, [], setCPUOccupancyRatePercent, true);
-    const memoryOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getMem, [], setMemoryOccupancyRatePercent, true);
+    const cpuOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getCpu, [], setCPUOccupancyRatePercent, true, 5 * 1000);
+    const memoryOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getMem, [], setMemoryOccupancyRatePercent, true, 20 * 1000);
     const diskOccupancyRateRequestInterval = makeRequestInterval(ConfigApi.getStorage, [], setDistOccupancyRatePercent, true, 10 * 60 * 1000);
 
-    axios.request({
-      url: 'https://gw.alipayobjects.com/os/bmw-prod/1d565782-dde4-4bb6-8946-ea6a38ccf184.json',
-      method: 'get'
-    }).then(({ data }) => {
-      const [a, b, c, d] = chunk(data, Math.floor(data.length / 4));
+    Promise
+      .all(
+        [
+          ConfigApi.getCastTime(),
+          ConfigApi.getTaskNum(),
+          ConfigApi.getCalledTaskNum(),
+          ConfigApi.getNotCalledTaskNum(),
+        ].map(item => item.then(({ data }) => JSON.parse(data || '[]'), () => [])))
+      .then(([a, b, c, d]) => {
+        setSchedulingTaskTimeData(a);
+        setSchedulingTaskCountData(b);
+        setFinishedSchedulingTaskCount(c);
+        setUnfinishedSchedulingTaskCount(d);
+      });
 
-      setSchedulingTaskTimeData(a);
-      setSchedulingTaskCountData(b);
-      setFinishedSchedulingTaskCount(c);
-      setUnfinishedSchedulingTaskCount(d);
-    });
+    ConfigApi.getProportion().then(({ data }) => {
+      setFinishedOrNotTaskProportion([{
+        type: t('未完成'),
+        value: data.notCalled,
+      }, {
+        type: t('已完成'),
+        value: data.called,
+      }]);
+    }, () => null);
 
-    setFinishedOrNotTaskProportion([{
-      type: t('未完成'),
-      value: 36,
-    }, {
-      type: t('已完成'),
-      value: 64,
-    }]);
-
-    return function() {
+    return function () {
       cpuOccupancyRateRequestInterval.clearInterval();
       memoryOccupancyRateRequestInterval.clearInterval();
       diskOccupancyRateRequestInterval.clearInterval();
@@ -132,7 +135,7 @@ function MonitorTaskDashboard(props: IProps) {
    */
   const renderSchedulingTaskTime = React.useMemo(() => (
     <ChartsLabelWrapper
-      title={t('调度任务耗时')}
+      title={t('调度任务耗时 (ms)')}
       titleMarginBottom={18}
       bordered
     >

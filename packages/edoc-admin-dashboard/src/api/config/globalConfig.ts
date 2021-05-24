@@ -11,8 +11,8 @@ export interface SignOptionDefault extends AxiosRequestConfig {
 }
 
 const config: SignOptionDefault = {
-  // baseURL: process.env.NODE_ENV === 'development' ? DEV_IP : PROD_URL,
-  baseURL: PROD_URL,
+  baseURL: process.env.NODE_ENV === 'development' ? DEV_IP : PROD_URL,
+  // baseURL: PROD_URL,
   timeout: 30 * 1000,
   withCredentials: false,
   retry: 1, // 重试 3 次
