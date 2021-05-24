@@ -44,7 +44,6 @@
   "内存使用率": "Memory usage",
   "磁盘占用率": "Disk usage",
   "完成任务占比": "% Of tasks completed",
-  "调度任务耗时": "Time consuming to schedule tasks",
   "调度任务量": "Scheduled tasks",
   "已完成调度任务量": "The amount of scheduled tasks completed",
   "未完成调度任务量": "The amount of unfinished scheduled tasks",
@@ -70,5 +69,6 @@
   "在这里查看定时任务操作日志": "View the operation log of the scheduled task here",
   "文案来源": "Copy source",
   "搜索 ID": "Search ID",
-  "搜索文案版本": "Search copy version"
+  "搜索文案版本": "Search copy version",
+  "调度任务耗时 (ms)": "Time to schedule tasks (ms)"
 }
