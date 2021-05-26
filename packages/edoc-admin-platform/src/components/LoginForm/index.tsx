@@ -7,7 +7,7 @@ import isMobilePhone from 'validator/es/lib/isMobilePhone';
 import Cookie from 'js-cookie';
 import { useHistory } from 'umi';
 
-import { LoginAPI } from '@/api';
+import { LoginAPI, AccountAPI } from '@/api';
 
 import { REGEXPS } from '@/components/RegisterForm';
 
@@ -141,7 +141,47 @@ function LoginForm(this: any, props: IProps) {
   /**
    * 提交【短信验证码登录】
    */
-  const handleSubmitLoginByCaptcha = React.useCallback(async () => { }, []);
+  const handleSubmitLoginByCaptcha = React.useCallback(async () => {
+    const { phoneNumber, captcha } = form.getFieldsValue(['phoneNumber', 'captcha']);
+
+    let flag = true;
+
+    if (!phoneNumber) {
+      form.setFields([{ name: 'phoneNumber', errors: [t('此项是必填项')] }]);
+      flag = false;
+    }
+
+    if (!captcha) {
+      form.setFields([{ name: 'captcha', errors: [t('此项是必填项')] }]);
+      flag = false;
+    } else if (!REGEXPS.captcha.test(captcha)) {
+      form.setFields([{ name: 'captcha', errors: [t('此项是必填项')] }]);
+      flag = false;
+    }
+
+    if (!flag) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data } = await AccountAPI.mobileLogin({
+        mobile: phoneNumber,
+        verificationCode: captcha
+      });
+      message.success(t('登录成功'));
+
+      const { headerValue } = data;
+      // LocalStorage
+      Cookie.set(AUTHORIZATION_KEY, headerValue, { expires: 1 });
+      _history.push('/');
+    } catch (err) {
+      message.error(err.message || JSON.stringify(err));
+      message.error(t('登录失败'));
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   /**
    * 支付宝扫码登陆
@@ -204,7 +244,7 @@ function LoginForm(this: any, props: IProps) {
                 </Col>
               </Row>
             </Form.Item>
-            <Button loading={loading} type={'primary'} block>{t('登录')}</Button>
+            <Button loading={loading} type={'primary'} onClick={handleSubmitLoginByCaptcha} block>{t('登录')}</Button>
           </Tabs.TabPane>
         </Tabs>
       </Form>

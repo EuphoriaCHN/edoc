@@ -8,6 +8,11 @@ class Account extends API {
     method: 'post'
   });
 
+  mobileLogin = Account.sign({
+    url: '/inc/mobileLogin',
+    method: 'post'
+  });
+
   updateInfo = Account.sign({
     url: '/updateInfo',
     method: 'post'
